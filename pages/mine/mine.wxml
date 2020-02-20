@@ -8,7 +8,9 @@
 <view class="lineBox">
   <view class="line" bindtap="tCode">
     <text>二维码</text>
-    <image src="../icon/right.png"></image>
+    
+    <image class="right" src="../icon/right.png"></image>
+    <image class="tcode" src="{{tcode}}"></image>
   </view>
   <view class="line">
     <text>服务电话</text>
@@ -16,7 +18,7 @@
   </view>
   <view class="line" bindtap="loginout">
     <text>退出登录</text>
-    <image src="../icon/right.png"></image>
+    <image class="right" src="../icon/right.png"></image>
   </view>
 </view>
 
@@ -29,4 +31,7 @@
       <view catchtap="makesure">确定</view>
     </view>
   </view>
+</view>
+<view bindtap="close" class="bgColor" wx:if='{{showIsTcode}}'>
+  <image class="showIsTcode"  src="{{tcode}}"></image>
 </view>

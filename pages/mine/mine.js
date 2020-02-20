@@ -9,10 +9,12 @@ Page({
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     showIs: false,
+    showIsTcode:false,
     names: '',
     phone: '',
     name: '',
-    avator:''
+    avator:'',
+    tcode:''
   },
   tel(e) {
     wx.makePhoneCall({
@@ -24,9 +26,15 @@ Page({
       showIs: true
     })
   },
+  tCode(e) {
+    this.setData({
+      showIsTcode: true
+    })
+  },
   close(e) {
     this.setData({
-      showIs: false
+      showIs: false,
+      showIsTcode:false
     })
   },
   name(e) {
@@ -190,23 +198,37 @@ Page({
         }
       }
     })
-    var img2 = app.globalData.url + '/wxminqrcode'
-    var path=encodeURIComponent('pages/evaNow/evaNow?id=2')
-    console.log(img2,path)
-    wx.request({
-      url: img2,
-      method:'get',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      data:{
-        path:path,
-        width:2
-      },
-      success: function(res) {
-        console.log(res);
-      }
-    })
+  var that=this
+  wx.getImageInfo({
+    src: app.globalData.url + '/wxminqrcode?path=pages/evaNow/evaNow?id=' + 2 + '&width=2',
+    method:'get',
+    header: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    success: function(res) {
+      that.setData({
+        tcode:res.path
+      })
+    }
+  })
+    // var path=encodeURIComponent('pages/evaNow/evaNow?id=3')
+    // wx.request({
+    //   url: app.globalData.url + '/wxminqrcode',
+    //   method:'get',
+    //   header: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //   },
+    //   data:{
+    //     path:path,
+    //     width:2
+    //   },
+    //   success: function(res) {
+    //     console.log(res);
+    //     that.setData({
+    //       tcode:'http://tmp/wxe403283f3b493453.o6zAJs1UGKDUdgrCE9ztq9czrC98.j8rxOYKt74fzf96c9de1a4c838cce479012b23982446.jpeg'
+    //     })
+    //   }
+    // })
   },
 
   /**

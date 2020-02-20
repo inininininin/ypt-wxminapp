@@ -49,7 +49,12 @@ App({
         vm.globalData.titleBarHeight = 0
       }
     })
-    
+    wx.request({
+      url: vm.globalData.url+'/oss/alive/param.json',
+      success(res){
+        vm.globalData.entity=res.data
+      }
+    })
   },
   cover(_cover){
     var that=this
@@ -61,6 +66,7 @@ App({
   globalData: {
     userInfo: null,
     userInfoDetail:[],
+    entity:[],
     loginHospitalId:'1',
     url: 'https://test.ypt.njshangka.com',
     Version:'6.0.2',
