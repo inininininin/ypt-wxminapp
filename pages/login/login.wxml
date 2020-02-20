@@ -1,0 +1,38 @@
+<!--pages/login/login.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+	<view class="header">
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px">
+		</view>
+	</view>
+</view>
+<image class="logo" src="../icon/logo.png"></image>
+<text class="title">手机快捷登录</text>
+<view class="line linephone" style="border-bottom: 1rpx solid #e5e5e5;">
+	<input placeholder-class="placeholder-class" type="number" maxlength="11" value='{{key}}' bindinput="loginPhone" placeholder="请输入手机号"></input>
+	<!-- <image src="../icon/delete.png" wx:if="{{key}}" bindtap="eliminate"></image> -->
+	<text bindtap="smsvcodeGet">{{times}}</text>
+</view>
+<view class="line">
+	<input bindinput="code" placeholder-class="placeholder-class" placeholder="请输入验证码"></input>
+</view>
+
+<view class="login" bindtap="login">登陆</view>
+<text class="loginWx" bindtap="loginWx">微信登陆</text>
+
+<view class="popWindow" style="display:none">
+	<view>
+		<text>服务条款及隐私政策</text>
+		<view>
+			<text>服务条款及隐私
+      政策服务
+      条款及隐私政策服务条款
+      及隐私政策服务条款及隐私政策服务条
+      款及隐私政策服务条款及隐私政策</text>
+		</view>
+		<view>
+			<button class="refuse" bindtap="refuse">不同意</button>
+			<button class="agree"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+		</view>
+	</view>
+</view>

@@ -1,0 +1,32 @@
+<!--pages/mine/mine.wxml-->
+<view class="container" >
+  <text>{{names}}</text>
+  <text>{{phone}}</text>
+  <image class="avator" bindtap="avator" src="{{avator}}"></image>
+  <image class="edit" bindtap="edit" src="../icon/bianji.png"></image>
+</view>
+<view class="lineBox">
+  <view class="line" bindtap="tCode">
+    <text>二维码</text>
+    <image src="../icon/right.png"></image>
+  </view>
+  <view class="line">
+    <text>服务电话</text>
+    <text bindtap="tel" class="tel" data-tel='400-800-8888'>400-800-8888</text>
+  </view>
+  <view class="line" bindtap="loginout">
+    <text>退出登录</text>
+    <image src="../icon/right.png"></image>
+  </view>
+</view>
+
+<view bindtap="close" class="bgColor" wx:if='{{showIs}}'>
+  <view class="popThis" catchtap="inThis">
+    <text>修改昵称</text>
+    <input bindinput="name" value="{{names}}"></input>
+    <view>
+      <view  catchtap="close">取消</view>
+      <view catchtap="makesure">确定</view>
+    </view>
+  </view>
+</view>

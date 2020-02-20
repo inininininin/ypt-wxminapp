@@ -1,0 +1,206 @@
+/* pages/evaList/evaList.wxss */
+@import '../../app.wxss';
+page {
+  height: 100%;
+  background: #f2f2f2;
+}
+
+.container {
+  box-sizing: border-box;
+  position: relative;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 2;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+}
+
+.title-bar>view {
+  height: 60rpx;
+  width: 460rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  float: left;
+  line-height: 60rpx;
+  vertical-align: middle;
+  margin-left: 10rpx;
+}
+
+.back {
+  width: 18rpx;
+  height: 30rpx;
+  display: inline-block;
+  padding: 20rpx;
+  margin-left: 12rpx;
+}
+
+.evahospital {
+  width: 610rpx;
+  text-align: center;
+  opacity: 1;
+  font-size: 36rpx;
+  font-family: PingFangSC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  letter-spacing: 0rpx;
+}
+
+.selectBox {
+  width: 100%;
+  height: 108rpx;
+  line-height: 108rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.selectBox>view{
+  float: left;
+}
+/* 下拉框 */
+
+.select_box {
+  display: inline-block;
+  background: #f5f5f5;
+  width: 237rpx;
+  /* margin: 0 auto; */
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: left;
+  border-radius: 30rpx;
+  margin: 24rpx 20rpx 20rpx 32rpx;
+  position: relative;
+}
+
+.select {
+  box-sizing: border-box;
+  width: 100%;
+  height: 60rpx;
+  /* border: 1px solid #efefef; */
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.select_text {
+  font-size: 28rpx;
+  flex: 1;
+  color: rgb(102, 102, 102);
+  line-height: 60rpx;
+  height: 60rpx;
+}
+
+.select_img {
+  width: 16rpx !important;
+  height: 10rpx !important;
+  /* display: block; */
+  transition: transform 0.3s;
+  position: absolute;
+  right: 30rpx;
+  /* margin-left: -50rpx; *//* margin-top: 0 !important; */
+}
+
+.select_img_rotate {
+  transform: rotate(180deg);
+}
+
+.option_box {
+  position: absolute;
+  top: 80rpx;
+  width: 237rpx;
+  border-bottom: 0;
+  border-top: none;
+  box-sizing: border-box;
+  height: 0;
+  overflow-y: auto;
+  background: #fff;
+  transition: height 0.3s;
+  z-index: 100;
+  text-align: center;
+  border-radius: 3rpx;
+  border: 0;
+  box-shadow: 0px 4px 15px 0px rgba(153, 153, 153, 0.24);
+}
+
+.option {
+  display: block;
+  font-size: 26rpx;
+  line-height: 70rpx;
+  /* border-bottom: 1px solid #efefef; *//* padding: 10rpx; */
+  color: rgb(102, 102, 102);
+}
+
+.option::selection {
+  color: rgb(43, 119, 239);
+}
+.searchBox{
+  width: 429rpx;
+height: 60rpx;
+opacity: 1;
+background: rgba(245,245,245,1);
+border-radius: 30rpx;
+line-height: 60rpx;
+margin-top: 24rpx;
+}
+.searchBox>image{
+  width: 28rpx;
+  height: 28rpx;
+  margin: 16rpx 10rpx 16rpx 32rpx;
+}
+.searchBox input{
+  width: 323rpx;
+  display: inline-block;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.list{
+  width: 100%;
+  height: auto;
+  background: #fff;
+}
+.listItem{
+  height: 215rpx;
+  width: 718rpx;
+  margin-left: 32rpx;
+  border-top: 1rpx solid #e2e2e2;
+}
+.listItem>image{
+  width: 130rpx;
+height: 130rpx;
+opacity: 1; 
+margin: 38rpx 31rpx 47rpx 0;
+float: left;
+}
+.listItem>view{
+  width: 525rpx;
+  height: 155rpx;
+  display: inline-block;
+  margin-top: 30rpx;
+}
+.listItem>view>view:nth-child(1){
+height: 48rpx;
+opacity: 1;
+font-size: 34rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(51,51,51,1);
+line-height: 48rpx;
+letter-spacing: 0rpx;
+}
+.listItem>view>view:nth-child(2){
+height: 99rpx;
+opacity: 1;
+font-size: 24rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(153,153,153,1);
+line-height: 33rpx;
+letter-spacing: 0rpx;
+}

@@ -1,0 +1,19 @@
+<!--pages/doctor/doctor.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header" style="background:{{background}}">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <image class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+      <text class="evahospital">{{navtitle}}</text>
+    </view>
+  </view>
+</view>
+<view class="listItem">
+    <image wx:if='{{type==1}}' src="{{detail.cover||'../icon/yisheng.png'}}"></image>
+    <image wx:if='{{type==2}}' src="{{detail.cover||'../icon/yihu1.png'}}"></image>
+    <view>
+      <view>{{detail.name||''}}</view>
+      <view class="lineThree">{{detail.intro||''}}</view>
+    </view>
+  </view>
+  <view class="evaNow" bindtap="evaNow">立即评价</view>

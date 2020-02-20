@@ -1,0 +1,13 @@
+<!--pages/evadepart/evadepart.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header" style="background:{{background}}">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <image class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+      <text class="evahospital">{{navtitle}}</text>
+    </view>
+  </view>
+</view>
+<view class="boxlist">
+  <view wx:for='{{departList}}'>{{item.name}}</view>
+</view>

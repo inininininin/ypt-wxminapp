@@ -1,0 +1,67 @@
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <image class="scan" bindtap="scan" src="../icon/scan.png"></image>
+      <view>
+        <image class="searchIcon" src="../icon/sousuo.png"></image>
+        <input disabled="disabled" placeholder="搜索你需要的内容"></input>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="topIndex">
+<!-- src="{{hosDetail.cover||'../icon/Bitmap.png'}}" -->
+  <image  mode="aspectFill"  src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
+  <view>
+    <view class="lineOne">{{hosDetail.name}}</view>
+    <view class="lineOne">{{departDetail}}</view>
+    <view class="lineOne">
+      <text wx:for='{{hosDetail.tag}}'>{{item}}</text>
+    </view>
+  </view>
+</view>
+<view class="intro">
+  <view class="introTitle">
+    <view>
+      <text></text>
+      <text>医院简介</text>
+    </view>
+    <text bindtap="lookMoreDetail" data-detail='{{hosDetail}}'>查看更多</text>
+  </view>
+  <text class="lineSix">{{hosDetail.intro}}</text>
+</view>
+<view class="doctorDetail">
+  <image src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
+  <view>
+    <view class="evaDoctor" data-type='1' bindtap="evaList">医师列表</view>
+    <view class="evanurse" data-type='2' bindtap="evaList">医护列表</view>
+    <view class="evadepart" bindtap="evadepart">科室列表</view>
+  </view>
+</view>
+<view class="doctorList">
+  <view class="introTitle">
+    <view>
+      <text></text>
+      <text>医师团队</text>
+    </view>
+    <text data-type='1' bindtap="evaList">查看更多</text>
+  </view>
+  <view class="doctorItem" wx:for='{{docList}}' data-id='{{item.doctorId}}' data-detail='{{item}}' bindtap="doctor">
+    <image mode="aspectFill" src="{{item.cover||'../icon/yisheng.png'}}"></image>
+    <view>
+      <text>{{item.name||''}}</text>
+      <text class="lineThree">{{item.intro||''}}</text>
+    </view>
+  </view>
+</view>
+
+
+<view class="pageLoading" style="display:{{allHidden}}">
+  <image src="../icon/loadingIs.gif"></image>
+</view>
+
+
+
+
+

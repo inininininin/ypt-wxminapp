@@ -1,0 +1,46 @@
+<!--pages/evaNow/evaNow.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+	<view class="header" style="background:{{background}}">
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px">
+			<image class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+			<text class="evahospital">{{navtitle}}</text>
+		</view>
+	</view>
+</view>
+
+<view class="evaTitle">
+	<text>{{title1}}</text>
+	<view>
+		<view bindtap="select" data-select='1'>
+			<image class="eva" src="../icon/eva1.png"></image>
+			<image class="{{showIs1}}" src="../icon/green.png"></image>
+		</view>
+		<view bindtap="select" data-select='2'>
+			<image class="eva" src="../icon/eva2.png"></image>
+			<image class="{{showIs2}}" src="../icon/blue.png"></image>
+		</view>
+		<view bindtap="select" data-select='3'>
+			<image class="eva" src="../icon/eva3.png"></image>
+			<image class="{{showIs3}}" src="../icon/red.png"></image>
+		</view>
+	</view>
+</view>
+<view class="evaVal">
+	<text>{{title2}}</text>
+	<textarea bindinput="textarea" maxlength="500"></textarea>
+	<view><text class="textVal">{{length}}</text>/500</view>
+</view>
+<view class="evaNowBtn" bindtap="evaNow">提交评价</view>
+<view class="evaEnd " style="display:{{hidden}}">
+	<view class="evaBox">
+		<image src="../icon/success@2x.png"></image>
+		<text>提交成功</text>
+		<text>您可以在评价中查看</text>
+		<view>
+			<text catchtap="back">返回主页</text>
+			<text></text>
+			<text catchtap="detail">查看详情</text>
+		</view>
+	</view>
+</view>

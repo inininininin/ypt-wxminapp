@@ -1,0 +1,64 @@
+<!--pages/evalutionList/evalutionList.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header" style="background:{{background}}">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <image class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+      <text class="evahospital">{{navtitle}}</text>
+    </view>
+  </view>
+</view>
+<view>
+	<view class="introTitle" wx:if='{{types==1}}'>
+		<view>
+			<text style="background:#2b77ef"></text>
+			<text>医师评价</text>
+			<text bindtap="lookMore" data-type='1'>查看更多</text>
+		</view>
+	</view>
+	<view class="doctorEva">
+		<view class="evaitem" wx:for='{{doctorList}}'>
+			<view>
+				<image src="../icon/yishi.png"></image>
+				<text>{{item.doctorName||''}}</text>
+				<text>{{item.addTime||''}}</text>
+			</view>
+			<view>{{item.content||''}}</view>
+		</view>
+
+	</view>
+	<view class="introTitle" wx:if='{{types==2}}'>
+		<view>
+			<text style="background:#FD687D"></text>
+			<text>医护评价</text>
+			<text  bindtap="lookMore" data-type='2'>查看更多</text>
+		</view>
+	</view>
+	<view class="nurseEva">
+		<view class="evaitem" wx:for='{{nurseList}}'>
+			<view>
+				<image src="../icon/yihu.png"></image>
+				<text>{{item.nurseName||''}}</text>
+				<text>{{item.doctorName||''}}</text>
+			</view>
+			<view>{{item.content||''}}</view>
+		</view>
+	</view>
+	<view class="introTitle" wx:if='{{types==3}}'>
+		<view>
+			<text style="background:#FF932E"></text>
+			<text>医院评价</text>
+			<text  bindtap="lookMore" data-type='3'>查看更多</text>
+		</view>
+	</view>
+	<view class="departEva">
+		<view class="evaitem" wx:for='{{hospitalList}}'>
+			<view>
+				<image src="../icon/keshi.png"></image>
+				<text>{{item.name||''}}</text>
+				<text>{{item.addTime||''}}</text>
+			</view>
+			<view class="lineTwo">{{item.content||''}}</view>
+		</view>
+	</view>
+</view>

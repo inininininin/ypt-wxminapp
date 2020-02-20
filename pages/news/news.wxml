@@ -1,0 +1,20 @@
+<!--pages/news/news.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px;line-height:{{titleBarHeight}}px">
+        <text bindtap="lookAll">全部已读</text>
+        <text style="line-height:{{titleBarHeight}}px"> {{navtitle}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="newsList">
+  <view class="newsItem" bindtap="look" data-id='{{item.userMessageId}}' wx:for='{{schemeList}}'>
+    <view>消息通知</view>
+    <view>{{item.addTime||''}}</view>
+    <view class="lineOne">{{item.content||''}}</view>
+    <text wx:if='{{item.looked==0}}'></text>
+  </view>
+</view>
+

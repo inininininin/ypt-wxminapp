@@ -1,0 +1,13 @@
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+    <view>
+     <view bindtap='backHistory' class='backHis'>
+    <image  style='display:inline-block;top:{{12+statusBarHeight}}px;left:30rpx;'  src='../img/shape@2x.png'></image>
+    </view>
+    <text class='titleText'>{{navtitle}}</text>
+    </view>
+    </view>
+  </view>
+</view>

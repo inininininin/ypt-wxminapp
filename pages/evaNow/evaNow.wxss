@@ -1,0 +1,249 @@
+/* pages/evaNow/evaNow.wxss */
+page {
+  height: 100%;
+  background: #f2f2f2;
+}
+
+.container {
+  box-sizing: border-box;
+  position: relative;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 2;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+}
+
+.title-bar>view {
+  height: 60rpx;
+  width: 460rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  float: left;
+  line-height: 60rpx;
+  vertical-align: middle;
+  margin-left: 10rpx;
+}
+
+.back {
+  width: 18rpx;
+  height: 30rpx;
+  display: inline-block;
+  padding: 20rpx;
+  margin-left: 12rpx;
+}
+
+.evahospital {
+  width: 610rpx;
+  text-align: center;
+  opacity: 1;
+  font-size: 36rpx;
+  font-family: PingFangSC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  letter-spacing: 0rpx;
+}
+
+.evaTitle {
+  width: 750rpx;
+  height: 237rpx;
+  opacity: 1;
+  background: rgba(255, 255, 255, 1);
+  margin: 20rpx 0;
+}
+
+.evaTitle text {
+  height: 48rpx;
+  opacity: 1;
+  font-size: 34rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 48rpx;
+  letter-spacing: 0.55rpx;
+  margin: 30rpx 0 30rpx 32rpx;
+  display: inline-block;
+}
+
+.evaTitle>view>view {
+  display: inline-block;
+  width: 223rpx;
+  height: 100rpx;
+  opacity: 1;
+  /* border: 1rpx dotted #f2f2f2; */
+  margin: 0 0 0 20rpx;
+  position: relative;
+}
+
+.evaTitle>view>view>.active {
+  display: none;
+}
+
+.evaTitle>view>view>.eva {
+  width: 223rpx;
+  height: 100rpx;
+}
+
+.evaTitle>view>view image:nth-child(2) {
+  position: absolute;
+  width: 45rpx;
+  height: 39rpx;
+  bottom: 1rpx;
+  right: 1rpx;
+}
+
+.evaVal {
+  width: 750rpx;
+  height: 509rpx;
+  opacity: 1;
+  background: rgba(255, 255, 255, 1);
+}
+
+.evaVal>text {
+  height: 48rpx;
+  opacity: 1;
+  font-size: 34rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 48rpx;
+  letter-spacing: 0.55rpx;
+  margin: 30rpx 0 13rpx 32rpx;
+  display: inline-block;
+}
+
+.evaVal textarea {
+  width: 686rpx;
+  height: 336rpx;
+  opacity: 1;
+  font-size: 30rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 42rpx;
+  letter-spacing: 0.48rpx;
+  margin: 0 32rpx 29rpx;
+  overflow-y: scroll;
+  border: 1rpx solid #f2f2f2;
+  padding: 5rpx;
+}
+
+.evaVal view {
+  width: 95rpx;
+  height: 33rpx;
+  opacity: 1;
+  font-size: 24rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 33rpx;
+  letter-spacing: 0.39rpx;
+  float: right;
+  margin-right: 32rpx;
+}
+
+.evaVal view text {
+  color: rgba(89, 134, 239, 1);
+}
+
+.evaNowBtn {
+  width: 686rpx;
+  height: 80rpx;
+  opacity: 1;
+  background: rgba(43, 119, 239, 1);
+  border-radius: 8rpx;
+  text-align: center;
+  font-size: 36rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 80rpx;
+  letter-spacing: 0px;
+  margin: 50rpx 32rpx;
+}
+
+.evaEnd {
+  position: fixed;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.2);
+  top: 0;
+  left: 0;
+  width: 750rpx;
+  height: 100%;
+}
+
+.evaBox {
+  width: 510rpx;
+  height: 468rpx;
+  opacity: 1;
+  background: rgba(255, 255, 255, 1);
+  margin: 433rpx 120rpx 0;
+  border-radius: 8rpx;
+  z-index: 3;
+}
+
+.evaBox image {
+  width: 140rpx;
+  height: 140rpx;
+  opacity: 1;
+  /* background: rgba(2, 175, 101, 1); */
+  margin: 50rpx 185rpx 20rpx;
+}
+
+.evaBox>text:nth-child(2) {
+  display: block;
+  width: 100%;
+  height: 40rpx;
+  opacity: 1;
+  font-size: 28rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(2, 175, 101, 1);
+  line-height: 40rpx;
+  letter-spacing: 0.78rpx;
+  text-align: center;
+}
+.evaBox>text:nth-child(3){
+ display: block;
+  width: 100%;
+height: 40rpx;
+opacity: 1;
+font-size: 28rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(102,102,102,1);
+line-height: 40rpx;
+letter-spacing: 0.78rpx;
+text-align: center;
+margin-top: 35rpx;
+}
+.evaBox>view>text:nth-child(1),.evaBox>view>text:nth-child(3){
+  display: inline-block;
+  width: 253rpx;
+height: 45rpx;
+opacity: 1;
+font-size: 32rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(43,119,239,1);
+line-height: 45rpx;
+letter-spacing: 0.89rpx;
+text-align: center;
+margin-top: 48rpx;
+}
+.evaBox>view>text:nth-child(2){
+  display: inline-block;
+  width: 4rpx;
+height: 22rpx;
+opacity: 1;
+background: rgba(194,194,194,1);
+}

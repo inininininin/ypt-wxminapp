@@ -1,0 +1,45 @@
+<!--pages/evaList/evaList.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header" style="background:{{background}}">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <image class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+      <text class="evahospital">{{navtitle}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="selectBox">
+  <!-- 下拉框 -->
+  <view class='select_box'>
+    <view class='select' catchtap='selectTaps'>
+      <text class='select_text'>{{selectDatas[indexs].name}}</text>
+      <!-- <image class='words_img' src='../../images/sanjiao.png'></image> -->
+      <image class='select_img {{shows&&"select_img_rotate"}}' src='../icon/xiala.png'></image>
+    </view>
+    <view class='option_box' style='height:{{shows?(selectDatas.length>10?300:selectDatas.length*70):0}}rpx;'>
+      <text class='option' style='{{indexs==selectDatas.length-1&&"border:0;"}}' wx:for='{{selectDatas}}' wx:key='this' data-id='{{item.officeId}}' data-index='{{index}}' catchtap='optionTaps'>{{item.name}}</text>
+    </view>
+  </view>
+  <view class="searchBox">
+    <image src="../icon/sousuo.png"></image>
+    <input bindconfirm='searchInput' placeholder="请输入"></input>
+  </view>
+</view>
+
+<view class="list">
+
+  <view class="listItem" wx:for='{{schemeList}}' bindtap="doctor" data-detail='{{item}}' data-id='{{item.doctorId||item.nurseId}}'>
+    <image wx:if='{{type==1}}' src="{{item.cover||'../icon/yisheng.png'}}"></image>
+    <image wx:if='{{type==2}}' src="{{item.cover||'../icon/yihu1.png'}}"></image>
+    <view>
+      <view>{{item.name||''}}</view>
+      <view class="lineThree">{{item.intro||''}}</view>
+    </view>
+  </view>
+ 
+</view>
+
+<view class="pageLoading"  style="display:{{allHidden}}">
+  <image src="../icon/loadingIs.gif"></image>
+</view>

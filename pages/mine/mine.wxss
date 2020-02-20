@@ -1,0 +1,171 @@
+/* pages/mine/mine.wxss */
+
+page {
+  height: 100%;
+  background: #fff;
+}
+
+.container {
+  box-sizing: border-box;
+  background: url(https://test.ypt.njshangka.com/wxminapp-resource/bj.jpg) no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 424rpx;
+  position: relative;
+}
+
+
+
+.container>text:nth-child(1) {
+  width: 100%;
+  text-align: center;
+  height: 70rpx;
+  opacity: 1;
+  font-size: 50rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 70rpx;
+  letter-spacing: 0rpx;
+  margin: 142rpx auto 6rpx;
+}
+
+.container>text:nth-child(2) {
+  position: absolute;
+  top: 217rpx;
+  width: 100%;
+  text-align: center;
+  height: 50rpx;
+  opacity: 1;
+  font-size: 36rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 50rpx;
+  letter-spacing: 0rpx;
+}
+.avator{
+  position: absolute;
+  width: 170rpx;
+  height: 170rpx;
+  left: 290rpx;
+  bottom: -85rpx;
+  border-radius: 85rpx;
+}
+.edit{
+  width: 109rpx;
+  height: 64rpx;
+  position: absolute;
+  right: 0;
+  bottom: 80rpx;
+}
+.lineBox{
+  margin-top: 129rpx;
+}
+.line{
+  width: 714rpx;
+  height: 104rpx;
+  margin-left: 36rpx;
+  border-bottom: 1rpx solid  #e2e2e2;
+  line-height: 104rpx;
+}
+.line text{
+opacity: 1;
+font-size: 34rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(51,51,51,1);
+letter-spacing: 0.58px;
+}
+.line image{
+  float: right;
+  width: 16rpx;
+  height: 26rpx;
+  margin: 39rpx 36rpx 39rpx 0;
+}
+.line .tel{
+  float: right;
+  margin-right: 36rpx;
+opacity: 1;
+font-size: 32rpx;
+font-family: PingFangSC;
+font-weight: 500;
+color: rgba(43,119,239,1);
+letter-spacing: 0.55px;
+}
+.bgColor{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  z-index: 2;
+  top: 0;
+  left: 0;
+}
+.popThis{
+  width: 540rpx;
+height: 361rpx;
+opacity: 1;
+background: rgba(255,255,255,1);
+margin: 480rpx 105rpx 0;
+border-radius: 8rpx;
+position: relative;
+}
+.popThis>text{
+  display: inline-block;
+height: 36rpx;
+opacity: 1;
+font-size: 36rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(0,0,0,1);
+line-height: 36rpx;
+letter-spacing: 0rpx;
+width: 100%;
+text-align: center;
+margin: 42rpx 0 56rpx;
+}
+.popThis input{
+  width: 456rpx;
+height: 72rpx;
+opacity: 1;
+background: rgba(255,255,255,1);
+border-radius: 8rpx;
+margin: 0 37.5rpx;
+border: 1rpx solid #e2e2e2;
+text-align: center;
+}
+.popThis>view{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100rpx;
+  border-top: 1rpx solid #e2e2e2;
+}
+.popThis>view>view{
+  display: inline-block;
+}
+.popThis>view>view:nth-child(1){
+  width: 269.5rpx;
+opacity: 1;
+font-size: 36rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(0,0,0,1);
+line-height: 100rpx;
+text-align: center;
+letter-spacing: 0px;
+border-right: 1rpx solid #e2e2e2;
+}
+.popThis>view>view:nth-child(2){
+  width: 269.5rpx;
+opacity: 1;
+font-size: 36rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: #2B77EF;
+line-height: 100rpx;
+text-align: center;
+letter-spacing: 0px;
+}

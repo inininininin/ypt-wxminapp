@@ -1,0 +1,21 @@
+<!--pages/hosIndex/hosIndex.wxml-->
+<view class="container" bindtap="panoramaVrUrl" data-url="{{detail.panoramaVrUrl||''}}" style="padding-top:{{statusBarHeight+titleBarHeight}}px;background:url({{detail.cover||'https://test.zaylt.njshangka.com/oss/static/20200106121239682168432372632991.png'}})  no-repeat;">
+	<view class="header" style="background:{{background}}">
+		<!-- background -->
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px">
+			<image class="back" catchtap="backHistory" src="../icon/fanhui.png"></image>
+		</view>
+	</view>
+	<text class="evahospital" catchtap="evahospital">医院评价</text>
+</view>
+<view class="detail">
+	<text>{{detail.name||''}}</text>
+	<!-- <view class="line">
+		<text wx:for='{{detail.tag}}'>{{item}}</text>
+	</view> -->
+	<view class="intro">
+		<text>{{detail.intro||''}}</text>
+
+	</view>
+</view>

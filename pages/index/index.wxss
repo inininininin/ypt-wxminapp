@@ -1,0 +1,328 @@
+/**index.wxss**/
+
+/* .container {
+  box-sizing: border-box;
+  background: #fff;
+}
+.indexTopBg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 750rpx;
+  height: 360rpx;
+  background: #2B77EF;
+  background-size: 100% 100%;
+}
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #2B77EF;
+    z-index: 999
+}
+.title-bar {
+  display: flex;
+  align-items: center;
+}
+.title-bar>view>.searchIcon{
+  width: 28rpx;
+  height: 28rpx;
+  float: left;
+  margin: 16rpx 20rpx;
+}
+.title-bar>view input{
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.title-bar>view{
+  height: 60rpx;
+  width: 460rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  float: left;
+  line-height: 60rpx;
+  vertical-align: middle;
+  margin-left: 10rpx;
+}
+.scan{
+  width: 41rpx;
+  height: 41rpx;
+  display: inline-block;
+  padding: 10rpx;
+  margin-left: 22rpx;
+  float: left;
+} */
+
+page {
+  height: 100%;
+  background: #f2f2f2;
+}
+
+.container {
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #2b77ef;
+  z-index: 2;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+}
+
+.title-bar>view>.searchIcon {
+  width: 28rpx;
+  height: 28rpx;
+  float: left;
+  margin: 16rpx 20rpx;
+}
+
+.title-bar>view input {
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.title-bar>view {
+  height: 60rpx;
+  width: 460rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  float: left;
+  line-height: 60rpx;
+  vertical-align: middle;
+  margin-left: 10rpx;
+}
+
+.scan {
+  width: 41rpx;
+  height: 41rpx;
+  display: inline-block;
+  padding: 10rpx;
+  margin-left: 22rpx;
+  float: left;
+}
+
+.topIndex {
+  width: 100%;
+  height: 270rpx;
+  background: #2b77ef;
+}
+
+.topIndex>image {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 62rpx 24rpx 88rpx 32rpx;
+  float: left;
+  border-radius: 8rpx;
+}
+
+.topIndex>view {
+  width: 540rpx;
+  float: left;
+  margin-top: 62rpx;
+}
+
+.topIndex>view>view {
+  height: 36rpx;
+  opacity: 1;
+  font-size: 36rpx;
+  font-family: PingFangSC;
+  font-weight: 500;
+  color: rgba(251, 215, 101, 1);
+  line-height: 36rpx;
+  letter-spacing: 0rpx;
+  margin-top: 12rpx;
+}
+
+.topIndex>view>view:nth-child(2) {
+  height: 28rpx;
+  opacity: 1;
+  font-size: 28rpx;
+  font-family: PingFangSC;
+  font-weight: 500;
+  color: rgba(245, 245, 245, 1);
+  line-height: 28rpx;
+  letter-spacing: 0px;
+  margin-top: 18rpx;
+  margin-bottom: 22rpx;
+}
+
+.topIndex>view>view:nth-child(3) {
+  height: 42rpx;
+}
+
+.topIndex>view>view:nth-child(3) text {
+  height: 42rpx;
+  opacity: 1;
+  font-size: 24rpx;
+  font-family: PingFangSC;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  line-height: 42rpx;
+  letter-spacing: 0px;
+  padding: 0 18rpx;
+  margin: 0 12rpx 0 0;
+  border-radius: 21rpx;
+  border: 1rpx solid #fff;
+}
+
+.intro {
+  width: 750rpx;
+  height: 351rpx;
+  background: #fff;
+}
+
+.introTitle {
+  height: 87rpx;
+  width: 100%;
+}
+
+.introTitle>view>text:nth-child(1) {
+  width: 5rpx;
+  height: 25rpx;
+  background: #2b77ef;
+  float: left;
+  margin: 34rpx 10rpx 0 32rpx;
+}
+
+.introTitle>view>text:nth-child(2) {
+  height: 45rpx;
+  opacity: 1;
+  font-size: 32rpx;
+  font-family: PingFangSC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 45rpx;
+  letter-spacing: 0rpx;
+  margin-top: 24rpx;
+  float: left;
+}
+
+.introTitle>text {
+  height: 37rpx;
+  opacity: 1;
+  font-size: 26rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  line-height: 37rpx;
+  letter-spacing: 0px;
+  margin-top: 28rpx;
+  margin-right: 32rpx;
+  float: right;
+}
+
+.intro>text {
+  width: 686rpx;
+  margin: 0 32rpx;
+  height: 240rpx;
+  opacity: 1;
+  font-size: 28rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40rpx;
+  letter-spacing: 0px;
+}
+
+.doctorDetail {
+  width: 750rpx;
+  height: 308rpx;
+  background: #fff;
+  margin: 20rpx 0;
+}
+
+.doctorDetail>image {
+  width: 710rpx;
+  height: 126rpx;
+  margin: 13rpx 20rpx 19rpx;
+}
+
+.doctorDetail>view {
+  width: 710rpx;
+  margin: 0 20rpx;
+}
+
+.doctorDetail>view>view {
+  width: 223rpx;
+  height: 130rpx;
+  margin-right: 21rpx;
+  display: inline-block;
+  text-align: center;
+  opacity: 1;
+  font-size: 36rpx;
+  font-family: PingFangSC;
+  font-weight: 500;
+  color: rgba(38, 91, 215, 1);
+  line-height: 130rpx;
+  letter-spacing: 0px;
+}
+
+.doctorDetail>view>view:last-child {
+  margin-right: 0;
+}
+
+.evaDoctor {
+  color: #265bd7;
+}
+
+.evanurse {
+  color: #ff2d42;
+}
+
+.evadepart {
+  color: #fe6f35;
+}
+.doctorList{
+  width: 100%;
+  background: #fff;
+}
+.doctorItem{
+  width: 720rpx;
+  height: 215rpx;
+  margin-left:30rpx; 
+  border-bottom: 1rpx solid #E2E2E2;
+}
+.doctorItem:last-child{
+  border-bottom:0;
+}
+.doctorItem>image{
+  width: 130rpx;
+  height: 130rpx;
+  float: left;
+  border-radius: 65rpx;
+  margin: 38rpx 34rpx 47rpx 0;
+}
+.doctorItem>view{
+  width: 525rpx;
+  height: 155rpx;
+  margin-top: 30rpx;
+  float: left;
+}
+.doctorItem>view text:nth-child(1){
+height: 48rpx;
+opacity: 1;
+font-size: 34rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(51,51,51,1);
+line-height: 48rpx;
+letter-spacing: 0px;
+}
+.doctorItem>view text:nth-child(2){
+height: 99rpx;
+opacity: 1;
+font-size: 24rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(153,153,153,1);
+line-height: 33rpx;
+letter-spacing: 0px;
+}
+
