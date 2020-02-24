@@ -1,7 +1,7 @@
 <!--pages/mine/mine.wxml-->
 <view class="container" >
-  <text>{{names}}</text>
-  <text>{{phone}}</text>
+  <text>{{names||''}}</text>
+  <text>{{phone||''}}</text>
   <image class="avator" bindtap="avator" src="{{avator}}"></image>
   <image class="edit" bindtap="edit" src="../icon/bianji.png"></image>
 </view>
@@ -14,7 +14,7 @@
   </view>
   <view class="line">
     <text>服务电话</text>
-    <text bindtap="tel" class="tel" data-tel='400-800-8888'>400-800-8888</text>
+    <text bindtap="tel" class="tel" data-tel='{{entityTel}}'>{{entityTel}}</text>
   </view>
   <view class="line" bindtap="loginout">
     <text>退出登录</text>

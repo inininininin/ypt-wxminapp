@@ -1,20 +1,33 @@
 <!--pages/news/news.wxml-->
 <view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
-  <view class="header">
-    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
-    <view class="title-bar" style="height:{{titleBarHeight}}px;line-height:{{titleBarHeight}}px">
-        <text bindtap="lookAll">全部已读</text>
-        <text style="line-height:{{titleBarHeight}}px"> {{navtitle}}</text>
-    </view>
-  </view>
+	<view class="header">
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px;line-height:{{titleBarHeight}}px">
+			<text bindtap="lookAll">全部已读</text>
+			<text style="line-height:{{titleBarHeight}}px"> {{navtitle}}</text>
+		</view>
+	</view>
 </view>
 
 <view class="newsList">
-  <view class="newsItem" bindtap="look" data-id='{{item.userMessageId}}' wx:for='{{schemeList}}'>
-    <view>消息通知</view>
-    <view>{{item.addTime||''}}</view>
-    <view class="lineOne">{{item.content||''}}</view>
-    <text wx:if='{{item.looked==0}}'></text>
-  </view>
+	<view class="newsItem" bindtap="look" data-newval='{{item.content||""}}' data-newdate='{{item.addTime||""}}' data-id='{{item.userMessageId}}' wx:for='{{schemeList}}'>
+		<view>消息通知</view>
+		<view>{{item.addTime||''}}</view>
+		<view class="lineOne">{{item.content||''}}</view>
+		<text wx:if='{{item.looked==0}}'></text>
+	</view>
 </view>
 
+<view class="bgColor" wx:if='{{showIs}}'>
+	<view>
+		<view class="bgTitle">
+			<text>消息通知</text>
+			<image bindtap="close" src="../icon/delete.png"></image>
+		</view>
+		<view class="bgContent">
+			<text>{{newDate}}</text>
+      <view>{{newVal}}</view>
+			<!-- <view>首次收益为第一次的任务收益：每个用户仅可领取一次。首次收益为第一次的任务收益：每个用户仅可领取一次。首次收益为第一次的任务收益：每个用户仅可领取一次。首次收益为第一次的任务收益：每个用户仅可领取一次。首次收益为第一次的任务收益：每个用户仅可领取一次。首次收益为第一次的任务收益：每个用户仅可领取一次。首次收益为第一次的任务收益：首次收益为第一次的任务收益：每个用户仅可领取一次。首次收益为第一次的任务收益：每个用户仅可领取一次。每个用户仅可领取一次。首次收益为第一次的任务收益：每个用户仅可领取一次。首次上传病源可一次领取20000积分；首次确认就诊即给上级医院输送的病源首次被确认就诊，用户可得20000积分；首次浏览文章可获得20000积分；首次分享文章获得20000积分。首次收益为第一次的任务收益：每个用户仅可领取一次。首次上传病源可一次领取20000积分；首次确认就诊即给上级医院输送的病源首次被确认就诊，用户可得20000积分；首次浏览文章可获得20000积分；首次分享文章获得20000积分。</view> -->
+		</view>
+	</view>
+</view>

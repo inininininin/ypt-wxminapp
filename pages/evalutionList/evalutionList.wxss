@@ -7,6 +7,7 @@ page {
 .container {
   box-sizing: border-box;
   position: relative;
+  margin-bottom: 24rpx;
 }
 
 .header {

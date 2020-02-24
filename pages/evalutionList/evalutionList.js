@@ -42,7 +42,8 @@ Page({
   },
   lastPage: function (toPageNo, url) {
     var that = this
-    toPageNo++
+    // toPageNo++
+    var toPageNo = parseInt(toPageNo) + 1
     wx.request({
       url: app.globalData.url + url, // '/user/my-messages',
       header: {
@@ -51,7 +52,7 @@ Page({
       },
       data: {
         pn: toPageNo,
-        ps: 3,
+        ps: 15,
       },
       method: 'get',
       success: function (res) {
@@ -64,9 +65,10 @@ Page({
               res.data.data.rows[i].addTime = utils.formatTime(addTime / 1000, 'Y-M-D h:m');
             }
           }
- 
+        var list=that.data.list.concat(res.data.data.rows)
             that.setData({
-              list: res.data.data.rows,
+              list: list,
+              toPageNo: String(toPageNo)
             });
          
         } else {
@@ -110,14 +112,21 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.setData({
+      list:[]
+    })
+    this.lastPage(0, this.data.url)
+    wx.stopPullDownRefresh({
+      complete: (res) => {},
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var toPageNo = this.data.toPageNo
+    this.lastPage(toPageNo, this.data.url)
   },
 
   /**

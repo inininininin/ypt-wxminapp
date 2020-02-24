@@ -31,6 +31,19 @@
 	<textarea bindinput="textarea" maxlength="500"></textarea>
 	<view><text class="textVal">{{length}}</text>/500</view>
 </view>
+<view class="evaCover">
+	<text>{{title3}}</text>
+	<view class='invoicePhoto'>
+		<view bindtap="addPic">
+			<image src="../icon/jia.png"></image>
+		</view>
+		<view class="imageItem" wx:for='{{imglist}}'>
+			<image data-src="{{item}}" mode="aspectFill" bindtap="previewImage" src='{{item}}'></image>
+			<image class="deletThis" bindtap="deletThis" data-src='{{item}}' src="../icon/deleteC.png"></image>
+		</view>
+	</view>
+</view>
+
 <view class="evaNowBtn" bindtap="evaNow">提交评价</view>
 <view class="evaEnd " style="display:{{hidden}}">
 	<view class="evaBox">

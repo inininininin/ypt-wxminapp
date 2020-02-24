@@ -177,6 +177,7 @@ height: 130rpx;
 opacity: 1; 
 margin: 38rpx 31rpx 47rpx 0;
 float: left;
+border-radius: 65rpx;
 }
 .listItem>view{
   width: 525rpx;

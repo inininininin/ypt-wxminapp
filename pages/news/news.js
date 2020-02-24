@@ -10,18 +10,24 @@ Page({
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     navtitle: '全部消息',
-    schemeList:[],
-
+    schemeList: [],
+    showIs: false,
+    newDate: '',
+    newVal: '',
   },
-
+  close() {
+    this.setData({
+      showIs: false
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.lastPage(0)
   },
-  lookAll(e){
-    var that=this
+  lookAll(e) {
+    var that = this
     wx.request({
       url: app.globalData.url + '/user/look-all-my-message',
       header: {
@@ -32,11 +38,11 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          for(var i in that.data.schemeList){
-              that.data.schemeList[i].looked=1
+          for (var i in that.data.schemeList) {
+            that.data.schemeList[i].looked = 1
           }
           that.setData({
-            schemeList:that.data.schemeList
+            schemeList: that.data.schemeList
           })
         } else {
           wx.showModal({
@@ -47,8 +53,8 @@ Page({
       }
     });
   },
-  look(e){
-    var that=this
+  look(e) {
+    var that = this
     wx.request({
       url: app.globalData.url + '/user/my-message',
       header: {
@@ -62,13 +68,16 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          for(var i in that.data.schemeList){
-            if(e.currentTarget.dataset.id==that.data.schemeList[i].userMessageId){
-              that.data.schemeList[i].looked=1
+          for (var i in that.data.schemeList) {
+            if (e.currentTarget.dataset.id == that.data.schemeList[i].userMessageId) {
+              that.data.schemeList[i].looked = 1
             }
           }
           that.setData({
-            schemeList:that.data.schemeList
+            schemeList: that.data.schemeList,
+            showIs: true,
+            newDate: e.currentTarget.dataset.newdate,
+            newVal: e.currentTarget.dataset.newval,
           })
         } else {
           wx.showModal({
@@ -139,7 +148,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
 

@@ -169,6 +169,7 @@ page {
   line-height: 80rpx;
   letter-spacing: 0px;
   margin: 50rpx 32rpx;
+  float: left;
 }
 
 .evaEnd {
@@ -246,4 +247,60 @@ margin-top: 48rpx;
 height: 22rpx;
 opacity: 1;
 background: rgba(194,194,194,1);
+}
+
+.evaCover{
+  width: 750rpx;
+  height: auto;
+  min-height: 287rpx;
+  /* height: 307rpx; */
+  background: #fff;
+  margin-top: 20rpx;
+  float: left;
+  /* padding-bottom: 20rpx; */
+}
+.evaCover>text {
+  height: 48rpx;
+  opacity: 1;
+  font-size: 34rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 1);
+  line-height: 48rpx;
+  letter-spacing: 0.55rpx;
+  margin: 30rpx 0 13rpx 32rpx;
+  display: inline-block;
+}
+.invoicePhoto{
+  width: 700rpx;
+  margin: 0 18rpx 0 32rpx;
+}
+.invoicePhoto image{
+  width: 160rpx;
+ height: 160rpx;
+}
+.invoicePhoto>view{
+ width: 160rpx;
+ height: 160rpx;
+ float: left;
+ margin-right: 15rpx;
+margin-bottom: 15rpx;
+ /* margin-top: 24rpx; */
+}
+.invoicePhoto image:nth-child(4n){
+ margin-right: 0rpx;
+}
+.invoicePhoto>.imageItem:last-child{
+  margin-bottom: 32rpx;
+}
+.imageItem{
+  position: relative;
+}
+.imageItem .deletThis{
+width: 40rpx;
+height: 40rpx;
+position: absolute;
+right: 5rpx;
+top: 5rpx;
+z-index: 1000;
 }

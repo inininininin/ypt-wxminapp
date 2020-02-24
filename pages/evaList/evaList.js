@@ -52,10 +52,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this
-    
+    var that=this 
     var selectDatas=[{officeId: "", name: "全部"}]
-     selectDatas=selectDatas.concat(JSON.parse(options.detail))
+    selectDatas=selectDatas.concat(JSON.parse(options.detail))
     var urls=''
     if(options.type==1){
       urls='/user/doctors'
@@ -65,7 +64,7 @@ Page({
         url:urls,
         selectDatas:selectDatas
       })
-    }else{
+    }else if(options.type==2){
       urls='/user/nurses'
       that .setData({
         navtitle:'医护列表',

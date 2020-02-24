@@ -15,8 +15,12 @@ Page({
     length: 0,
     title1: '',
     title2: '',
+    title3:'请上传挂号发票或诊治单',
     hidden: 'none',
     star:'',
+    imglist: [],
+    imgBlob: '',
+    // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
   },
   select(e) {
     if (e.currentTarget.dataset.select == 1) {
@@ -52,6 +56,80 @@ Page({
       length: e.detail.value.length,
       content: e.detail.value,
     })
+  },
+  previewImage: function (e) {
+    var current = e.target.dataset.src;
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接
+      urls: this.data.imglist // 需要预览的图片http链接列表
+    })
+  },
+  addPic: function (e) {
+    var that=this
+    wx.chooseImage({
+      count: 9,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success(res) {
+        // tempFilePath可以作为img标签的src属性显示图片
+        const tempFilePaths = res.tempFilePaths
+        var picBlob=that.data.picBlob
+        console.log(tempFilePaths)
+        for (var i in tempFilePaths){
+         
+          wx.uploadFile({
+            url: app.globalData.url + '/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
+            filePath: tempFilePaths[i],
+            name: 'file',
+            success: function (res) {
+              var data = JSON.parse(res.data);
+              var url = data.data.url
+              var imglist = that.data.imglist
+              if (data.code == 0) {
+                wx.showToast({
+                  title: '上传成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+                if (that.data.imgBlob==''){
+                  var imgBlob =  url
+                }else{
+                  var imgBlob = that.data.imgBlob + ',' + url
+                }
+                console.log(imgBlob)
+                imglist.push(app.globalData.url + url)
+                that.setData({
+                  imglist: imglist,
+                  imgBlob: imgBlob
+                })
+                console.log(imglist)
+                
+              }
+            },
+            fail: function (res) {
+              console.log(res)
+            }
+          })
+        }        
+      }
+    })
+  },
+  deletThis(e){
+    var img=[],imgBlob=''
+    var src=e.target.dataset.src
+    var pic = this.data.imglist
+    for (var i in pic){
+      if (src == pic[i]){
+        // img = this.data.imgBlob[i] + ','
+      }else{
+        img.push(pic[i])
+        imgBlob = imgBlob + ',' + pic[i].split('com')[1]
+      }
+      this.setData({
+        imglist: img,
+        imgBlob:imgBlob.substring(1, imgBlob.length)
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -114,6 +192,7 @@ Page({
         data: {
           star: that.data.star,
           content: that.data.content,
+          cover:that.data.imgBlob
         },
         method: 'post',
         success: function (res) {

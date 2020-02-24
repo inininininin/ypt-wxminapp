@@ -23,7 +23,7 @@ Page({
   },
   edit(e) {
     this.setData({
-      showIs: true
+      showIs: true 
     })
   },
   tCode(e) {
@@ -110,6 +110,7 @@ Page({
       success(res) {
         const src = res.tempFilePaths[0]
         var avatar = res.tempFilePaths[0]
+        console.log(avatar)
         wx.uploadFile({
           url: app.globalData.url + '/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
           filePath: avatar,
@@ -163,7 +164,8 @@ Page({
    that.setData({
       names: app.globalData.userInfoDetail.name,
       phone: app.globalData.userInfoDetail.phone,
-      avator:avator
+      avator:avator,
+      entityTel: app.globalData.entity.entityTel,
     })
    
   },
@@ -199,8 +201,9 @@ Page({
       }
     })
   var that=this
+  console.log(123)
   wx.getImageInfo({
-    src: app.globalData.url + '/wxminqrcode?path=pages/evaNow/evaNow?id=' + 2 + '&width=2',
+    src: app.globalData.url + '/wxminqrcode?path=pages/evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) + '&width=2',
     method:'get',
     header: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -209,6 +212,9 @@ Page({
       that.setData({
         tcode:res.path
       })
+    },
+    fail(res){
+      console.log(res)
     }
   })
     // var path=encodeURIComponent('pages/evaNow/evaNow?id=3')
