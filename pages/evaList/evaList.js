@@ -59,7 +59,7 @@ Page({
     if(options.type==1){
       urls='/user/doctors'
       that .setData({
-        navtitle:'医师列表',
+        navtitle:'医生列表',
         type:options.type,
         url:urls,
         selectDatas:selectDatas

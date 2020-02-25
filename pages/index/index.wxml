@@ -34,7 +34,7 @@
 <view class="doctorDetail">
   <image src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
   <view>
-    <view class="evaDoctor" data-type='1' bindtap="evaList">医师列表</view>
+    <view class="evaDoctor" data-type='1' bindtap="evaList">医生列表</view>
     <view class="evanurse" data-type='2' bindtap="evaList">医护列表</view>
     <view class="evadepart" bindtap="evadepart">科室列表</view>
   </view>
@@ -43,7 +43,7 @@
   <view class="introTitle">
     <view>
       <text></text>
-      <text>医师团队</text>
+      <text>医生团队</text>
     </view>
     <text data-type='1' bindtap="evaList">查看更多</text>
   </view>

@@ -11,7 +11,7 @@
 	<view class="introTitle" wx:if='{{doctorList}}'>
 		<view>
 			<text style="background:#2b77ef"></text>
-			<text>医师评价</text>
+			<text>医生评价</text>
 			<text bindtap="lookMore" data-type='1'>查看更多</text>
 		</view>
 	</view>

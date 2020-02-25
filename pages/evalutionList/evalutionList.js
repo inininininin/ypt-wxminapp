@@ -19,7 +19,7 @@ Page({
   onLoad: function (options) {
     var type='',url=''
     if(options.type==1){
-      type='医师评价列表';
+      type='医生评价列表';
       url='/user/my-doctor-comments';
     }else  if(options.type==2){
       type='医护评价列表';
