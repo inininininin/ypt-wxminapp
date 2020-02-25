@@ -46,7 +46,7 @@ Page({
           if (res.data.data.rows) {
             var addTime
             for (var i = 0; i < res.data.data.rows.length; i++) {
-              addTime = res.data.data.rows[i].addTime
+              addTime = res.data.data.rows[i].createTime
               res.data.data.rows[i].addTime = utils.formatTime(addTime / 1000, 'Y-M-D h:m');
             }
           }

@@ -90,13 +90,14 @@ page {
 
 .title-bar>view {
   height: 60rpx;
-  width: 460rpx;
+  width: 430rpx;
   background: #fff;
   border-radius: 30rpx;
   float: left;
   line-height: 60rpx;
   vertical-align: middle;
   margin-left: 10rpx;
+  font-size: 30rpx;
 }
 
 .scan {

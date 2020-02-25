@@ -11,9 +11,9 @@ Page({
   scan(e){
     wx.scanCode({
       success (res) {
-        console.log(res.result)
+        console.log(res)
         wx.navigateTo({
-          url: res.result,
+          url: res.path,
         })
       }
     })

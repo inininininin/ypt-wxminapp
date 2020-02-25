@@ -14,7 +14,8 @@ Page({
     phone: '',
     name: '',
     avator:'',
-    tcode:''
+    tcode:'',
+    imglist:[]
   },
   tel(e) {
     wx.makePhoneCall({
@@ -151,23 +152,19 @@ Page({
       }
     })
   },
+  // 查看二维码
+  lookCode(e){
+    var current = e.currentTarget.dataset.src;
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接
+      urls: this.data.imglist // 需要预览的图片http链接列表
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   var that=this
-   if(app.globalData.userInfoDetail.cover==''||app.globalData.userInfoDetail.cover==null||app.globalData.userInfoDetail.cover==undefined){
-     var avator='../icon/moren.png'
-   }else{
-    var avator=app.globalData.url+app.globalData.userInfoDetail.cover
-   }
-   that.setData({
-      names: app.globalData.userInfoDetail.name,
-      phone: app.globalData.userInfoDetail.phone,
-      avator:avator,
-      entityTel: app.globalData.entity.entityTel,
-    })
-   
+
   },
 
   /**
@@ -181,6 +178,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that=this
     wx.request({
       url: app.globalData.url + '/user/login-refresh',
       header: {
@@ -191,7 +189,20 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          app.globalData.userInfoDetail=res.data.data         
+          app.globalData.userInfoDetail=res.data.data  
+          if(app.globalData.userInfoDetail.cover==''||app.globalData.userInfoDetail.cover==null||app.globalData.userInfoDetail.cover==undefined){
+            var avator='../icon/moren.png'
+          }else{
+           var avator=app.globalData.url+app.globalData.userInfoDetail.cover
+          }
+         
+          that.setData({
+            typeUser:app.globalData.userInfoDetail.type,
+            names: app.globalData.userInfoDetail.name,
+            phone: app.globalData.userInfoDetail.phone,
+            avator:avator,
+            entityTel: app.globalData.entity.entityTel,
+          }) 
         } else {
           wx.showToast({
             title: res.data.codeMsg,
@@ -200,18 +211,21 @@ Page({
         }
       }
     })
-  var that=this
-  console.log(123)
+
   wx.getImageInfo({
-    src: app.globalData.url + '/wxminqrcode?path=pages/evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) + '&width=2',
+    src: app.globalData.url + '/wxminqrcode?path=../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) + '&width=2',
     method:'get',
     header: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
     success: function(res) {
+      var imglist=[]
+      imglist.push(res.path)
       that.setData({
-        tcode:res.path
+        tcode:res.path,
+        imglist:imglist,
       })
+      console.log(that.data.imglist)
     },
     fail(res){
       console.log(res)

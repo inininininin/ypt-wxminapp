@@ -6,11 +6,10 @@
   <image class="edit" bindtap="edit" src="../icon/bianji.png"></image>
 </view>
 <view class="lineBox">
-  <view class="line" bindtap="tCode">
+  <view class="line" bindtap="tCode" wx:if='{{typeUser!=0}}'>
     <text>二维码</text>
-    
     <image class="right" src="../icon/right.png"></image>
-    <image class="tcode" src="{{tcode}}"></image>
+    <image  class="tcode" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}" src="{{item}}"></image>
   </view>
   <view class="line">
     <text>服务电话</text>
@@ -32,6 +31,6 @@
     </view>
   </view>
 </view>
-<view bindtap="close" class="bgColor" wx:if='{{showIsTcode}}'>
+<!-- <view bindtap="close" class="bgColor" wx:if='{{showIsTcode}}'>
   <image class="showIsTcode"  src="{{tcode}}"></image>
-</view>
+</view> -->

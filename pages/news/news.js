@@ -107,7 +107,7 @@ Page({
         if (res.data.code == 0) {
           var addTime
           for (var i = 0; i < res.data.data.rows.length; i++) {
-            addTime = res.data.data.rows[i].addTime
+            addTime = res.data.data.rows[i].createTime
             res.data.data.rows[i].addTime = utils.formatTime(addTime / 1000, 'Y-M-D h:m');
           }
           var schemeListArr = that.data.schemeList;
