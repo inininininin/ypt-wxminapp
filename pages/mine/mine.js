@@ -203,7 +203,7 @@ Page({
   var that=this
   console.log(123)
   wx.getImageInfo({
-    src: app.globalData.url + '/wxminqrcode?path=pages/evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) + '&width=2',
+    src: app.globalData.url + '/wxminqrcode?path=pages/evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) + '&width=2',
     method:'get',
     header: {
       "Content-Type": "application/x-www-form-urlencoded",
