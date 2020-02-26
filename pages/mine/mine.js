@@ -211,9 +211,9 @@ Page({
         }
       }
     })
-
+var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) )
   wx.getImageInfo({
-    src: app.globalData.url + '/wxminqrcode?path=../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) + '&width=2',
+    src: app.globalData.url + '/wxminqrcode?path='+param+ '&width=2',
     method:'get',
     header: {
       "Content-Type": "application/x-www-form-urlencoded",

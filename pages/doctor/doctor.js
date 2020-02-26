@@ -8,7 +8,7 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    navtitle: '',
+    navtitle: '详情',
     detail:{}
   },
   /**
@@ -24,7 +24,7 @@ Page({
   },
   evaNow(e){
     wx.navigateTo({
-      url:'../evaNow/evaNow?type='+this.data.type+'&id='+this.data.id,
+      url:'../evaNow/evaNow?type='+this.data.type+'&id='+this.data.id+'&name='+this.data.detail.name,
     })
   },
   /**

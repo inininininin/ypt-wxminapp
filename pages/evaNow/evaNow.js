@@ -141,6 +141,7 @@ Page({
         url: '/user/doctor-comment',
         type: options.type,
         id: options.id,
+        navtitle:options.name,
         title1: '您对本次就医医生诊断体验：',
         title2: '请填写您对该医生的评价：',
       })
@@ -149,6 +150,7 @@ Page({
         url: '/user/nurse-comment',
         type: options.type,
         id: options.id,
+        navtitle:options.name,
         title1: '您对本次就医医护人员服务体验：',
         title2: '请填写您对该医护人员的评价：',
       })
@@ -157,6 +159,7 @@ Page({
         url: '/user/hospital-comment',
         type: options.type,
         id: options.id,
+        navtitle:options.name,
         title1: '您本次就医体验：',
         title2: '请填写您对该医院的具体评价及建议：',
       })
@@ -227,13 +230,15 @@ Page({
   },
   detail(e) {
     wx.navigateTo({
-      url: '../evaList/evaList',
+      url: '../evalutionList/evalutionList?type='+this.data.type,
     })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function(){
+    
+  },
   backHistory(e) {
     wx.navigateBack({
       delta: 1

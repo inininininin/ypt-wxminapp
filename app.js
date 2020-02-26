@@ -64,10 +64,11 @@ App({
     return _cover
   },
   globalData: {
+    loginHospitalId:'',
+    loginHpitalName:'',
     userInfo: null,
     userInfoDetail:[],
     entity:[],
-    loginHospitalId:'1',
     url: 'https://test.ypt.njshangka.com',
     Version:'6.0.2',
     cookie:'userLoginId=20200115093115886145231133378472; Max-Age=157680000; Expires=Mon, 13-Jan-2025 01:31:15 GMT; Path=/; HttpOnly'

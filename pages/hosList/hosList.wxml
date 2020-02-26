@@ -1,0 +1,29 @@
+<!--pages/hosList/hosList.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header" style="background:{{background}}">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <image class="back" bindtap="backHistory"  src="../icon/fanhui2.png"></image>
+      <text class="evahospital">{{navtitle}}</text>
+    </view>
+  </view>
+</view>
+<view class="main">
+  <view class="searchBox">
+    <input value="" confirm-type='search' bindconfirm="search"  placeholder="请输入医院名称"></input>
+  </view>
+
+  <view class="searchList">
+    <text wx:for='{{schemeList}}' data-id='{{item.hospitalId}}'  data-name='{{item.name}}' bindtap="selectThis">{{item.name}}</text>
+    <!-- <text>某某医院某某医院</text>
+    <text>某某1231医院</text>
+    <text>某某医院</text>
+    <text>某某医sadasdasd院</text>
+    <text>某某fasf医院</text>
+    <text>某某dfsf医院</text> -->
+  </view>
+</view>
+<view class="showNone" wx:if='{{showNone}}'>
+  <!-- <text>无数据</text> -->
+  无数据
+</view>

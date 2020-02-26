@@ -3,7 +3,7 @@
 .logo {
   width: 186rpx;
   height: 69rpx;
-  margin: 60rpx 282rpx 120rpx;
+  margin: 60rpx 282rpx 20rpx;
 }
 
 .title {
@@ -81,7 +81,11 @@ vertical-align: middle;
   margin: 60rpx auto 0;
   border-radius: 5rpx;
 }
-
+.loginChange{
+  width: 686rpx;
+  height: 40rpx;
+  margin : 20rpx auto;
+}
 .loginWx {
   width: 130rpx;
   text-align: center;
@@ -93,8 +97,39 @@ vertical-align: middle;
   color: rgba(51, 51, 51, 1);
   line-height: 40rpx;
   letter-spacing: 0.45rpx;
-  margin : 40rpx 310rpx;
+  /* margin : 40rpx 310rpx; */
+  /* display: inline-block; */
+  float: left;
+  padding: 20rpx 20rpx 20rpx 0;
+}
+.changeHos{
+  width: 130rpx;
+  text-align: center;
+  height: 40rpx;
+  opacity: 1;
+  font-size: 28rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40rpx;
+  letter-spacing: 0.45rpx;
+  /* margin : 40rpx 310rpx; */
+  padding: 20rpx 0 20rpx 20rpx;
+  float: right;
+}
+.hosName{
+  width: 100%;
   display: block;
+  text-align: center;
+  height: 40rpx;
+  opacity: 1;
+  font-size: 34rpx;
+  font-family: PingFangSC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40rpx;
+  letter-spacing: 0.45rpx;
+  margin-bottom: 100rpx;
 }
 .popWindow{
   width: 100%;

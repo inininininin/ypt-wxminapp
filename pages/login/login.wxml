@@ -7,6 +7,7 @@
 	</view>
 </view>
 <image class="logo" src="../icon/logo.png"></image>
+<text class="hosName" bindtap="changeHos">{{loginHpitalName}}</text>
 <text class="title">手机快捷登录</text>
 <view class="line linephone" style="border-bottom: 1rpx solid #e5e5e5;">
 	<input placeholder-class="placeholder-class" type="number" maxlength="11" value='{{key}}' bindinput="loginPhone" placeholder="请输入手机号"></input>
@@ -18,9 +19,14 @@
 </view>
 
 <view class="login" bindtap="login">登陆</view>
+<view class="loginChange">
 <text class="loginWx" bindtap="loginWx">微信登陆</text>
+<text class="changeHos" bindtap="changeHos">更换医院</text>
 
-<view class="popWindow" style="display:none">
+
+</view>
+
+<view class="popWindow" wx:if='{{showIs}}'>
 	<view>
 		<text>服务条款及隐私政策</text>
 		<view>

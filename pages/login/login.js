@@ -11,14 +11,17 @@ Page({
     times:'获取验证码',
     time:60,
     key:'',
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    showIs:false,
+    code:''
   },
-  
+  changeHos(e){
+    wx.navigateTo({
+      url: '../hosList/hosList',
+    })
+  },
   loginWx:function(){
-    // /user/login-by-wxminapp
-    // wx.request({
-    //   url: 'url',
-    // })
+    this.setData({showIs:true})
   },
   loginPhone: function (e) {
     this.setData({
@@ -85,6 +88,20 @@ Page({
   },
   login(e){
     var that=this
+    if(app.globalData.loginHospitalId==''){
+      wx.showToast({
+        title: '请选择医院',
+        duration:1000,
+        icon:'loading'
+      })
+    }else if(that.data.key==''||that.data.code==''){
+      wx.showToast({
+        title: '请填写完整',
+        duration:1000,
+        icon:'loading'
+      })
+    }
+   
     wx.request({
       url: app.globalData.url + '/user/login-by-smsvcode',
       header: {
@@ -115,6 +132,8 @@ Page({
               wx.hideToast()
               if (res.data.code == 0) {
                 app.globalData.userInfoDetail=res.data.data
+                app.globalData.loginHospitalId=res.data.data.hospitalId,
+                    app.globalData.loginHpitalName=res.data.data.hospitalName,
                 wx.switchTab({
                   url: '../index/index',
                 })
@@ -139,18 +158,140 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that=this
+   
     wx.login({
       success(res) {
         console.log(res.code);
         var code = res.code
+        that.setData({
+          code:code
+        })
+        wx.request({
+          url: app.globalData.url + '/user/login-by-wxminapp',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: 'post',
+          data: {
+            wsJsCode:code,
+            // phone: that.data.key,
+            // smsvcode:that.data.code,
+            loginHospitalId:app.globalData.loginHospitalId,
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+              wx.showToast({
+                title: '操作成功',
+                icon:'loading'
+              })
+              app.globalData.cookie = res.header['Set-Cookie']
+              wx.request({
+                url: app.globalData.url + '/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': app.globalData.cookie
+                },
+                method: 'post',
+                success: function (res) {
+                  wx.hideToast()
+                  if (res.data.code == 0) {
+                    app.globalData.userInfoDetail=res.data.data
+                    app.globalData.loginHospitalId=res.data.data.hospitalId,
+                    app.globalData.loginHpitalName=res.data.data.hospitalName,
+                    wx.switchTab({
+                      url: '../index/index',
+                    })
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon:'loading'
+                    })
+                  }
+                }
+              })
+             
+             
+             
+            } else if(res.data.code == 27){
+              
+              wx.showModal({
+                title: '请选择登陆医院',
+                showCancel:false,
+                success (res) {
+                  if (res.confirm) {
+                    wx.navigateTo({
+                      url: '../hosList/hosList',
+                    })
+                  }
+                }
+              })
+            }else{
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon:'loading'
+              })
+            }
+          }
+        })
+        
       }
     })
+   
+  },
+  refuse(e){
+    this.setData({showIs:false})
   },
   getPhoneNumber (e) {
-    console.log(e)
+     
+    wx.login({
+      success(res) {
+        console.log(res.code);
+        var code = res.code
+         wx.request({
+          url: app.globalData.url + '/user/login-by-wxminapp',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: 'post',
+          data: {
+            wsJsCode:code,
+            // phone: that.data.key,
+            // smsvcode:that.data.code,
+            loginHospitalId:app.globalData.loginHospitalId,
+            wxMinappencryptedDataOfPhoneNumber:e.detail.encryptedData,
+            wxMinappIv:e.detail.iv,
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+              wx.showToast({
+                title: '操作成功',
+                icon:'loading'
+              })
+              app.globalData.cookie = res.header['Set-Cookie']
+             
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon:'loading'
+              })
+            }
+          }
+        })
+      }
+    })
     console.log(e.detail.errMsg)
     console.log(e.detail.iv)
     console.log(e.detail.encryptedData)
+    var that=this
+    that.setData({
+      wxMinappencryptedDataOfPhoneNumber:e.detail.encryptedData,
+      wxMinappIv:e.detail.iv,
+    })
+  
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -164,7 +305,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // console.log(app.globalData.loginHpitalName)
+    // if(app.globalData.loginHpitalName==''){
+    //   wx.showModal({
+    //     title: '请选择登陆医院',
+    //     showCancel:false,
+    //     success (res) {
+    //       if (res.confirm) {
+    //         wx.navigateTo({
+    //           url: '../hosList/hosList',
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+    this.setData({
+      loginHpitalName:app.globalData.loginHpitalName||''
+    })
   },
 
   /**

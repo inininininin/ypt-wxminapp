@@ -1,9 +1,10 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/login/login",
-    "pages/logs/logs",
     
+    "pages/login/login",
+    "pages/hosList/hosList",
+    "pages/logs/logs",
+    "pages/index/index",
     "pages/common/common",
     "pages/evaluation/evaluation",
     "pages/news/news",
@@ -15,6 +16,7 @@
     "pages/evaNow/evaNow",
     "pages/webview/webview",
     "pages/evalutionList/evalutionList"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
