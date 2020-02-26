@@ -1,5 +1,5 @@
 // pages/login/login.js
-var app=getApp()
+var app = getApp()
 Page({
 
   /**
@@ -8,20 +8,23 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    times:'获取验证码',
-    time:60,
-    key:'',
+    times: '获取验证码',
+    time: 60,
+    key: '',
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    showIs:false,
-    code:''
+    showIs: false,
+    code: '',
+    type: ''
   },
-  changeHos(e){
+  changeHos(e) {
     wx.navigateTo({
       url: '../hosList/hosList',
     })
   },
-  loginWx:function(){
-    this.setData({showIs:true})
+  loginWx: function () {
+    this.setData({
+      showIs: true
+    })
   },
   loginPhone: function (e) {
     this.setData({
@@ -34,35 +37,35 @@ Page({
     })
   },
   // 获取验证码
-  timeBack(){
-    var that=this
-      var timer = setInterval(function () {
-        var time=that.data.time-1;
+  timeBack() {
+    var that = this
+    var timer = setInterval(function () {
+      var time = that.data.time - 1;
+      that.setData({
+        times: time + ' s',
+        time: time
+      })
+      if (that.data.time == 0) {
+        clearInterval(timer);
         that.setData({
-          times: time + ' s',
-          time: time
+          times: '获取验证码',
+          time: 60
         })
-        if (that.data.time == 0) {
-          clearInterval(timer);
-          that.setData({
-            times: '获取验证码',
-            time:60
-          })
-        }
-      }, 1000);   
+      }
+    }, 1000);
   },
   smsvcodeGet(e) {
     var that = this
     if (that.data.key == '' || that.data.key.length < 11) {
       wx.showToast({
         title: '请填写正确手机号',
-        icon:'loading'
+        icon: 'loading'
       })
     } else if (that.data.times != '获取验证码') {
       return
     } else {
       that.setData({
-        time:60
+        time: 60
       })
       wx.request({
         url: app.globalData.url + '/sendsmsvcode',
@@ -86,87 +89,191 @@ Page({
       })
     }
   },
-  login(e){
-    var that=this
-    if(app.globalData.loginHospitalId==''){
-      wx.showToast({
-        title: '请选择医院',
-        duration:1000,
-        icon:'loading'
+  login(e) {
+    var that = this
+    if (app.globalData.loginHospitalId == '') {
+      wx.showModal({
+        title: '请选择登陆医院',
+        showCancel: false,
+        success(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '../hosList/hosList',
+            })
+          }
+        }
       })
-    }else if(that.data.key==''||that.data.code==''){
+    } else if (that.data.key == '' || that.data.code == '') {
       wx.showToast({
         title: '请填写完整',
-        duration:1000,
-        icon:'loading'
+        duration: 1000,
+        icon: 'loading'
+      })
+    }else{
+      wx.request({
+        url: app.globalData.url + '/user/login-by-smsvcode',
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        method: 'post',
+        data: {
+          phone: that.data.key,
+          smsvcode: that.data.code,
+          loginHospitalId: app.globalData.loginHospitalId,
+        },
+        success: function (res) {
+          wx.hideToast()
+          if (res.data.code == 0) {
+            wx.showToast({
+              title: '操作成功',
+              icon: 'loading'
+            })
+            app.globalData.cookie = res.header['Set-Cookie']
+            wx.request({
+              url: app.globalData.url + '/user/login-refresh',
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                'cookie': app.globalData.cookie
+              },
+              method: 'post',
+              success: function (res) {
+                wx.hideToast()
+                if (res.data.code == 0) {
+                  app.globalData.userInfoDetail = res.data.data
+                  app.globalData.loginHospitalId = res.data.data.hospitalId,
+                    app.globalData.loginHpitalName = res.data.data.hospitalName
+                  if (that.data.type == 1) {
+                    wx.navigateBack({})
+                  } else {
+                    wx.switchTab({
+                      url: '../index/index',
+                    })
+                  }
+                } else {
+                  wx.showToast({
+                    title: res.data.codeMsg,
+                    icon: 'loading'
+                  })
+                }
+              }
+            })
+          }else {
+            wx.showToast({
+              title: res.data.codeMsg,
+              icon: 'loading'
+            })
+          }
+        }
       })
     }
+
    
-    wx.request({
-      url: app.globalData.url + '/user/login-by-smsvcode',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      method: 'post',
-      data: {
-        phone: that.data.key,
-        smsvcode:that.data.code,
-        loginHospitalId:app.globalData.loginHospitalId,
-      },
-      success: function (res) {
-        wx.hideToast()
-        if (res.data.code == 0) {
-          wx.showToast({
-            title: '操作成功',
-            icon:'loading'
-          })
-          app.globalData.cookie = res.header['Set-Cookie']
-          wx.request({
-            url: app.globalData.url + '/user/login-refresh',
-            header: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              'cookie': app.globalData.cookie
-            },
-            method: 'post',
-            success: function (res) {
-              wx.hideToast()
-              if (res.data.code == 0) {
-                app.globalData.userInfoDetail=res.data.data
-                app.globalData.loginHospitalId=res.data.data.hospitalId,
-                    app.globalData.loginHpitalName=res.data.data.hospitalName,
-                wx.switchTab({
-                  url: '../index/index',
-                })
-              } else {
-                wx.showToast({
-                  title: res.data.codeMsg,
-                  icon:'loading'
-                })
-              }
-            }
-          })
-        } else {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon:'loading'
-          })
-        }
-      }
-    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this
-   
+    var that = this
+    that.setData({
+      type: options.type
+    })
+    if(options.from!=1){
+      wx.login({
+        success(res) {
+          console.log(res.code);
+          var code = res.code
+          that.setData({
+            code: code
+          })
+          wx.request({
+            url: app.globalData.url + '/user/login-by-wxminapp',
+            header: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            method: 'post',
+            data: {
+              wsJsCode: code,
+              // phone: that.data.key,
+              // smsvcode:that.data.code,
+              loginHospitalId: app.globalData.loginHospitalId,
+            },
+            success: function (res) {
+              wx.hideToast()
+              if (res.data.code == 0) {
+                wx.showToast({
+                  title: '操作成功',
+                  icon: 'loading'
+                })
+                app.globalData.cookie = res.header['Set-Cookie']
+                wx.request({
+                  url: app.globalData.url + '/user/login-refresh',
+                  header: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    'cookie': app.globalData.cookie
+                  },
+                  method: 'post',
+                  success: function (res) {
+                    wx.hideToast()
+                    if (res.data.code == 0) {
+                      app.globalData.userInfoDetail = res.data.data
+                      app.globalData.loginHospitalId = res.data.data.hospitalId,
+                        app.globalData.loginHpitalName = res.data.data.hospitalName
+                      if (that.data.type == 1) {
+                        wx.navigateBack({})
+                      } else {
+                        wx.switchTab({
+                          url: '../index/index',
+                        })
+                      }
+  
+                    } else {
+                      wx.showToast({
+                        title: res.data.codeMsg,
+                        icon: 'loading'
+                      })
+                    }
+                  }
+                })
+              } else if (res.data.code == 27) {
+                if(app.globalData.loginHospitalId==''){
+                  wx.showModal({
+                    title: '请选择登陆医院',
+                    showCancel: false,
+                    success(res) {
+                      if (res.confirm) {
+                        wx.navigateTo({
+                          url: '../hosList/hosList',
+                        })
+                      }
+                    }
+                  })
+                }         
+              } else {
+                wx.showToast({
+                  title: res.data.codeMsg,
+                  icon: 'loading'
+                })
+              }
+            }
+          })
+  
+        }
+      })
+    }
+  
+
+  },
+  refuse(e) {
+    this.setData({
+      showIs: false
+    })
+  },
+  getPhoneNumber(e) {
+
     wx.login({
       success(res) {
         console.log(res.code);
         var code = res.code
-        that.setData({
-          code:code
-        })
         wx.request({
           url: app.globalData.url + '/user/login-by-wxminapp',
           header: {
@@ -174,17 +281,17 @@ Page({
           },
           method: 'post',
           data: {
-            wsJsCode:code,
-            // phone: that.data.key,
-            // smsvcode:that.data.code,
-            loginHospitalId:app.globalData.loginHospitalId,
+            wsJsCode: code,
+            loginHospitalId: app.globalData.loginHospitalId,
+            wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData,
+            wxMinappIv: e.detail.iv,
           },
           success: function (res) {
             wx.hideToast()
             if (res.data.code == 0) {
               wx.showToast({
                 title: '操作成功',
-                icon:'loading'
+                icon: 'loading'
               })
               app.globalData.cookie = res.header['Set-Cookie']
               wx.request({
@@ -197,101 +304,45 @@ Page({
                 success: function (res) {
                   wx.hideToast()
                   if (res.data.code == 0) {
-                    app.globalData.userInfoDetail=res.data.data
-                    app.globalData.loginHospitalId=res.data.data.hospitalId,
-                    app.globalData.loginHpitalName=res.data.data.hospitalName,
-                    wx.switchTab({
-                      url: '../index/index',
-                    })
+                    app.globalData.userInfoDetail = res.data.data
+                    app.globalData.loginHospitalId = res.data.data.hospitalId,
+                      app.globalData.loginHpitalName = res.data.data.hospitalName
+                    if (that.data.type == 1) {
+                      wx.navigateBack({})
+                    } else {
+                      wx.switchTab({
+                        url: '../index/index',
+                      })
+                    }
+
                   } else {
                     wx.showToast({
                       title: res.data.codeMsg,
-                      icon:'loading'
+                      icon: 'loading'
                     })
                   }
                 }
               })
-             
-             
-             
-            } else if(res.data.code == 27){
-              
-              wx.showModal({
-                title: '请选择登陆医院',
-                showCancel:false,
-                success (res) {
-                  if (res.confirm) {
-                    wx.navigateTo({
-                      url: '../hosList/hosList',
-                    })
-                  }
-                }
-              })
-            }else{
-              wx.showToast({
-                title: res.data.codeMsg,
-                icon:'loading'
-              })
-            }
-          }
-        })
-        
-      }
-    })
-   
-  },
-  refuse(e){
-    this.setData({showIs:false})
-  },
-  getPhoneNumber (e) {
-     
-    wx.login({
-      success(res) {
-        console.log(res.code);
-        var code = res.code
-         wx.request({
-          url: app.globalData.url + '/user/login-by-wxminapp',
-          header: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          method: 'post',
-          data: {
-            wsJsCode:code,
-            // phone: that.data.key,
-            // smsvcode:that.data.code,
-            loginHospitalId:app.globalData.loginHospitalId,
-            wxMinappencryptedDataOfPhoneNumber:e.detail.encryptedData,
-            wxMinappIv:e.detail.iv,
-          },
-          success: function (res) {
-            wx.hideToast()
-            if (res.data.code == 0) {
-              wx.showToast({
-                title: '操作成功',
-                icon:'loading'
-              })
-              app.globalData.cookie = res.header['Set-Cookie']
-             
+
+            
             } else {
               wx.showToast({
                 title: res.data.codeMsg,
-                icon:'loading'
+                icon: 'loading'
               })
             }
           }
         })
       }
     })
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
-    var that=this
+
+    var that = this
     that.setData({
-      wxMinappencryptedDataOfPhoneNumber:e.detail.encryptedData,
-      wxMinappIv:e.detail.iv,
+      wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData,
+      wxMinappIv: e.detail.iv,
     })
-  
-    
+
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -320,7 +371,7 @@ Page({
     //   })
     // }
     this.setData({
-      loginHpitalName:app.globalData.loginHpitalName||''
+      loginHpitalName: app.globalData.loginHpitalName || ''
     })
   },
 

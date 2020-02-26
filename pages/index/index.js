@@ -145,6 +145,9 @@ Page({
     })
   },
   onLoad: function () {
+   
+  },
+  onShow: function () {
     this.hosDetail();
     this.departDetail();
     this.docList();

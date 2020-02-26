@@ -90,8 +90,13 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
+          app.globalData.loginHospitalId='',
+          app.globalData.loginHpitalName='',
+          app.globalData.userInfo= null,
+          app.globalData.userInfoDetail=[],
+          app.globalData.cookie=''
           wx.redirectTo({
-            url: '../login/login',
+            url: '../login/login?from=1',
           })
         } else {
           wx.showToast({
@@ -211,7 +216,7 @@ Page({
         }
       }
     })
-var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId) )
+var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
   wx.getImageInfo({
     src: app.globalData.url + '/wxminqrcode?path='+param+ '&width=2',
     method:'get',

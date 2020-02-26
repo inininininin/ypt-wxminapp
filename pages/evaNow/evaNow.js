@@ -135,7 +135,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.type)
+    console.log(options.hospitalid,options.hospitalname)
+    if(options.hospitalid!=''){
+      app.globalData.loginHospitalId=options.hospitalid,
+      app.globalData.loginHpitalName=options.hospitalname
+    }
     if (options.type == 1) {
       this.setData({
         url: '/user/doctor-comment',
@@ -249,7 +253,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.request({
+      url: app.globalData.url + '/user/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': app.globalData.cookie
+      },
+      method: 'post',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          
+        } else {
+          wx.showModal({
+            title: res.data.codeMsg,
+            showCancel:false,
+                success (res) {
+                  if (res.confirm) {
+                    wx.navigateTo({
+                      url: '../login/login?type=1',
+                    })
+              }
+            }
+          })
+        }
+      }
+    })
   },
 
   /**
