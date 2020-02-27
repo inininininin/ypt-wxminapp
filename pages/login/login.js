@@ -52,6 +52,20 @@ Page({
         icon: 'loading',
         duration: 1000
       })
+    }else if(app.globalData.loginHospitalId==''||app.globalData.loginHospitalId==null||app.globalData.loginHospitalId==undefined){
+      wx.showToast({
+        title: '选择登录医院',
+        icon: 'none',
+        duration: 2000,
+        mask:true,
+        complete: function complete(res){
+          setTimeout(function(){
+            wx.navigateTo({
+                      url: '../hosList/hosList',
+                    })
+          },500);
+        }
+      });
     }else{
       that.setData({
         showIs: true
@@ -132,17 +146,6 @@ Page({
       })
     }else{
       if (app.globalData.loginHospitalId == '') {
-        // wx.showModal({
-        //   title: '请选择登录医院',
-        //   showCancel: false,
-        //   success(res) {
-        //     if (res.confirm) {
-        //       wx.navigateTo({
-        //         url: '../hosList/hosList',
-        //       })
-        //     }
-        //   }
-        // })
         wx.showToast({
           title: '选择登录医院',
           icon: 'none',
@@ -237,7 +240,6 @@ Page({
     if(options.from!=1){
       wx.login({
         success(res) {
-          console.log(res.code);
           var code = res.code
           that.setData({
             code: code
@@ -331,7 +333,6 @@ Page({
 
     wx.login({
       success(res) {
-        console.log(res.code);
         var code = res.code
         wx.request({
           url: app.globalData.url + '/user/login-by-wxminapp',
