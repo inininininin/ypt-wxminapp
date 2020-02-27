@@ -16,8 +16,9 @@ Page({
    */
   onLoad: function (options) {
     var href = options.href
+    console.log(href,decodeURIComponent(href))
     this.setData({
-      href: href,
+      href: decodeURIComponent(href),
     })
   },
 
