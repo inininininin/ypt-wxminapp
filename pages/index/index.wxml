@@ -42,7 +42,7 @@
   </view>
 </view>
 <view class="doctorList">
-  <view class="introTitle">
+  <view class="introTitle" wx:if='{{docList!=""&&docList!=null&&docList!=undefined}}'>
     <view>
       <text></text>
       <text>医生团队</text>

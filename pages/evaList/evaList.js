@@ -98,7 +98,9 @@ Page({
           for (var i = 0; i < res.data.data.rows.length; i++) {
             addTime = res.data.data.rows[i].addTime
             res.data.data.rows[i].addTime = utils.formatTime(addTime / 1000, 'Y-M-D h:m');
+            res.data.data.rows[i].cover = app.cover(res.data.data.rows[i].cover)
           }
+          
           var schemeListArr = that.data.schemeList;
           var newSchemeListArr = schemeListArr.concat(res.data.data.rows)
           if (res.data.data.rows.length == 0) {
