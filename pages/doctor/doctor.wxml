@@ -9,8 +9,8 @@
   </view>
 </view>
 <view class="listItem">
-    <image wx:if='{{type==1}}' src="{{detail.cover||'../icon/yisheng.png'}}"></image>
-    <image wx:if='{{type==2}}' src="{{detail.cover||'../icon/yihu1.png'}}"></image>
+    <image mode='aspectFill' wx:if='{{type==1}}' src="{{detail.cover||'../icon/yisheng.png'}}"></image>
+    <image mode='aspectFill' wx:if='{{type==2}}' src="{{detail.cover||'../icon/yihu1.png'}}"></image>
     <view>
       <text>{{detail.name||''}}</text><text class="tag lineOne">{{detail.tag||""}}</text>
       <text class="lineThree">{{detail.intro||''}}</text>

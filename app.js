@@ -1,5 +1,16 @@
 //app.js
 App({
+ 
+  globalData: {
+    loginHospitalId: '',
+    loginHpitalName: '',
+    userInfo: null,
+    userInfoDetail: [],
+    entity: [],
+    url: 'https://test.ypt.njshangka.com',
+    version: '6.0.2',
+    cookie: ''
+  },
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -50,7 +61,7 @@ App({
       }
     })
     wx.request({
-      url: vm.globalData.url+'/oss/alive/param.json',
+      url: vm.globalData.url+'/oss/alive/config.json',
       success(res){
         vm.globalData.entity=res.data
       }
@@ -62,15 +73,6 @@ App({
       _cover=that.globalData.url+_cover
     }
     return _cover
-  },
-  globalData: {
-    loginHospitalId:'',
-    loginHpitalName:'',
-    userInfo: null,
-    userInfoDetail:[],
-    entity:[],
-    url: 'https://test.ypt.njshangka.com',
-    version:'6.0.2',
-    cookie:'userLoginId=20200115093115886145231133378472; Max-Age=157680000; Expires=Mon, 13-Jan-2025 01:31:15 GMT; Path=/; HttpOnly'
+
   }
 })
