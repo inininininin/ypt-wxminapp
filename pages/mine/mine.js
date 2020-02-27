@@ -16,7 +16,7 @@ Page({
     avator:'',
     tcode:'',
     imglist:[],
-    version:app.globalData.version
+    version:''
   },
   tel(e) {
     wx.makePhoneCall({
@@ -185,6 +185,9 @@ Page({
    */
   onShow: function () {
     var that=this
+    that.setData({
+      version:app.globalData.version.split('-')[0]
+    })
     wx.request({
       url: app.globalData.url + '/user/login-refresh',
       header: {
@@ -217,9 +220,10 @@ Page({
         }
       }
     })
-var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
-  wx.getImageInfo({
-    src: app.globalData.url + '/wxminqrcode?path='+param+ '&width=2',
+// var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
+var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId))
+wx.getImageInfo({
+    src: app.globalData.url + '/wxminqrcode?path='+param+ '&width=200',
     method:'get',
     header: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -237,24 +241,6 @@ var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDet
       console.log(res)
     }
   })
-    // var path=encodeURIComponent('pages/evaNow/evaNow?id=3')
-    // wx.request({
-    //   url: app.globalData.url + '/wxminqrcode',
-    //   method:'get',
-    //   header: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //   },
-    //   data:{
-    //     path:path,
-    //     width:2
-    //   },
-    //   success: function(res) {
-    //     console.log(res);
-    //     that.setData({
-    //       tcode:'http://tmp/wxe403283f3b493453.o6zAJs1UGKDUdgrCE9ztq9czrC98.j8rxOYKt74fzf96c9de1a4c838cce479012b23982446.jpeg'
-    //     })
-    //   }
-    // })
   },
 
   /**

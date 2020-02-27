@@ -15,9 +15,9 @@ Page({
     length: 0,
     title1: '',
     title2: '',
-    title3:'请上传挂号发票或诊治单',
+    title3: '请上传挂号发票或诊治单',
     hidden: 'none',
-    star:'',
+    star: '',
     imglist: [],
     imgBlob: '',
     // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
@@ -65,7 +65,7 @@ Page({
     })
   },
   addPic: function (e) {
-    var that=this
+    var that = this
     wx.chooseImage({
       count: 9,
       sizeType: ['original', 'compressed'],
@@ -73,10 +73,10 @@ Page({
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
-        var picBlob=that.data.picBlob
+        var picBlob = that.data.picBlob
         console.log(tempFilePaths)
-        for (var i in tempFilePaths){
-         
+        for (var i in tempFilePaths) {
+
           wx.uploadFile({
             url: app.globalData.url + '/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
             filePath: tempFilePaths[i],
@@ -91,9 +91,9 @@ Page({
                   icon: 'success',
                   duration: 2000
                 })
-                if (that.data.imgBlob==''){
-                  var imgBlob =  url
-                }else{
+                if (that.data.imgBlob == '') {
+                  var imgBlob = url
+                } else {
                   var imgBlob = that.data.imgBlob + ',' + url
                 }
                 console.log(imgBlob)
@@ -103,31 +103,32 @@ Page({
                   imgBlob: imgBlob
                 })
                 console.log(imglist)
-                
+
               }
             },
             fail: function (res) {
               console.log(res)
             }
           })
-        }        
+        }
       }
     })
   },
-  deletThis(e){
-    var img=[],imgBlob=''
-    var src=e.target.dataset.src
+  deletThis(e) {
+    var img = [],
+      imgBlob = ''
+    var src = e.target.dataset.src
     var pic = this.data.imglist
-    for (var i in pic){
-      if (src == pic[i]){
+    for (var i in pic) {
+      if (src == pic[i]) {
         // img = this.data.imgBlob[i] + ','
-      }else{
+      } else {
         img.push(pic[i])
         imgBlob = imgBlob + ',' + pic[i].split('com')[1]
       }
       this.setData({
         imglist: img,
-        imgBlob:imgBlob.substring(1, imgBlob.length)
+        imgBlob: imgBlob.substring(1, imgBlob.length)
       })
     }
   },
@@ -139,35 +140,71 @@ Page({
       app.globalData.loginHospitalId=options.hospitalid,
       app.globalData.loginHpitalName=options.hospitalname
     }
+    var that = this
     if (options.type == 1) {
-      this.setData({
-        url: '/user/doctor-comment',
-        type: options.type,
-        id: options.id,
-        navtitle:options.name,
-        title1: '您对本次就医医生诊断体验：',
-        title2: '请填写您对该医生的评价：',
-      })
+      wx.request({
+        url: app.globalData.url + '/doctor',
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'cookie': app.globalData.cookie
+        },
+        data: {
+          doctorId: options.id,
+        },
+        method: 'get',
+        success: function (res) {
+          if (res.data.code == 0) {
+            console.log(res.data.data.hospitalId)
+            app.globalData.loginHospitalId = res.data.data.hospitalId
+            app.globalData.loginHpitalName = res.data.data.hospitalName
+            that.setData({
+              url: '/user/doctor-comment',
+              type: options.type,
+              id: res.data.data.doctorId,
+              navtitle: res.data.data.name,
+              title1: '您对本次就医医生诊断体验：',
+              title2: '请填写您对该医生的评价：',
+            })
+          }
+        }
+      });
     } else if (options.type == 2) {
-      this.setData({
-        url: '/user/nurse-comment',
-        type: options.type,
-        id: options.id,
-        navtitle:options.name,
-        title1: '您对本次就医医护人员服务体验：',
-        title2: '请填写您对该医护人员的评价：',
-      })
+      wx.request({
+        url: app.globalData.url + 'nurse',
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'cookie': app.globalData.cookie
+        },
+        data: {
+          nurseId: options.id,
+        },
+        method: 'get',
+        success: function (res) {
+          if (res.data.code == 0) {
+            app.globalData.loginHospitalId = res.data.data.hospitalId
+            app.globalData.loginHpitalName = res.data.data.hospitalName
+            that.setData({
+              url: '/user/nurse-comment',
+              type: options.type,
+              id: res.data.data.nurseId,
+              navtitle: res.data.data.name,
+              title1: '您对本次就医医护人员服务体验：',
+              title2: '请填写您对该医护人员的评价：',
+            })
+          }
+        }
+      });
     } else {
-      this.setData({
+      that.setData({
         url: '/user/hospital-comment',
         type: options.type,
         id: options.id,
-        navtitle:options.name,
+        navtitle: options.name,
         title1: '您本次就医体验：',
         title2: '请填写您对该医院的具体评价及建议：',
       })
     }
-    console.log(this.data.url)
+
   },
   evaNow(e) {
     wx.showToast({
@@ -184,11 +221,11 @@ Page({
       var params = ''
     }
     console.log(params)
-    if(that.data.star==''||that.data.content==''){
+    if (that.data.star == '' || that.data.content == '') {
       wx.showToast({
         title: '请填写完整',
       })
-    }else{
+    } else {
       wx.request({
         url: app.globalData.url + that.data.url + params,
         header: {
@@ -198,7 +235,7 @@ Page({
         data: {
           star: that.data.star,
           content: that.data.content,
-          cover:that.data.imgBlob
+          cover: that.data.imgBlob
         },
         method: 'post',
         success: function (res) {
@@ -224,7 +261,7 @@ Page({
         }
       });
     }
-    
+
   },
   back(e) {
     wx.navigateBack({
@@ -233,14 +270,14 @@ Page({
   },
   detail(e) {
     wx.navigateTo({
-      url: '../evalutionList/evalutionList?type='+this.data.type,
+      url: '../evalutionList/evalutionList?type=' + this.data.type,
     })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function(){
-    
+  onReady: function () {
+
   },
   backHistory(e) {
     wx.navigateBack({
@@ -262,16 +299,16 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          
+
         } else {
           wx.showModal({
             title: res.data.codeMsg,
-            showCancel:false,
-                success (res) {
-                  if (res.confirm) {
-                    wx.navigateTo({
-                      url: '../login/login?type=1',
-                    })
+            showCancel: false,
+            success(res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '../login/login?type=1',
+                })
               }
             }
           })
