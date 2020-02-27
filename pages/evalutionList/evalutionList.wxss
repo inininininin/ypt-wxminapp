@@ -145,5 +145,5 @@ font-weight: 400;
 color: rgba(102,102,102,1);
 line-height: 37rpx;
 letter-spacing: 0rpx;
-
+word-break:break-all;word-wrap:break-word
 }
