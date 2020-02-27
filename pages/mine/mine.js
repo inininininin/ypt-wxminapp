@@ -15,7 +15,8 @@ Page({
     name: '',
     avator:'',
     tcode:'',
-    imglist:[]
+    imglist:[],
+    version:app.globalData.version
   },
   tel(e) {
     wx.makePhoneCall({

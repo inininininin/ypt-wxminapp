@@ -1,5 +1,6 @@
 // pages/login/login.js
 var app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -17,6 +18,7 @@ Page({
     type: '',
     href:'',
     selectAgree:true,
+    version:app.globalData.version
   },
   selectIcon: function (e) {
     var selectAgree = !this.data.selectAgree;
@@ -29,7 +31,21 @@ Page({
       url: '../hosList/hosList',
     })
   },
+  loginXy(e){
+    wx.navigateTo({
+      url: '../webview/webview?href='+app.globalData.url+'/oss/alive/user-protocol.html',
+    })
+  },
   loginWx: function () {
+    var that=this
+    wx.request({
+      url: app.globalData.url+'/oss/alive/user-protocol.html',
+      success:function(res){
+        console.log(res.data)
+        var article=res.data
+        WxParse.wxParse('article', 'html',article, that, 5);
+      }
+    })
     if (!that.data.selectAgree){
       wx.showToast({
         title: '请勾选登录协议',
@@ -37,7 +53,7 @@ Page({
         duration: 1000
       })
     }else{
-      this.setData({
+      that.setData({
         showIs: true
       })
     }
@@ -116,17 +132,30 @@ Page({
       })
     }else{
       if (app.globalData.loginHospitalId == '') {
-        wx.showModal({
-          title: '请选择登陆医院',
-          showCancel: false,
-          success(res) {
-            if (res.confirm) {
+        // wx.showModal({
+        //   title: '请选择登录医院',
+        //   showCancel: false,
+        //   success(res) {
+        //     if (res.confirm) {
+        //       wx.navigateTo({
+        //         url: '../hosList/hosList',
+        //       })
+        //     }
+        //   }
+        // })
+        wx.showToast({
+          title: '选择登录医院',
+          icon: 'none',
+          duration: 2000,
+          mask:true,
+          complete: function complete(res){
+            setTimeout(function(){
               wx.navigateTo({
-                url: '../hosList/hosList',
-              })
-            }
+                        url: '../hosList/hosList',
+                      })
+            },500);
           }
-        })
+        });
       } else if (that.data.key == '' || that.data.code == '') {
         wx.showToast({
           title: '请填写完整',
@@ -229,8 +258,8 @@ Page({
               wx.hideToast()
               if (res.data.code == 0) {
                 wx.showToast({
-                  title: '登陆中',
-                  icon: 'loading'
+                  title: '登录中',
+                  icon:"none"
                 })
                 app.globalData.cookie = res.header['Set-Cookie']
                 wx.request({
@@ -264,17 +293,19 @@ Page({
                 })
               } else if (res.data.code == 27) {
                 if(app.globalData.loginHospitalId==''){
-                  wx.showModal({
-                    title: '请选择登陆医院',
-                    showCancel: false,
-                    success(res) {
-                      if (res.confirm) {
+                  wx.showToast({
+                    title: '选择登录医院',
+                    icon: 'none',
+                    duration: 2000,
+                    mask:true,
+                    complete: function complete(res){
+                      setTimeout(function(){
                         wx.navigateTo({
-                          url: '../hosList/hosList',
-                        })
-                      }
+                                  url: '../hosList/hosList',
+                                })
+                      },500);
                     }
-                  })
+                  });
                 }         
               } else {
                 wx.showToast({
@@ -384,20 +415,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // console.log(app.globalData.loginHpitalName)
-    // if(app.globalData.loginHpitalName==''){
-    //   wx.showModal({
-    //     title: '请选择登陆医院',
-    //     showCancel:false,
-    //     success (res) {
-    //       if (res.confirm) {
-    //         wx.navigateTo({
-    //           url: '../hosList/hosList',
-    //         })
-    //       }
-    //     }
-    //   })
-    // }
+
     this.setData({
       loginHpitalName: app.globalData.loginHpitalName || ''
     })

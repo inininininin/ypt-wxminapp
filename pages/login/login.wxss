@@ -1,5 +1,6 @@
 /* pages/login/login.wxss */
 @import '../common/common.wxss';
+@import '../../wxParse/wxParse.wxss';
 .logo {
   width: 186rpx;
   height: 69rpx;
@@ -100,7 +101,7 @@ vertical-align: middle;
   /* margin : 40rpx 310rpx; */
   /* display: inline-block; */
   float: left;
-  padding: 20rpx 20rpx 20rpx 0;
+  /* padding: 20rpx 20rpx 20rpx 0; */
 }
 .changeHos{
   width: 130rpx;
@@ -114,7 +115,7 @@ vertical-align: middle;
   line-height: 40rpx;
   letter-spacing: 0.45rpx;
   /* margin : 40rpx 310rpx; */
-  padding: 20rpx 0 20rpx 20rpx;
+  /* padding: 20rpx 0 20rpx 20rpx; */
   float: right;
 }
 .hosName{
@@ -212,4 +213,15 @@ vertical-align: middle;
 .registerXy>view{
  float: left;
  margin-left: 20rpx;
+}
+
+.version{
+  position: absolute;
+  width: 100%;
+  bottom: 20rpx;
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+  line-height: 30rpx;
+  left: 0;
 }

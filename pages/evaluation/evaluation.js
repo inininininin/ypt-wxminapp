@@ -12,7 +12,7 @@ Page({
     navtitle: '全部评价',
     hospitalName: app.globalData.hospitalName,
     allHidden: 'block',
-    showNone:false,
+    showNone:true,
     doctorNum:0,
     nurseNum:0,
     hospitalNum:0,
@@ -50,7 +50,11 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          
+          if(res.data.data.rowCount!=0){
+            that.setData({
+              showNone: false,
+            });
+          }
           if (list == 'doctorList') {
             that.setData({
               doctorNum: res.data.data.rowCount,

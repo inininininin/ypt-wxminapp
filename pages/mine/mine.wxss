@@ -185,3 +185,13 @@ letter-spacing: 0px;
   margin: 300rpx 75rpx;
   border-radius: 50%;
 }
+.version{
+  position: absolute;
+  width: 100%;
+  bottom: 20rpx;
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+  line-height: 30rpx;
+  left: 0;
+}

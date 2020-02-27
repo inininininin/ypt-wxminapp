@@ -20,7 +20,7 @@
     <image class="right" src="../icon/right.png"></image>
   </view>
 </view>
-
+<text class="version">ver : {{version}}</text>
 <view bindtap="close" class="bgColor" wx:if='{{showIs}}'>
   <view class="popThis" catchtap="inThis">
     <text>修改昵称</text>
