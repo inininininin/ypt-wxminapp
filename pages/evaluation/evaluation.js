@@ -172,6 +172,9 @@ Page({
     this.lastPage(0, '/user/my-doctor-comments', 'doctorList')
     this.lastPage(0, '/user/my-nurse-comments', 'nurseList')
     this.lastPage(0, '/user/my-hospital-comments', 'hospitalList')
+    this.numList(0, '/user/my-doctor-comments-sum', 'doctorList')
+    this.numList(0, '/user/my-nurse-comments-sum', 'nurseList')
+    this.numList(0, '/user/my-hospital-comments-sum', 'hospitalList')
     wx.stopPullDownRefresh()
   },
 
