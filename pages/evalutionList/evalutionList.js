@@ -29,12 +29,13 @@ Page({
     }else{
       type='医院评价列表';
       url='/user/my-hospital-comments';
-      loginHpitalName:app.globalData.loginHpitalName
+      
     }
     this.setData({
       navtitle:type,
       types:options.type,
-      url:url
+      url:url,
+      loginHpitalName:app.globalData.loginHpitalName
     })
     this.lastPage(0, url)
   },

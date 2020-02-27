@@ -339,5 +339,10 @@ color: rgba(153,153,153,1);
 line-height: 33rpx;
 letter-spacing: 0px;
 }
-
-
+.tcode{
+  width:36rpx ;
+  height: 36rpx;
+  padding-bottom: 0 40rpx;
+  vertical-align: top;
+  /* line-height: 36rpx; */
+}

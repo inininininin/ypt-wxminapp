@@ -6,15 +6,32 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    testImg: "../icon/Bitmap.png"
+    testImg: "../icon/Bitmap.png",
+    imglist: [],
   },
-  scan(e){
+  // 查看二维码
+  lookCode(e) {
+    var current = e.currentTarget.dataset.src;
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接
+      urls: this.data.imglist // 需要预览的图片http链接列表
+    })
+  },
+
+  scan(e) {
     wx.scanCode({
-      success (res) {
-        console.log(res)
-        wx.navigateTo({
-          url: res.path,
-        })
+      success(res) {
+        console.log(res,res.path.slice(3,4))
+        if (res.path.slice(3,4)=='i') {
+          wx.reLaunch({
+            url: res.path,
+          })
+        } else {
+          wx.navigateTo({
+            url: res.path,
+          })
+        }
+
       }
     })
   },
@@ -37,9 +54,9 @@ Page({
   bindViewTap: function () {
 
   },
-  
+
   hosDetail() {
-    var that=this
+    var that = this
     wx.request({
       url: app.globalData.url + '/user/hospital',
       header: {
@@ -75,7 +92,7 @@ Page({
     })
   },
   departDetail() {
-    var that=this
+    var that = this
     wx.request({
       url: app.globalData.url + '/user/offices',
       header: {
@@ -111,7 +128,7 @@ Page({
     })
   },
   docList() {
-    var that=this
+    var that = this
     wx.request({
       url: app.globalData.url + '/user/doctors',
       header: {
@@ -145,12 +162,33 @@ Page({
     })
   },
   onLoad: function () {
-   
+
   },
   onShow: function () {
     this.hosDetail();
     this.departDetail();
     this.docList();
+    var that = this
+    var param = encodeURIComponent('../index/index?hospitalid=' + app.globalData.userInfoDetail.hospitalId + '&hospitalname=' + app.globalData.userInfoDetail.hospitalName)
+    wx.getImageInfo({
+      src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=2',
+      method: 'get',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      success: function (res) {
+        var imglist = []
+        imglist.push(res.path)
+        that.setData({
+          tcode: res.path,
+          imglist: imglist,
+        })
+        console.log(that.data.imglist)
+      },
+      fail(res) {
+        console.log(res)
+      }
+    })
   },
   onReady: function () {
     this.setData({

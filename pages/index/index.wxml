@@ -14,7 +14,9 @@
 <!-- src="{{hosDetail.cover||'../icon/Bitmap.png'}}" -->
   <image  mode="aspectFill"  src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
   <view>
-    <view class="lineOne">{{hosDetail.name}}</view>
+  <!-- src="{{item}}" -->
+    <view class="lineOne">{{hosDetail.name}} <image bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}"  class="tcode" src="../icon/tcode.png"></image></view>
+
     <view class="lineOne">{{departDetail}}</view>
     <view class="lineOne">
       <text wx:for='{{hosDetail.tag}}'>{{item}}</text>

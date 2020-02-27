@@ -16,7 +16,7 @@ Page({
     doctorNum:0,
     nurseNum:0,
     hospitalNum:0,
-    loginHpitalName:app.globalData.loginHpitalName
+   
   },
   lookMore(e){
     wx.navigateTo({
@@ -143,7 +143,8 @@ Page({
    */
   onShow: function () {
     this.setData({
-      allHidden: 'none'
+      allHidden: 'none',
+      loginHpitalName:app.globalData.loginHpitalName
     })
   },
 
