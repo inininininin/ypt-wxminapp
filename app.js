@@ -73,5 +73,6 @@ App({
       _cover=that.globalData.url+_cover
     }
     return _cover
+
   }
 })
