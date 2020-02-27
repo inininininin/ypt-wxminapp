@@ -16,6 +16,7 @@ Page({
     doctorNum:0,
     nurseNum:0,
     hospitalNum:0,
+    loginHpitalName:app.globalData.loginHpitalName
   },
   lookMore(e){
     wx.navigateTo({

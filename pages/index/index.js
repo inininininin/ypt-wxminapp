@@ -158,11 +158,13 @@ Page({
     })
   },
   lookMoreDetail(e) {
+    console.log(e.currentTarget.dataset.detail, JSON.stringify(e.currentTarget.dataset.detail))
     wx.navigateTo({
       url: '../hosIndex/hosIndex?detail=' + JSON.stringify(e.currentTarget.dataset.detail),
     })
   },
   doctor(e) {
+    console.log(e.currentTarget.dataset.detail, JSON.stringify(e.currentTarget.dataset.detail))
     wx.navigateTo({
       url: '../doctor/doctor?id=' + e.currentTarget.dataset.id + '&type=1' + '&detail=' + JSON.stringify(e.currentTarget.dataset.detail),
     })

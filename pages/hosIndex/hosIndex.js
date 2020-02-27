@@ -18,17 +18,55 @@ Page({
   },
   evahospital(e){
     wx.navigateTo({
-      url: '../evaNow/evaNow?type=3',
+      url: '../evaNow/evaNow?type=3&name='+this.data.detail.name,
+    })
+  },
+  hosDetail() {
+    var that=this
+    wx.request({
+      url: app.globalData.url + '/user/hospital',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': app.globalData.cookie
+      },
+      method: 'get',
+      data: {
+        hospitalId: app.globalData.loginHospitalId,
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          app.globalData.hospitalName = res.data.data.name
+          var tag = []
+          res.data.data.cover = app.cover(res.data.data.cover)
+          if (res.data.data.tag) {
+            for (var i in res.data.data.tag.split(',')) {
+              tag.push(res.data.data.tag.split(',')[i])
+            }
+          }
+          res.data.data.tag = tag
+          that.setData({
+            detail: res.data.data,
+            testImg: res.data.data.cover,
+          })
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'loading'
+          })
+        }
+      }
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      detail:JSON.parse(options.detail)
-    })
-    console.log(this.data.detail)
+    // console.log(options.detail)//JSON.parse(options.detail))
+    // this.setData({
+    //   detail: JSON.parse(options.detail)
+    // })
+    // console.log(this.data.detail)
+    this.hosDetail();
   },
   onPageScroll: function (e) {
     if (e.scrollTop>0){

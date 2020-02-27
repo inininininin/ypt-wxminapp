@@ -12,8 +12,8 @@
     <image wx:if='{{type==1}}' src="{{detail.cover||'../icon/yisheng.png'}}"></image>
     <image wx:if='{{type==2}}' src="{{detail.cover||'../icon/yihu1.png'}}"></image>
     <view>
-      <view>{{detail.name||''}}</view>
-      <view class="lineThree">{{detail.intro||''}}</view>
+      <text>{{detail.name||''}}</text><text class="tag lineOne">{{detail.tag||""}}</text>
+      <text class="lineThree">{{detail.intro||''}}</text>
     </view>
   </view>
   <view class="evaNow" bindtap="evaNow">立即评价</view>

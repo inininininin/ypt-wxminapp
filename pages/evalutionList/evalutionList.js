@@ -10,13 +10,15 @@ Page({
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     navtitle: '',
-    list:[]
+    list:[],
+    loginHpitalName:app.globalData.loginHpitalName
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options.type,app.globalData.loginHpitalName)
     var type='',url=''
     if(options.type==1){
       type='医生评价列表';
@@ -26,7 +28,8 @@ Page({
       url='/user/my-nurse-comments'
     }else{
       type='医院评价列表';
-      url='/user/my-hospital-comments'
+      url='/user/my-hospital-comments';
+      loginHpitalName:app.globalData.loginHpitalName
     }
     this.setData({
       navtitle:type,

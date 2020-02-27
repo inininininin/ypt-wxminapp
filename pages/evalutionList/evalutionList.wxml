@@ -55,7 +55,7 @@
 		<view class="evaitem" wx:for='{{list}}'>
 			<view>
 				<image src="../icon/keshi.png"></image>
-				<text>{{item.name||''}}</text>
+				<text>{{loginHpitalName}}</text>
 				<text>{{item.addTime||''}}</text>
 			</view>
 			<view>{{item.content||''}}</view>

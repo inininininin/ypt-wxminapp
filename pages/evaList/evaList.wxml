@@ -33,8 +33,8 @@
     <image wx:if='{{type==1}}' src="{{item.cover||'../icon/yisheng.png'}}"></image>
     <image wx:if='{{type==2}}' src="{{item.cover||'../icon/yihu1.png'}}"></image>
     <view>
-      <view>{{item.name||''}}</view>
-      <view class="lineThree">{{item.intro||''}}</view>
+      <text>{{item.name||''}}</text><text class="tag lineOne">{{item.tag||""}}</text>
+      <text class="lineThree">{{item.intro||''}}</text>
     </view>
   </view>
  
