@@ -16,9 +16,9 @@ Page({
     showIs: false,
     code: '',
     type: '',
-    href:'',
-    selectAgree:true,
-    version:app.globalData.version
+    href: '',
+    selectAgree: true,
+    version: app.globalData.version
   },
   selectIcon: function (e) {
     var selectAgree = !this.data.selectAgree;
@@ -31,47 +31,47 @@ Page({
       url: '../hosList/hosList',
     })
   },
-  loginXy(e){
+  loginXy(e) {
     wx.navigateTo({
-      url: '../webview/webview?href='+app.globalData.url+'/oss/alive/user-protocol.html',
+      url: '../webview/webview?href=' + app.globalData.url + '/oss/alive/user-protocol.html',
     })
   },
   loginWx: function () {
-    var that=this
+    var that = this
     wx.request({
-      url: app.globalData.url+'/oss/alive/user-protocol.html',
-      success:function(res){
+      url: app.globalData.url + '/oss/alive/user-protocol.html',
+      success: function (res) {
         console.log(res.data)
-        var article=res.data
-        WxParse.wxParse('article', 'html',article, that, 5);
+        var article = res.data
+        WxParse.wxParse('article', 'html', article, that, 5);
       }
     })
-    if (!that.data.selectAgree){
+    if (!that.data.selectAgree) {
       wx.showToast({
         title: '请勾选登录协议',
         icon: 'loading',
         duration: 1000
       })
-    }else if(app.globalData.loginHospitalId==''||app.globalData.loginHospitalId==null||app.globalData.loginHospitalId==undefined){
+    } else if (app.globalData.loginHospitalId == '' || app.globalData.loginHospitalId == null || app.globalData.loginHospitalId == undefined) {
       wx.showToast({
         title: '选择登录医院',
         icon: 'none',
         duration: 2000,
-        mask:true,
-        complete: function complete(res){
-          setTimeout(function(){
+        mask: true,
+        complete: function complete(res) {
+          setTimeout(function () {
             wx.navigateTo({
-                      url: '../hosList/hosList',
-                    })
-          },500);
+              url: '../hosList/hosList',
+            })
+          }, 500);
         }
       });
-    }else{
+    } else {
       that.setData({
         showIs: true
       })
     }
-    
+
   },
   loginPhone: function (e) {
     this.setData({
@@ -138,25 +138,25 @@ Page({
   },
   login(e) {
     var that = this
-    if (!that.data.selectAgree){
+    if (!that.data.selectAgree) {
       wx.showToast({
         title: '请勾选登录协议',
         icon: 'loading',
         duration: 1000
       })
-    }else{
+    } else {
       if (app.globalData.loginHospitalId == '') {
         wx.showToast({
           title: '选择登录医院',
           icon: 'none',
           duration: 2000,
-          mask:true,
-          complete: function complete(res){
-            setTimeout(function(){
+          mask: true,
+          complete: function complete(res) {
+            setTimeout(function () {
               wx.navigateTo({
-                        url: '../hosList/hosList',
-                      })
-            },500);
+                url: '../hosList/hosList',
+              })
+            }, 500);
           }
         });
       } else if (that.data.key == '' || that.data.code == '') {
@@ -165,7 +165,7 @@ Page({
           duration: 1000,
           icon: 'loading'
         })
-      }else{
+      } else {
         wx.request({
           url: app.globalData.url + '/user/login-by-smsvcode',
           header: {
@@ -213,7 +213,7 @@ Page({
                   }
                 }
               })
-            }else {
+            } else {
               wx.showToast({
                 title: res.data.codeMsg,
                 icon: 'loading'
@@ -222,11 +222,11 @@ Page({
           }
         })
       }
-  
+
     }
-    
-    
-   
+
+
+
   },
   /**
    * 生命周期函数--监听页面加载
@@ -235,9 +235,10 @@ Page({
     var that = this
     that.setData({
       type: options.type,
-      href:app.globalData.url
+      href: app.globalData.url,
+      version: app.globalData.version.split('-')[0]
     })
-    if(options.from!=1){
+    if (options.from != 1) {
       wx.login({
         success(res) {
           var code = res.code
@@ -261,7 +262,7 @@ Page({
               if (res.data.code == 0) {
                 wx.showToast({
                   title: '登录中',
-                  icon:"none"
+                  icon: "none"
                 })
                 app.globalData.cookie = res.header['Set-Cookie']
                 wx.request({
@@ -284,7 +285,7 @@ Page({
                           url: '../index/index',
                         })
                       }
-  
+
                     } else {
                       wx.showToast({
                         title: res.data.codeMsg,
@@ -294,21 +295,21 @@ Page({
                   }
                 })
               } else if (res.data.code == 27) {
-                if(app.globalData.loginHospitalId==''){
+                if (app.globalData.loginHospitalId == '') {
                   wx.showToast({
                     title: '选择登录医院',
                     icon: 'none',
                     duration: 2000,
-                    mask:true,
-                    complete: function complete(res){
-                      setTimeout(function(){
+                    mask: true,
+                    complete: function complete(res) {
+                      setTimeout(function () {
                         wx.navigateTo({
-                                  url: '../hosList/hosList',
-                                })
-                      },500);
+                          url: '../hosList/hosList',
+                        })
+                      }, 500);
                     }
                   });
-                }         
+                }
               } else {
                 wx.showToast({
                   title: res.data.codeMsg,
@@ -317,11 +318,11 @@ Page({
               }
             }
           })
-  
+
         }
       })
     }
-  
+
 
   },
   refuse(e) {
@@ -384,7 +385,7 @@ Page({
                 }
               })
 
-            
+
             } else {
               wx.showToast({
                 title: res.data.codeMsg,
@@ -416,7 +417,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (app.globalData.loginHospitalId == '') {
+      wx.showToast({
+        title: '选择登录医院',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+        complete: function complete(res) {
+          setTimeout(function () {
+            wx.navigateTo({
+              url: '../hosList/hosList',
+            })
+          }, 500);
+        }
+      });
+    }
     this.setData({
       loginHpitalName: app.globalData.loginHpitalName || ''
     })

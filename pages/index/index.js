@@ -165,6 +165,7 @@ Page({
 
   },
   onShow: function () {
+    console.log(app.globalData.loginHospitalId)
     this.hosDetail();
     this.departDetail();
     this.docList();
