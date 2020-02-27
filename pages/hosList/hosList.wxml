@@ -24,6 +24,5 @@
   </view>
 </view>
 <view class="showNone" wx:if='{{showNone}}'>
-  <!-- <text>无数据</text> -->
   无数据
 </view>

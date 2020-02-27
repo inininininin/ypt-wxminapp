@@ -56,3 +56,9 @@ button::after{
   height: 120rpx;
   margin: 400rpx 315rpx;
 }
+.showNone{
+  width: 100%;
+  font-size: 32rpx;
+  line-height: 300rpx;
+  text-align: center;
+}

@@ -84,9 +84,3 @@ page {
   font-size: 30rpx;
   text-align: center;
 }
-.showNone{
-  width: 100%;
-  font-size: 32rpx;
-  line-height: 300rpx;
-  text-align: center;
-}

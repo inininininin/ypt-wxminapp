@@ -14,7 +14,15 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     showIs: false,
     code: '',
-    type: ''
+    type: '',
+    href:'',
+    selectAgree:true,
+  },
+  selectIcon: function (e) {
+    var selectAgree = !this.data.selectAgree;
+    this.setData({
+      selectAgree: selectAgree
+    });
   },
   changeHos(e) {
     wx.navigateTo({
@@ -22,9 +30,18 @@ Page({
     })
   },
   loginWx: function () {
-    this.setData({
-      showIs: true
-    })
+    if (!that.data.selectAgree){
+      wx.showToast({
+        title: '请勾选登录协议',
+        icon: 'loading',
+        duration: 1000
+      })
+    }else{
+      this.setData({
+        showIs: true
+      })
+    }
+    
   },
   loginPhone: function (e) {
     this.setData({
@@ -91,82 +108,92 @@ Page({
   },
   login(e) {
     var that = this
-    if (app.globalData.loginHospitalId == '') {
-      wx.showModal({
-        title: '请选择登陆医院',
-        showCancel: false,
-        success(res) {
-          if (res.confirm) {
-            wx.navigateTo({
-              url: '../hosList/hosList',
-            })
-          }
-        }
-      })
-    } else if (that.data.key == '' || that.data.code == '') {
+    if (!that.data.selectAgree){
       wx.showToast({
-        title: '请填写完整',
-        duration: 1000,
-        icon: 'loading'
+        title: '请勾选登录协议',
+        icon: 'loading',
+        duration: 1000
       })
     }else{
-      wx.request({
-        url: app.globalData.url + '/user/login-by-smsvcode',
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        method: 'post',
-        data: {
-          phone: that.data.key,
-          smsvcode: that.data.code,
-          loginHospitalId: app.globalData.loginHospitalId,
-        },
-        success: function (res) {
-          wx.hideToast()
-          if (res.data.code == 0) {
-            wx.showToast({
-              title: '操作成功',
-              icon: 'loading'
-            })
-            app.globalData.cookie = res.header['Set-Cookie']
-            wx.request({
-              url: app.globalData.url + '/user/login-refresh',
-              header: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                'cookie': app.globalData.cookie
-              },
-              method: 'post',
-              success: function (res) {
-                wx.hideToast()
-                if (res.data.code == 0) {
-                  app.globalData.userInfoDetail = res.data.data
-                  app.globalData.loginHospitalId = res.data.data.hospitalId,
-                    app.globalData.loginHpitalName = res.data.data.hospitalName
-                  if (that.data.type == 1) {
-                    wx.navigateBack({})
+      if (app.globalData.loginHospitalId == '') {
+        wx.showModal({
+          title: '请选择登陆医院',
+          showCancel: false,
+          success(res) {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '../hosList/hosList',
+              })
+            }
+          }
+        })
+      } else if (that.data.key == '' || that.data.code == '') {
+        wx.showToast({
+          title: '请填写完整',
+          duration: 1000,
+          icon: 'loading'
+        })
+      }else{
+        wx.request({
+          url: app.globalData.url + '/user/login-by-smsvcode',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: 'post',
+          data: {
+            phone: that.data.key,
+            smsvcode: that.data.code,
+            loginHospitalId: app.globalData.loginHospitalId,
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+              wx.showToast({
+                title: '操作成功',
+                icon: 'loading'
+              })
+              app.globalData.cookie = res.header['Set-Cookie']
+              wx.request({
+                url: app.globalData.url + '/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': app.globalData.cookie
+                },
+                method: 'post',
+                success: function (res) {
+                  wx.hideToast()
+                  if (res.data.code == 0) {
+                    app.globalData.userInfoDetail = res.data.data
+                    app.globalData.loginHospitalId = res.data.data.hospitalId,
+                      app.globalData.loginHpitalName = res.data.data.hospitalName
+                    if (that.data.type == 1) {
+                      wx.navigateBack({})
+                    } else {
+                      wx.switchTab({
+                        url: '../index/index',
+                      })
+                    }
                   } else {
-                    wx.switchTab({
-                      url: '../index/index',
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'loading'
                     })
                   }
-                } else {
-                  wx.showToast({
-                    title: res.data.codeMsg,
-                    icon: 'loading'
-                  })
                 }
-              }
-            })
-          }else {
-            wx.showToast({
-              title: res.data.codeMsg,
-              icon: 'loading'
-            })
+              })
+            }else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'loading'
+              })
+            }
           }
-        }
-      })
+        })
+      }
+  
     }
-
+    
+    
    
   },
   /**
@@ -175,7 +202,8 @@ Page({
   onLoad: function (options) {
     var that = this
     that.setData({
-      type: options.type
+      type: options.type,
+      href:app.globalData.url
     })
     if(options.from!=1){
       wx.login({
@@ -201,7 +229,7 @@ Page({
               wx.hideToast()
               if (res.data.code == 0) {
                 wx.showToast({
-                  title: '操作成功',
+                  title: '登陆中',
                   icon: 'loading'
                 })
                 app.globalData.cookie = res.header['Set-Cookie']

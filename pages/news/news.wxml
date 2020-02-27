@@ -31,3 +31,6 @@
 		</view>
 	</view>
 </view>
+<view class="showNone" wx:if='{{showNone}}'>
+  无数据
+</view>

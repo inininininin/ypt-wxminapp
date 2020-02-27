@@ -191,3 +191,25 @@ vertical-align: middle;
   border: 1rpx solid #fff;
   color: #fff;
 }
+.userZc{
+  font-size: 30rpx;
+  margin-top: 20rpx;
+  width: 100%;
+  text-align: center;
+}
+.registerXy{
+  width: 620rpx;
+  margin:40rpx 65rpx 0;
+  font-size: 24rpx;
+  line-height: 34rpx;
+  height: 34rpx;
+}
+.registerXy>image{
+  width: 34rpx;
+  height: 34rpx;
+  float: left;
+}
+.registerXy>view{
+ float: left;
+ margin-left: 20rpx;
+}

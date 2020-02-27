@@ -14,6 +14,7 @@ Page({
     showIs: false,
     newDate: '',
     newVal: '',
+    showNone:false
   },
   close() {
     this.setData({
@@ -117,10 +118,8 @@ Page({
               schemeList: newSchemeListArr,
             });
             if (toPageNo == 1) {
-              wx.showToast({
-                title: '尚无消息',
-                icon: 'loading',
-                // duration: 1500
+              that.setData({
+                showNone:true
               })
             } else {
               wx.showToast({
