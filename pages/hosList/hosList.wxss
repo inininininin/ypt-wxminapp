@@ -62,13 +62,13 @@ page {
   height: 100rpx;
 }
 .searchBox input{
-  width: 600rpx;
+  width: 650rpx;
   height: 70rpx;
   border-radius: 35rpx;
   padding: 0 20rpx;
   font-size: 32rpx;
   line-height: 70rpx;
-  margin: 15rpx 75rpx;
+  margin: 10rpx 30rpx;
   border: 1rpx solid #e5e5e5;
   display: inline-block;
 }
@@ -82,5 +82,5 @@ page {
   height: 60rpx;
   line-height: 60rpx;
   font-size: 30rpx;
-  text-align: center;
+  text-align: left;
 }
