@@ -486,7 +486,6 @@ Page({
         mask: true,
         complete: function complete(res) {
           setTimeout(function () {
-            console.log(123123)
             wx.navigateTo({
               url: '../hosList/hosList',
             })

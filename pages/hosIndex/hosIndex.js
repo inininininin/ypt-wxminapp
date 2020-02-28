@@ -61,11 +61,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // console.log(options.detail)//JSON.parse(options.detail))
-    // this.setData({
-    //   detail: JSON.parse(options.detail)
-    // })
-    // console.log(this.data.detail)
+
     this.hosDetail();
   },
   onPageScroll: function (e) {

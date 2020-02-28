@@ -21,7 +21,6 @@ Page({
   scan(e) {
     wx.scanCode({
       success(res) {
-        console.log(res, res.path.slice(3, 4))
         if (res.path.slice(3, 4) == 'i') {
           wx.reLaunch({
             url: res.path,
@@ -177,10 +176,8 @@ Page({
     })
   },
   onLoad: function (options) {
-    console.log(options)
   },
   onShow: function (options) {
-    console.log(options)
     if(options&&options.hospitalid){
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
@@ -221,13 +218,11 @@ Page({
     })
   },
   lookMoreDetail(e) {
-    console.log(e.currentTarget.dataset.detail, JSON.stringify(e.currentTarget.dataset.detail))
     wx.navigateTo({
       url: '../hosIndex/hosIndex?detail=' + JSON.stringify(e.currentTarget.dataset.detail),
     })
   },
   doctor(e) {
-    console.log(e.currentTarget.dataset.detail, JSON.stringify(e.currentTarget.dataset.detail))
     wx.navigateTo({
       url: '../doctor/doctor?id=' + e.currentTarget.dataset.id + '&type=1' + '&detail=' + JSON.stringify(e.currentTarget.dataset.detail),
     })

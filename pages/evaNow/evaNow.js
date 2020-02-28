@@ -16,10 +16,12 @@ Page({
     title1: '',
     title2: '',
     title3: '请上传挂号发票或诊治单',
-    hidden: 'none',
+    hidden: false,
     star: '',
     imglist: [],
     imgBlob: '',
+    star:'',
+    content:''
     // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
   },
   select(e) {
@@ -74,7 +76,6 @@ Page({
         // tempFilePath可以作为img标签的src属性显示图片
         const tempFilePaths = res.tempFilePaths
         var picBlob = that.data.picBlob
-        console.log(tempFilePaths)
         for (var i in tempFilePaths) {
 
           wx.uploadFile({
@@ -96,13 +97,11 @@ Page({
                 } else {
                   var imgBlob = that.data.imgBlob + ',' + url
                 }
-                console.log(imgBlob)
                 imglist.push(app.globalData.url + url)
                 that.setData({
                   imglist: imglist,
                   imgBlob: imgBlob
                 })
-                console.log(imglist)
 
               }
             },
@@ -156,9 +155,6 @@ Page({
         method: 'get',
         success: function (res) {
           if (res.data.code == 0) {
-            console.log(res.data.data.hospitalId)
-            // app.globalData.loginHospitalId = res.data.data.hospitalId
-            // app.globalData.loginHpitalName = res.data.data.hospitalName
             wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
       wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
             that.setData({
@@ -225,7 +221,6 @@ Page({
     } else {
       var params = ''
     }
-    console.log(params)
     if (that.data.star == '' || that.data.content == '') {
       wx.showToast({
         title: '请填写完整',
@@ -255,7 +250,7 @@ Page({
               complete: (res) => {},
             })
             that.setData({
-              hidden: 'block'
+              hidden: true
             })
           } else {
             wx.showModal({
