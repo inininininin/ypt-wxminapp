@@ -139,11 +139,11 @@ Page({
     if(options.hospitalid!=''&&options.hospitalid!=undefined&&options.hospitalid!=null){
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
-      // app.globalData.loginHospitalId=options.hospitalid,
-      // app.globalData.loginHpitalName=options.hospitalname
     }
     var that = this
-    if (options.type == 1) {
+    wx.setStorageSync('type', options.type)
+    wx.setStorageSync('id', options.id)
+    if (wx.getStorageSync('type') == 1) {
       wx.request({
         url: app.globalData.url + '/doctor',
         header: {
@@ -151,7 +151,7 @@ Page({
           'cookie': wx.getStorageSync('cookie')
         },
         data: {
-          doctorId: options.id,
+          doctorId: wx.getStorageSync('id') ,
         },
         method: 'get',
         success: function (res) {
@@ -172,7 +172,7 @@ Page({
           }
         }
       });
-    } else if (options.type == 2) {
+    } else if (wx.getStorageSync('type')  == 2) {
       wx.request({
         url: app.globalData.url + 'nurse',
         header: {
@@ -180,7 +180,7 @@ Page({
           'cookie': wx.getStorageSync('cookie')
         },
         data: {
-          nurseId: options.id,
+          nurseId: wx.getStorageSync('id'),
         },
         method: 'get',
         success: function (res) {
@@ -203,8 +203,8 @@ Page({
     } else {
       that.setData({
         url: '/user/hospital-comment',
-        type: options.type,
-        id: options.id,
+        type: wx.getStorageSync('type'),
+        id: wx.getStorageSync('id'),
         navtitle: options.name,
         title1: '您本次就医体验：',
         title2: '请填写您对该医院的具体评价及建议：',
@@ -218,7 +218,6 @@ Page({
       icon: 'loading'
     })
     var that = this
-    console.log(that.data.type)
     if (that.data.type == 1) {
       var params = '?doctorId=' + that.data.id
     } else if (that.data.type == 2) {
@@ -307,17 +306,19 @@ Page({
         if (res.data.code == 0) {
 
         } else {
-          wx.showModal({
+          wx.showToast({
             title: res.data.codeMsg,
-            showCancel: false,
-            success(res) {
-              if (res.confirm) {
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+            complete: function complete(res) {
+              setTimeout(function () {
                 wx.navigateTo({
                   url: '../login/login?type=1',
                 })
-              }
+              }, 500);
             }
-          })
+          });
         }
       }
     })
