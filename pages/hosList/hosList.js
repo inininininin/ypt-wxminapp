@@ -16,8 +16,10 @@ Page({
     showNone:false
   },
   selectThis(e){
-    app.globalData.loginHospitalId=e.currentTarget.dataset.id
-    app.globalData.loginHpitalName=e.currentTarget.dataset.name
+    // app.globalData.loginHospitalId=e.currentTarget.dataset.id
+    // app.globalData.loginHpitalName=e.currentTarget.dataset.name
+    wx.setStorageSync('loginHospitalId', e.currentTarget.dataset.id)
+    wx.setStorageSync('loginHpitalName', e.currentTarget.dataset.name)
     wx.navigateBack({
       
     })
@@ -31,6 +33,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(111)
     this.lastPage(0)
   },
   search(e){
@@ -47,7 +50,7 @@ Page({
       url: app.globalData.url + '/hospitals',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       data: {
         pn: toPageNo,

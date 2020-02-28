@@ -50,7 +50,7 @@ Page({
       url: app.globalData.url + '/user/alter-my-info',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'post',
       data: {
@@ -83,7 +83,7 @@ Page({
       url: app.globalData.url + '/user/logout',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'post',
       data: {
@@ -93,9 +93,11 @@ Page({
         if (res.data.code == 0) {
           app.globalData.loginHospitalId='',
           app.globalData.loginHpitalName='',
+          wx.setStorageSync('loginHospitalId', '')
+          wx.setStorageSync('loginHpitalName', '')
+          wx.setStorageSync('cookie', '')
           app.globalData.userInfo= null,
           app.globalData.userInfoDetail=[],
-          app.globalData.cookie=''
           wx.redirectTo({
             url: '../login/login?from=1',
           })
@@ -141,7 +143,7 @@ Page({
                 },
                 header: {
                   "Content-Type": "application/x-www-form-urlencoded",
-                  'cookie': app.globalData.cookie
+                  'cookie': wx.getStorageSync('cookie')
                 },
                 success: function (res) {
                   that.setData({
@@ -192,7 +194,7 @@ Page({
       url: app.globalData.url + '/user/login-refresh',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'post',
       success: function (res) {

@@ -33,7 +33,7 @@ Page({
       url: app.globalData.url + '/user/look-all-my-message',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'post',
       success: function (res) {
@@ -60,7 +60,7 @@ Page({
       url: app.globalData.url + '/user/my-message',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       data: {
         userMessageId: e.currentTarget.dataset.id,
@@ -96,7 +96,7 @@ Page({
       url: app.globalData.url + '/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       data: {
         pn: toPageNo,

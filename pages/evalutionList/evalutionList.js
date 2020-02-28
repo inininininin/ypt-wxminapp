@@ -52,7 +52,7 @@ Page({
       url: app.globalData.url + url, // '/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       data: {
         pn: toPageNo,
