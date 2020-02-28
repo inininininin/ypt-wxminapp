@@ -20,14 +20,15 @@
 	<view class="line">
 		<input bindinput="code" placeholder-class="placeholder-class" placeholder="请输入验证码"></input>
 	</view>
-	<view class="registerXy">
+	
+	<view class="login" bindtap="login">登录</view>
+  <view class="registerXy" >
 		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{selectAgree}}" src="../icon/select1@2x.png"></image>
 		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{!selectAgree}}" src="../icon/Not-selected1@2x.png"></image>
 		<view>我已经阅读并同意
 			<text style="color:rgb(0,181,252);" bindtap="loginXy">《用户协议与隐私政策》</text>
 		</view>
 	</view>
-	<view class="login" bindtap="login">登录</view>
 	<view class="loginChange">
 		<text class="loginWx" bindtap="loginByPhone">微信登录</text>
 		<text class="changeHos" bindtap="changeHos">更换医院</text>

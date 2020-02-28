@@ -88,7 +88,7 @@ vertical-align: middle;
 .loginChange {
   width: 686rpx;
   height: 40rpx;
-  margin: 20rpx auto;
+  margin: 30rpx auto;
 }
 
 .loginWx {
@@ -214,15 +214,15 @@ vertical-align: middle;
 
 .registerXy {
   width: 620rpx;
-  margin: 40rpx 65rpx 0;
+  margin: 10rpx 30rpx 0;
   font-size: 24rpx;
   line-height: 34rpx;
   height: 34rpx;
 }
 
 .registerXy>image {
-  width: 34rpx;
-  height: 34rpx;
+  width: 30rpx;
+  height:30rpx;
   float: left;
 }
 
