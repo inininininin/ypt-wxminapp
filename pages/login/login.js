@@ -57,7 +57,7 @@ Page({
       })
     } else if (wx.getStorageSync('loginHospitalId') == '' || wx.getStorageSync('loginHospitalId') == null || wx.getStorageSync('loginHospitalId') == undefined) {
       wx.showToast({
-        title: '选择医院',
+        title: '选择登录医院',
         icon: 'none',
         duration: 2000,
         mask: true,
@@ -154,7 +154,7 @@ Page({
             var code = res.code
             if (wx.getStorageSync('loginHospitalId') == '') {
               wx.showToast({
-                title: '选择医院',
+                title: '选择登录医院',
                 icon: 'none',
                 duration: 1000,
                 mask: true,
@@ -181,6 +181,7 @@ Page({
                 method: 'post',
                 data: {
                   wsJsCode: code,
+                  phone: that.data.key,
                   smsvcode: that.data.code,
                   loginHospitalId: wx.getStorageSync('loginHospitalId'),
                 },
@@ -357,7 +358,7 @@ Page({
     //           } else if (res.data.code == 27) {
     //             if (wx.getStorageSync('loginHospitalId') == '') {
     //               wx.showToast({
-    //                 title: '选择医院',
+    //                 title: '选择登录医院',
     //                 icon: 'none',
     //                 duration: 2000,
     //                 mask: true,
@@ -480,7 +481,7 @@ Page({
   onShow: function () {
     if (wx.getStorageSync('loginHospitalId') == '') {
       wx.showToast({
-        title: '选择医院',
+        title: '选择登录医院',
         icon: 'none',
         duration: 2000,
         mask: true,
