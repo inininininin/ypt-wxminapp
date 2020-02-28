@@ -21,8 +21,8 @@ Page({
   scan(e) {
     wx.scanCode({
       success(res) {
-        console.log(res,res.path.slice(3,4))
-        if (res.path.slice(3,4)=='i') {
+        console.log(res, res.path.slice(3, 4))
+        if (res.path.slice(3, 4) == 'i') {
           wx.reLaunch({
             url: res.path,
           })
@@ -65,7 +65,7 @@ Page({
       },
       method: 'get',
       data: {
-        hospitalId:wx.getStorageSync('loginHospitalId'),// app.globalData.loginHospitalId,
+        hospitalId: wx.getStorageSync('loginHospitalId'), // app.globalData.loginHospitalId,
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -152,20 +152,45 @@ Page({
           that.setData({
             docList: res.data.data.rows
           })
-        } else {
+        } else if(res.data.code==20){
           wx.showToast({
             title: res.data.codeMsg,
-            icon: 'loading'
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+            complete: function complete(res) {
+              setTimeout(function () {
+                  wx.setStorageSync('codeType', that.data.type)
+                  wx.navigateTo({
+                    url: '../login/login',
+                  })
+              }, 500);
+            }
+          });
+        }else{
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none',
           })
         }
       }
     })
   },
-  onLoad: function () {
-
+  onLoad: function (options) {
+    console.log(options)
   },
-  onShow: function () {
-    // console.log(app.globalData.loginHospitalId)
+  onShow: function (options) {
+    console.log(options)
+    if(options&&options.hospitalid){
+      wx.setStorageSync('loginHospitalId', options.hospitalid)
+      wx.setStorageSync('loginHpitalName', options.hospitalname)
+    }
+    
+    if (wx.getStorageSync('codeType') == 1) {
+      wx.navigateTo({
+        url: '../evaNow/evaNow?type=' + wx.getStorageSync('type') + '&isfrom=1&id=' + wx.getStorageSync('id'),
+      })
+    }
     this.hosDetail();
     this.departDetail();
     this.docList();
@@ -184,7 +209,6 @@ Page({
           tcode: res.path,
           imglist: imglist,
         })
-        console.log(that.data.imglist)
       },
       fail(res) {
         console.log(res)

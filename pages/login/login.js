@@ -207,13 +207,17 @@ Page({
                           app.globalData.userInfoDetail = res.data.data
                           wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                           wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
-                          if (that.data.type == 1) {
-                            wx.navigateBack({})
-                          } else {
-                            wx.switchTab({
-                              url: '../index/index',
-                            })
-                          }
+                          wx.setStorageSync('codeType', that.data.type)
+                          wx.switchTab({
+                            url: '../index/index',
+                          })
+                          // if (that.data.type == 1) {
+                          //   wx.navigateBack({})
+                          // } else {
+                          //   wx.switchTab({
+                          //     url: '../index/index',
+                          //   })
+                          // }
                         } else {
                           wx.showToast({
                             title: res.data.codeMsg,
@@ -277,13 +281,15 @@ Page({
             mask: true,
             complete: function complete(res) {
               setTimeout(function () {
-                if (that.data.type == 1) {
-                  wx.navigateBack({})
-                } else {
+                // if (that.data.type == 1) {
+                //   // wx.navigateBack({})
+                //   wx.setStorageSync('codeType', that.data.type)
+                // } else {
+                  wx.setStorageSync('codeType', that.data.type)
                   wx.switchTab({
                     url: '../index/index',
                   })
-                }
+                // }
               }, 500);
             }
           });
@@ -419,13 +425,17 @@ Page({
                     app.globalData.userInfoDetail = res.data.data
                     wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                     wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
-                    if (that.data.type == 1) {
-                      wx.navigateBack({})
-                    } else {
-                      wx.switchTab({
-                        url: '../index/index',
-                      })
-                    }
+                    wx.setStorageSync('codeType', that.data.type)
+                    wx.switchTab({
+                      url: '../index/index',
+                    })
+                    // if (that.data.type == 1) {
+                    //   wx.navigateBack({})
+                    // } else {
+                    //   wx.switchTab({
+                    //     url: '../index/index',
+                    //   })
+                    // }
 
                   } else {
                     wx.showToast({
