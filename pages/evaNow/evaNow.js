@@ -137,8 +137,10 @@ Page({
    */
   onLoad: function (options) {
     if(options.hospitalid!=''&&options.hospitalid!=undefined&&options.hospitalid!=null){
-      app.globalData.loginHospitalId=options.hospitalid,
-      app.globalData.loginHpitalName=options.hospitalname
+      wx.setStorageSync('loginHospitalId', options.hospitalid)
+      wx.setStorageSync('loginHpitalName', options.hospitalname)
+      // app.globalData.loginHospitalId=options.hospitalid,
+      // app.globalData.loginHpitalName=options.hospitalname
     }
     var that = this
     if (options.type == 1) {
@@ -146,7 +148,7 @@ Page({
         url: app.globalData.url + '/doctor',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
-          'cookie': app.globalData.cookie
+          'cookie': wx.getStorageSync('cookie')
         },
         data: {
           doctorId: options.id,
@@ -155,8 +157,10 @@ Page({
         success: function (res) {
           if (res.data.code == 0) {
             console.log(res.data.data.hospitalId)
-            app.globalData.loginHospitalId = res.data.data.hospitalId
-            app.globalData.loginHpitalName = res.data.data.hospitalName
+            // app.globalData.loginHospitalId = res.data.data.hospitalId
+            // app.globalData.loginHpitalName = res.data.data.hospitalName
+            wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+      wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
             that.setData({
               url: '/user/doctor-comment',
               type: options.type,
@@ -173,7 +177,7 @@ Page({
         url: app.globalData.url + 'nurse',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
-          'cookie': app.globalData.cookie
+          'cookie': wx.getStorageSync('cookie')
         },
         data: {
           nurseId: options.id,
@@ -181,8 +185,10 @@ Page({
         method: 'get',
         success: function (res) {
           if (res.data.code == 0) {
-            app.globalData.loginHospitalId = res.data.data.hospitalId
-            app.globalData.loginHpitalName = res.data.data.hospitalName
+            // app.globalData.loginHospitalId = res.data.data.hospitalId
+            // app.globalData.loginHpitalName = res.data.data.hospitalName
+            wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+            wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
             that.setData({
               url: '/user/nurse-comment',
               type: options.type,
@@ -230,7 +236,7 @@ Page({
         url: app.globalData.url + that.data.url + params,
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
-          'cookie': app.globalData.cookie
+          'cookie': wx.getStorageSync('cookie')
         },
         data: {
           star: that.data.star,
@@ -293,7 +299,7 @@ Page({
       url: app.globalData.url + '/user/login-refresh',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'post',
       success: function (res) {

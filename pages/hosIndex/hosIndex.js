@@ -27,11 +27,11 @@ Page({
       url: app.globalData.url + '/user/hospital',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'get',
       data: {
-        hospitalId: app.globalData.loginHospitalId,
+        hospitalId: wx.getStorageSync('loginHospitalId'),
       },
       success: function (res) {
         if (res.data.code == 0) {

@@ -61,11 +61,11 @@ Page({
       url: app.globalData.url + '/user/hospital',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'get',
       data: {
-        hospitalId: app.globalData.loginHospitalId,
+        hospitalId:wx.getStorageSync('loginHospitalId'),// app.globalData.loginHospitalId,
       },
       success: function (res) {
         if (res.data.code == 0) {
@@ -97,7 +97,7 @@ Page({
       url: app.globalData.url + '/user/offices',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'get',
       data: {
@@ -133,7 +133,7 @@ Page({
       url: app.globalData.url + '/user/doctors',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       method: 'get',
       data: {
@@ -165,7 +165,7 @@ Page({
 
   },
   onShow: function () {
-    console.log(app.globalData.loginHospitalId)
+    // console.log(app.globalData.loginHospitalId)
     this.hosDetail();
     this.departDetail();
     this.docList();

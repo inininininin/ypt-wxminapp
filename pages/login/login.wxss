@@ -1,6 +1,7 @@
 /* pages/login/login.wxss */
 @import '../common/common.wxss';
 @import '../../wxParse/wxParse.wxss';
+
 .logo {
   width: 181rpx;
   height: 58rpx;
@@ -50,6 +51,7 @@
   height: 108rpx;
   line-height: 108rpx;
 }
+
 /* .linephone image{
   width: 24rpx;
 height: 24rpx;
@@ -82,20 +84,23 @@ vertical-align: middle;
   margin: 60rpx auto 0;
   border-radius: 5rpx;
 }
-.loginChange{
+
+.loginChange {
   width: 686rpx;
   height: 40rpx;
-  margin : 20rpx auto;
+  margin: 20rpx auto;
 }
+
 .loginWx {
-  width: 130rpx;
+  width: auto;
   text-align: center;
   height: 40rpx;
   opacity: 1;
   font-size: 28rpx;
   font-family: PingFangSC;
   font-weight: 400;
-  color: rgba(51, 51, 51, 1);
+  
+  color: #536d95;
   line-height: 40rpx;
   letter-spacing: 0.45rpx;
   /* margin : 40rpx 310rpx; */
@@ -103,22 +108,24 @@ vertical-align: middle;
   float: left;
   /* padding: 20rpx 20rpx 20rpx 0; */
 }
-.changeHos{
-  width: 130rpx;
+
+.changeHos {
+  width: auto;
   text-align: center;
   height: 40rpx;
   opacity: 1;
   font-size: 28rpx;
   font-family: PingFangSC;
   font-weight: 400;
-  color: rgba(51, 51, 51, 1);
+  color: #536d95;
   line-height: 40rpx;
   letter-spacing: 0.45rpx;
   /* margin : 40rpx 310rpx; */
   /* padding: 20rpx 0 20rpx 20rpx; */
   float: right;
 }
-.hosName{
+
+.hosName {
   width: 100%;
   display: block;
   text-align: center;
@@ -132,23 +139,26 @@ vertical-align: middle;
   letter-spacing: 0.45rpx;
   margin-bottom: 100rpx;
 }
-.popWindow{
+
+.popWindow {
   width: 100%;
   height: 100%;
   position: fixed;
   z-index: 2;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   top: 0;
   left: 0;
 }
-.popWindow>view{
+
+.popWindow>view {
   width: 640rpx;
   height: 800rpx;
   margin: 300rpx 55rpx;
   border-radius: 8rpx;
   background: #fff;
 }
-.popWindow>view>text{
+
+/* .popWindow>view>text{
   display: block;
   width: 100%;
   height: 80rpx;
@@ -156,23 +166,24 @@ vertical-align: middle;
   text-align: center;
   font-size: 34rpx;
   color: rgba(51, 51, 51, 1);
-}
-.popWindow>view>view:nth-child(2){
+} */
+.popWindow>view>view:nth-child(1) {
   width: 600rpx;
-  height: 560rpx;
+  height: 640rpx;
   overflow-y: scroll;
   margin: 0;
   padding: 10rpx 20rpx;
   color: rgba(115, 115, 115, 1);
   font-size: 30rpx;
   line-height: 38rpx;
-  box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.1); 
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
 }
-.popWindow>view>view:nth-child(3){
+
+.popWindow>view>view:nth-child(2) {
   width: 100%;
 }
 
-.popWindow button{
+.popWindow button {
   width: 200rpx;
   border-radius: 50rpx;
   height: 62rpx !important;
@@ -187,35 +198,40 @@ vertical-align: middle;
   font-weight: 400;
   margin: 39rpx 60rpx;
 }
-.popWindow .agree{
-  background:#cc3d49 ;
+
+.popWindow .agree {
+  background: #cc3d49;
   border: 1rpx solid #fff;
   color: #fff;
 }
-.userZc{
+
+.userZc {
   font-size: 30rpx;
   margin-top: 20rpx;
   width: 100%;
   text-align: center;
 }
-.registerXy{
+
+.registerXy {
   width: 620rpx;
-  margin:40rpx 65rpx 0;
+  margin: 40rpx 65rpx 0;
   font-size: 24rpx;
   line-height: 34rpx;
   height: 34rpx;
 }
-.registerXy>image{
+
+.registerXy>image {
   width: 34rpx;
   height: 34rpx;
   float: left;
 }
-.registerXy>view{
- float: left;
- margin-left: 20rpx;
+
+.registerXy>view {
+  float: left;
+  margin-left: 20rpx;
 }
 
-.version{
+.version {
   position: absolute;
   width: 100%;
   bottom: 20rpx;
@@ -225,3 +241,36 @@ vertical-align: middle;
   line-height: 30rpx;
   left: 0;
 }
+
+
+.loginByWx {
+  width: 596rpx;
+  height: 90rpx;
+  margin: 200rpx 77rpx 0;
+  background: #17bb07;
+  border-radius: 45rpx;
+  font-size: 34rpx;
+  line-height: 90rpx;
+  text-align: center;
+  color: #fff;
+}
+
+.loginByWx image {
+  width: 53rpx;
+  height: 43rpx;
+  vertical-align: middle;
+}
+/* .loginByPhone{
+  width: 750rpx;
+height: 42rpx;
+font-size: 30rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #536d95;
+line-height: 42rpx;
+letter-spacing: 0rpx;
+display: block;
+text-align: center;
+margin: 38rpx 0;
+} */

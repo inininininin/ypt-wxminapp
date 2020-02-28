@@ -9,7 +9,7 @@ App({
     entity: [],
     url: 'https://ypt.njshangka.com',
     version: '6.0.2-1',
-    cookie: ''
+    cookie: '',
   },
   onLaunch: function () {
     // 展示本地存储能力

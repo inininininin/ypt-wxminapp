@@ -82,7 +82,7 @@ Page({
       url: app.globalData.url + that.data.url,
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': app.globalData.cookie
+        'cookie': wx.getStorageSync('cookie')
       },
       data: {
         pn: toPageNo,
