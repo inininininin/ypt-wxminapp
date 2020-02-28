@@ -4,7 +4,7 @@
 		<!-- background -->
 		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
 		<view class="title-bar" style="height:{{titleBarHeight}}px">
-			<image class="back" catchtap="backHistory" src="../icon/fanhui.png"></image>
+			<image mode="aspectFill" class="back" catchtap="backHistory" src="../icon/fanhui.png"></image>
 		</view>
 	</view>
 	<text class="evahospital" catchtap="evahospital">医院评价</text>

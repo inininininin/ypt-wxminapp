@@ -155,7 +155,7 @@ margin-top: 24rpx;
   margin: 16rpx 10rpx 16rpx 32rpx;
 }
 .searchBox input{
-  width: 323rpx;
+  width: 310rpx;
   display: inline-block;
   height: 60rpx;
   line-height: 60rpx;

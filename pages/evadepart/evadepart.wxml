@@ -3,7 +3,7 @@
   <view class="header" style="background:{{background}}">
     <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
     <view class="title-bar" style="height:{{titleBarHeight}}px">
-      <image class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+      <image  mode="aspectFill" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
       <text class="evahospital">{{navtitle}}</text>
     </view>
   </view>

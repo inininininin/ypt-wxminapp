@@ -2,14 +2,14 @@
 <view class="container" >
   <text>{{names||''}}</text>
   <text>{{phone||''}}</text>
-  <image class="avator" bindtap="avator" src="{{avator}}"></image>
-  <image class="edit" bindtap="edit" src="../icon/bianji.png"></image>
+  <image mode="aspectFill" class="avator" bindtap="avator" src="{{avator}}"></image>
+  <image mode="aspectFill" class="edit" bindtap="edit" src="../icon/bianji.png"></image>
 </view>
 <view class="lineBox">
   <view class="line" bindtap="tCode" wx:if='{{typeUser!=0}}'>
     <text>二维码</text>
-    <image class="right" src="../icon/right.png"></image>
-    <image  class="tcode" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}" src="{{item}}"></image>
+    <image mode="aspectFill" class="right" src="../icon/right.png"></image>
+    <image  mode="aspectFill" class="tcode" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}" src="{{item}}"></image>
   </view>
   <view class="line">
     <text>服务电话</text>
@@ -17,7 +17,7 @@
   </view>
   <view class="line" bindtap="loginout">
     <text>退出登录</text>
-    <image class="right" src="../icon/right.png"></image>
+    <image mode="aspectFill" class="right" src="../icon/right.png"></image>
   </view>
 </view>
 <text class="version">ver : {{version}}</text>
@@ -32,5 +32,5 @@
   </view>
 </view>
 <!-- <view bindtap="close" class="bgColor" wx:if='{{showIsTcode}}'>
-  <image class="showIsTcode"  src="{{tcode}}"></image>
+  <image mode="aspectFill" class="showIsTcode"  src="{{tcode}}"></image>
 </view> -->

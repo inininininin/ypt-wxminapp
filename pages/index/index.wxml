@@ -2,9 +2,9 @@
   <view class="header">
     <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
     <view class="title-bar" style="height:{{titleBarHeight}}px">
-      <image class="scan" bindtap="scan" src="../icon/scan.png"></image>
+      <!-- <image mode="aspectFill" class="scan" bindtap="scan" src="../icon/scan.png"></image> -->
       <view>
-        <image class="searchIcon" src="../icon/sousuo.png"></image>
+        <image mode="aspectFill" class="searchIcon" src="../icon/sousuo.png"></image>
         <input disabled="disabled" placeholder="搜索你需要的内容"></input>
       </view>
     </view>
@@ -15,7 +15,7 @@
   <image  mode="aspectFill"  src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
   <view>
   <!-- src="{{item}}" -->
-    <view class="lineOne">{{hosDetail.name}} <image bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}"  class="tcode" src="../icon/tcode.png"></image></view>
+    <view class="lineOne">{{hosDetail.name}} <image mode="aspectFill" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}"  class="tcode" src="../icon/tcode.png"></image></view>
 
     <view class="lineOne">{{departDetail}}</view>
     <view class="lineOne">
@@ -34,7 +34,7 @@
   <text class="lineSix">{{hosDetail.intro}}</text>
 </view>
 <view class="doctorDetail">
-  <image src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
+  <image mode="aspectFill" src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
   <view>
     <view class="evaDoctor" data-type='1' bindtap="evaList">医生列表</view>
     <view class="evanurse" data-type='2' bindtap="evaList">医护列表</view>
@@ -60,7 +60,7 @@
 
 
 <view class="pageLoading" style="display:{{allHidden}}">
-  <image src="../icon/loadingIs.gif"></image>
+  <image mode="aspectFill" src="../icon/loadingIs.gif"></image>
 </view>
 
 
