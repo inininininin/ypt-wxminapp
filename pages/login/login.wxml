@@ -15,10 +15,11 @@
 	<view class="line linephone" style="border-bottom: 1rpx solid #e5e5e5;">
 		<input placeholder-class="placeholder-class" type="number" maxlength="11" value='{{key}}' bindinput="loginPhone" placeholder="请输入手机号"></input>
 		<!-- <image mode="aspectFill" src="../icon/delete.png" wx:if="{{key}}" bindtap="eliminate"></image> -->
-		<text bindtap="smsvcodeGet">{{times}}</text>
 	</view>
 	<view class="line">
 		<input bindinput="code" placeholder-class="placeholder-class" placeholder="请输入验证码"></input>
+    		<text bindtap="smsvcodeGet">{{times}}</text>
+
 	</view>
 	
 	<view class="login" bindtap="login">登录</view>
