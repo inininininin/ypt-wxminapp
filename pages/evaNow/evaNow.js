@@ -170,7 +170,7 @@ Page({
       });
     } else if (wx.getStorageSync('type')  == 2) {
       wx.request({
-        url: app.globalData.url + 'nurse',
+        url: app.globalData.url + '/nurse',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
           'cookie': wx.getStorageSync('cookie')
