@@ -215,7 +215,7 @@ Page({
   evaNow(e) {
     wx.showToast({
       title: '操作中',
-      icon: 'loading'
+      icon: 'none'
     })
     var that = this
     if (that.data.type == 1) {

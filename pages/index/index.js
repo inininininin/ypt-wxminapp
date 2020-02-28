@@ -85,7 +85,7 @@ Page({
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon: 'loading'
+            icon: 'none'
           })
         }
       }
@@ -121,7 +121,7 @@ Page({
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon: 'loading'
+            icon: 'none'
           })
         }
       }
