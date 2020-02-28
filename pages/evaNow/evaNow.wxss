@@ -174,10 +174,12 @@ page {
 
 .evaEnd {
   position: fixed;
-  z-index: 3;
-  background: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 750rpx;
   height: 100%;
 }
@@ -187,9 +189,12 @@ page {
   height: 468rpx;
   opacity: 1;
   background: rgba(255, 255, 255, 1);
-  margin: 433rpx 120rpx 0;
+  /* margin: 433rpx 120rpx 0; */
   border-radius: 8rpx;
-  z-index: 3;
+  z-index: 101;
+  position: fixed;
+  top: 433rpx;
+  left: 120rpx;
 }
 
 .evaBox image {

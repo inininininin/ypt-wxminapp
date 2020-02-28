@@ -119,7 +119,6 @@ Page({
       success(res) {
         const src = res.tempFilePaths[0]
         var avatar = res.tempFilePaths[0]
-        console.log(avatar)
         wx.uploadFile({
           url: app.globalData.url + '/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
           filePath: avatar,
@@ -128,7 +127,6 @@ Page({
           success: function (res) {
             var data = JSON.parse(res.data);
             var url = data.data.url
-            console.log(data)
             if (data.code == 0) {
               wx.showToast({
                 title: '上传成功',
@@ -237,7 +235,6 @@ wx.getImageInfo({
         tcode:res.path,
         imglist:imglist,
       })
-      console.log(that.data.imglist)
     },
     fail(res){
       console.log(res)

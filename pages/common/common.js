@@ -26,7 +26,6 @@ Page({
       statusBarHeight: getApp().globalData.statusBarHeight,
       titleBarHeight: getApp().globalData.titleBarHeight
     })  
-    console.log(vm.statusBarHeight)
   },
 
   backHistory: function (e) {

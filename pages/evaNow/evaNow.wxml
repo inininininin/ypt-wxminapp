@@ -45,15 +45,15 @@
 </view>
 
 <view class="evaNowBtn" bindtap="evaNow">提交评价</view>
-<view class="evaEnd " style="display:{{hidden}}">
+<view class="evaEnd "  wx:if='{{hidden}}'>
 	<view class="evaBox">
 		<image mode="aspectFill" src="../icon/success@2x.png"></image>
 		<text>提交成功</text>
 		<text>您可以在评价中查看</text>
 		<view>
-			<text catchtap="back">返回主页</text>
+			<text bindtap="back">返回主页</text>
 			<text></text>
-			<text catchtap="detail">查看详情</text>
+			<text bindtap="detail">查看详情</text>
 		</view>
 	</view>
 </view>
