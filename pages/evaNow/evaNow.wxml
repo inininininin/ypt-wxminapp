@@ -51,7 +51,7 @@
 		<text>提交成功</text>
 		<text>您可以在评价中查看</text>
 		<view>
-			<text bindtap="back">返回主页</text>
+			<text bindtap="back">返回</text>
 			<text></text>
 			<text bindtap="detail">查看详情</text>
 		</view>
