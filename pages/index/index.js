@@ -170,7 +170,7 @@ Page({
     this.departDetail();
     this.docList();
     var that = this
-    var param = encodeURIComponent('../index/index?hospitalid=' + app.globalData.userInfoDetail.hospitalId + '&hospitalname=' + app.globalData.userInfoDetail.hospitalName)
+    var param = encodeURIComponent('pages/index/index?hospitalid=' + app.globalData.userInfoDetail.hospitalId + '&hospitalname=' + app.globalData.userInfoDetail.hospitalName)
     wx.getImageInfo({
       src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=2',
       method: 'get',

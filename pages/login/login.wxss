@@ -2,9 +2,9 @@
 @import '../common/common.wxss';
 @import '../../wxParse/wxParse.wxss';
 .logo {
-  width: 186rpx;
-  height: 69rpx;
-  margin: 60rpx 282rpx 20rpx;
+  width: 181rpx;
+  height: 58rpx;
+  margin: 60rpx 284rpx 20rpx;
 }
 
 .title {

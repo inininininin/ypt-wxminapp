@@ -8,7 +8,7 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    navtitle: '科室评价',
+    navtitle: '科室列表',
   },
 
   /**

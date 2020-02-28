@@ -221,7 +221,7 @@ Page({
       }
     })
 // var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
-var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId))
+var param=encodeURIComponent('pages/evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId))
 wx.getImageInfo({
     src: app.globalData.url + '/wxminqrcode?path='+param+ '&width=200',
     method:'get',
