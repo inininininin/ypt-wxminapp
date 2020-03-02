@@ -87,11 +87,7 @@ Page({
               var url = data.data.url
               var imglist = that.data.imglist
               if (data.code == 0) {
-                wx.showToast({
-                  title: '上传成功',
-                  icon: 'success',
-                  duration: 2000
-                })
+                
                 if (that.data.imgBlob == '') {
                   var imgBlob = url
                 } else {
@@ -107,6 +103,11 @@ Page({
             },
             fail: function (res) {
               console.log(res)
+              wx.showToast({
+                  title: res,
+                  icon: 'success',
+                  duration: 2000
+                })
             }
           })
         }

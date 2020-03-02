@@ -135,6 +135,7 @@ page {
   overflow-y: scroll;
   border: 1rpx solid #f2f2f2;
   padding: 5rpx;
+  z-index: 1 !important;
 }
 
 .evaVal view {
@@ -189,15 +190,11 @@ page {
   height: 468rpx;
   opacity: 1;
   background: rgba(255, 255, 255, 1);
-  /* margin: 433rpx 120rpx 0; */
+  margin: 433rpx 120rpx 0;
   border-radius: 8rpx;
-  z-index: 101;
-  position: fixed;
-  top: 433rpx;
-  left: 120rpx;
 }
 
-.evaBox image {
+.evaBox cover-image {
   width: 140rpx;
   height: 140rpx;
   opacity: 1;
@@ -205,7 +202,7 @@ page {
   margin: 50rpx 185rpx 20rpx;
 }
 
-.evaBox>text:nth-child(2) {
+.evaBox .evaSuccess {
   display: block;
   width: 100%;
   height: 40rpx;
@@ -218,7 +215,7 @@ page {
   letter-spacing: 0.78rpx;
   text-align: center;
 }
-.evaBox>text:nth-child(3){
+.evaBox .evaLook{
  display: block;
   width: 100%;
 height: 40rpx;
@@ -232,7 +229,7 @@ letter-spacing: 0.78rpx;
 text-align: center;
 margin-top: 35rpx;
 }
-.evaBox>view>text:nth-child(1),.evaBox>view>text:nth-child(3){
+.evaBox .evaBtn .evaback,.evaBox .evaBtn .evadetail{
   display: inline-block;
   width: 253rpx;
 height: 45rpx;
@@ -246,7 +243,7 @@ letter-spacing: 0.89rpx;
 text-align: center;
 margin-top: 48rpx;
 }
-.evaBox>view>text:nth-child(2){
+.evaBox .evaBtn .evaline{
   display: inline-block;
   width: 4rpx;
 height: 22rpx;

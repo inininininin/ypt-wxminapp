@@ -65,6 +65,10 @@ Page({
             that.setData({
               showNone: true,
             });
+          }else{
+            that.setData({
+              showNone: false,
+            });
           }
           for (var i = 0; i < res.data.data.rows.length; i++) {
             addTime = res.data.data.rows[i].addTime
