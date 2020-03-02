@@ -60,7 +60,7 @@ Page({
         if (res.data.code == 0) {
           wx.showToast({
             title: '操作成功',
-            icon: 'loading'
+            icon: 'none'
           })
           setTimeout(function () {
             that.setData({
@@ -71,7 +71,7 @@ Page({
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon: 'loading'
+            icon: 'none'
           })
         }
       }
@@ -104,7 +104,7 @@ Page({
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon: 'loading'
+            icon: 'none'
           })
         }
       }

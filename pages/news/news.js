@@ -124,7 +124,7 @@ Page({
             } else {
               wx.showToast({
                 title: '数据已全部加载',
-                // icon: 'loading',
+                // icon: 'none',
                 // duration: 1500
               })
             }

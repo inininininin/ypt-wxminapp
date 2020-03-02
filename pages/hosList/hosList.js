@@ -9,7 +9,7 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    navtitle: '医院列表',
+    navtitle: '选择医院',
     showIs:false,
     kw:'',
     schemeList:[],

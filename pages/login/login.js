@@ -52,7 +52,7 @@ Page({
     if (!that.data.selectAgree) {
       wx.showToast({
         title: '请勾选登录协议',
-        icon: 'loading',
+        icon: 'none',
         duration: 1000
       })
     } else if (wx.getStorageSync('loginHospitalId') == '' || wx.getStorageSync('loginHospitalId') == null || wx.getStorageSync('loginHospitalId') == undefined) {
@@ -109,7 +109,7 @@ Page({
     if (that.data.key == '' || that.data.key.length < 11) {
       wx.showToast({
         title: '请填写正确手机号',
-        icon: 'loading'
+        icon: 'none'
       })
     } else if (that.data.times != '获取验证码') {
       return
@@ -144,7 +144,7 @@ Page({
     if (!that.data.selectAgree) {
       wx.showToast({
         title: '请勾选登录协议',
-        icon: 'loading',
+        icon: 'none',
         duration: 1000
       })
     } else {
@@ -170,7 +170,7 @@ Page({
               wx.showToast({
                 title: '请填写完整',
                 duration: 1000,
-                icon: 'loading'
+                icon: 'none'
               })
             } else {
               wx.request({
@@ -189,7 +189,7 @@ Page({
                   if (res.data.code == 0) {
                     wx.showToast({
                       title: '操作成功',
-                      icon: 'loading'
+                      icon: 'none'
                     })
                     wx.setStorageSync('cookie', res.header['Set-Cookie'])
                     // wx.getStorageSync('cookie') =wx.getStorageSync('cookie')
@@ -221,7 +221,7 @@ Page({
                         } else {
                           wx.showToast({
                             title: res.data.codeMsg,
-                            icon: 'loading'
+                            icon: 'none'
                           })
                         }
                       }
@@ -229,7 +229,7 @@ Page({
                   } else {
                     wx.showToast({
                       title: res.data.codeMsg,
-                      icon: 'loading'
+                      icon: 'none'
                     })
                   }
                 }
@@ -349,7 +349,7 @@ Page({
     //                 } else {
     //                   wx.showToast({
     //                     title: res.data.codeMsg,
-    //                     icon: 'loading'
+    //                    icon: 'none'
     //                   })
     //                 }
     //               }
@@ -373,7 +373,7 @@ Page({
     //           } else {
     //             wx.showToast({
     //               title: res.data.codeMsg,
-    //               icon: 'loading'
+    //               icon: 'none'
     //             })
     //           }
     //         }
@@ -409,7 +409,7 @@ Page({
             if (res.data.code == 0) {
               wx.showToast({
                 title: '操作成功',
-                icon: 'loading'
+                icon: 'none'
               })
               wx.setStorageSync('cookie', res.header['Set-Cookie'])
               wx.request({
@@ -440,7 +440,7 @@ Page({
                   } else {
                     wx.showToast({
                       title: res.data.codeMsg,
-                      icon: 'loading'
+                      icon: 'none'
                     })
                   }
                 }
@@ -450,7 +450,7 @@ Page({
             } else {
               wx.showToast({
                 title: res.data.codeMsg,
-                icon: 'loading'
+                icon: 'none'
               })
             }
           }

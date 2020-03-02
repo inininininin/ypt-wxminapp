@@ -1,6 +1,6 @@
 //app.js
 App({
- 
+  
   globalData: {
     loginHospitalId: '',
     loginHpitalName: '',
@@ -8,8 +8,8 @@ App({
     userInfoDetail: [],
     entity: [],
     url: 'https://ypt.njshangka.com',
-    version: '6.0.2-1',
-    cookie: '',
+    version: '2002281350-7d3e4a4',
+    cookie: ''
   },
   onLaunch: function () {
     // 展示本地存储能力

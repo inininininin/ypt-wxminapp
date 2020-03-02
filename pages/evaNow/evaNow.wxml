@@ -45,6 +45,7 @@
 </view>
 
 <view class="evaNowBtn" bindtap="evaNow">提交评价</view>
+
 <cover-view class="evaEnd "  wx:if='{{hidden}}'>
 	<cover-view class="evaBox">
 		<cover-image mode="aspectFill" src="../icon/success@2x.png"></cover-image>
@@ -57,3 +58,4 @@
 		</cover-view>
 	</cover-view>
 </cover-view>
+
