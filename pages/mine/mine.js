@@ -100,7 +100,8 @@ Page({
           app.globalData.userInfo= null,
           app.globalData.userInfoDetail=[],
           wx.redirectTo({
-            url: '../login/login?from=1',
+            // url: '../login/login?from=1',
+            url: '../logs/logs',
           })
         } else {
           wx.showToast({

@@ -21,17 +21,16 @@ Page({
     version: app.globalData.version,
     showPhone: false
   },
-  // loginWxBack(e){
-  //   this.setData({
-  //     showPhone:!this.data.showPhone
-  //   })
-  // },
+
   loginByPhone(e) {
-    this.setData({
-      showPhone: !this.data.showPhone
+    wx.redirectTo({
+      url: '../logs/logs',
     })
+    // this.setData({
+    //   showPhone: !this.data.showPhone
+    // })
   },
-  selectIcon: function (e) {
+  selectIcon: function(e) {
     var selectAgree = !this.data.selectAgree;
     this.setData({
       selectAgree: selectAgree
@@ -47,7 +46,7 @@ Page({
       url: '../webview/webview?href=' + app.globalData.url + '/oss/alive/user-protocol.html',
     })
   },
-  loginWx: function () {
+  loginWx: function() {
     var that = this
     if (!that.data.selectAgree) {
       wx.showToast({
@@ -62,7 +61,7 @@ Page({
         duration: 2000,
         mask: true,
         complete: function complete(res) {
-          setTimeout(function () {
+          setTimeout(function() {
             wx.navigateTo({
               url: '../hosList/hosList',
             })
@@ -76,12 +75,12 @@ Page({
     }
 
   },
-  loginPhone: function (e) {
+  loginPhone: function(e) {
     this.setData({
       key: e.detail.value,
     })
   },
-  code: function (e) {
+  code: function(e) {
     this.setData({
       code: e.detail.value,
     })
@@ -89,7 +88,7 @@ Page({
   // 获取验证码
   timeBack() {
     var that = this
-    var timer = setInterval(function () {
+    var timer = setInterval(function() {
       var time = that.data.time - 1;
       that.setData({
         times: time + ' s',
@@ -126,7 +125,7 @@ Page({
         data: {
           phone: that.data.key,
         },
-        success: function (res) {
+        success: function(res) {
           wx.hideToast()
           if (res.data.code == 0) {
             that.timeBack()
@@ -159,7 +158,7 @@ Page({
                 duration: 1000,
                 mask: true,
                 complete: function complete(res) {
-                  setTimeout(function () {
+                  setTimeout(function() {
                     wx.navigateTo({
                       url: '../hosList/hosList',
                     })
@@ -184,13 +183,10 @@ Page({
                   smsvcode: that.data.code,
                   loginHospitalId: wx.getStorageSync('loginHospitalId'),
                 },
-                success: function (res) {
+                success: function(res) {
                   wx.hideToast()
                   if (res.data.code == 0) {
-                    wx.showToast({
-                      title: '操作成功',
-                      icon: 'none'
-                    })
+
                     wx.setStorageSync('cookie', res.header['Set-Cookie'])
                     // wx.getStorageSync('cookie') =wx.getStorageSync('cookie')
                     wx.request({
@@ -200,7 +196,7 @@ Page({
                         'cookie': wx.getStorageSync('cookie')
                       },
                       method: 'post',
-                      success: function (res) {
+                      success: function(res) {
                         wx.hideToast()
                         if (res.data.code == 0) {
 
@@ -208,16 +204,20 @@ Page({
                           wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                           wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
                           wx.setStorageSync('codeType', that.data.type)
-                          wx.switchTab({
-                            url: '../index/index',
-                          })
-                          // if (that.data.type == 1) {
-                          //   wx.navigateBack({})
-                          // } else {
-                          //   wx.switchTab({
-                          //     url: '../index/index',
-                          //   })
-                          // }
+                          wx.showToast({
+                            title: '登录成功',
+                            icon: 'none',
+                            duration: 2000,
+                            mask: true,
+                            complete: function complete(res) {
+                              setTimeout(function() {
+                                wx.setStorageSync('codeType', that.data.type)
+                                wx.switchTab({
+                                  url: '../index/index',
+                                })
+                              }, 500);
+                            }
+                          });
                         } else {
                           wx.showToast({
                             title: res.data.codeMsg,
@@ -247,7 +247,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this
     that.setData({
       type: options.type,
@@ -256,48 +256,12 @@ Page({
     })
     wx.request({
       url: app.globalData.url + '/oss/alive/user-protocol.html',
-      success: function (res) {
+      success: function(res) {
         var article = res.data
         WxParse.wxParse('article', 'html', article, that, 5);
       }
     })
-    wx.request({
-      url: app.globalData.url + '/user/login-refresh',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': wx.getStorageSync('cookie')
-      },
-      method: 'post',
-      success: function (res) {
-        wx.hideToast()
-        if (res.data.code == 0) {
-          app.globalData.userInfoDetail = res.data.data
-          wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
-          wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
-          wx.showToast({
-            title: '登录成功',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-            complete: function complete(res) {
-              setTimeout(function () {
-                // if (that.data.type == 1) {
-                //   // wx.navigateBack({})
-                //   wx.setStorageSync('codeType', that.data.type)
-                // } else {
-                  wx.setStorageSync('codeType', that.data.type)
-                  wx.switchTab({
-                    url: '../index/index',
-                  })
-                // }
-              }, 500);
-            }
-          });
-         
-          
-        }
-      }
-    })
+
     // if (options.from != 1) {
     //   wx.login({
     //     success(res) {
@@ -404,13 +368,10 @@ Page({
             wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData,
             wxMinappIv: e.detail.iv,
           },
-          success: function (res) {
+          success: function(res) {
             wx.hideToast()
             if (res.data.code == 0) {
-              wx.showToast({
-                title: '操作成功',
-                icon: 'none'
-              })
+
               wx.setStorageSync('cookie', res.header['Set-Cookie'])
               wx.request({
                 url: app.globalData.url + '/user/login-refresh',
@@ -419,23 +380,27 @@ Page({
                   'cookie': wx.getStorageSync('cookie')
                 },
                 method: 'post',
-                success: function (res) {
+                success: function(res) {
                   wx.hideToast()
                   if (res.data.code == 0) {
                     app.globalData.userInfoDetail = res.data.data
                     wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                     wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
                     wx.setStorageSync('codeType', that.data.type)
-                    wx.switchTab({
-                      url: '../index/index',
-                    })
-                    // if (that.data.type == 1) {
-                    //   wx.navigateBack({})
-                    // } else {
-                    //   wx.switchTab({
-                    //     url: '../index/index',
-                    //   })
-                    // }
+                    wx.showToast({
+                      title: '登录成功',
+                      icon: 'none',
+                      duration: 2000,
+                      mask: true,
+                      complete: function complete(res) {
+                        setTimeout(function() {
+                          wx.setStorageSync('codeType', that.data.type)
+                          wx.switchTab({
+                            url: '../index/index',
+                          })
+                        }, 500);
+                      }
+                    });
 
                   } else {
                     wx.showToast({
@@ -469,7 +434,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
@@ -477,59 +442,162 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    if (wx.getStorageSync('loginHospitalId') == '') {
-      wx.showToast({
-        title: '选择医院',
-        icon: 'none',
-        duration: 2000,
-        mask: true,
-        complete: function complete(res) {
-          setTimeout(function () {
+  onShow: function() {
+    var that = this
+    // if (wx.getStorageSync('loginHospitalId') == '') {
+    //   wx.showToast({
+    //     title: '选择医院',
+    //     icon: 'none',
+    //     duration: 2000,
+    //     mask: true,
+    //     complete: function complete(res) {
+    //       setTimeout(function () {
+    //         wx.navigateTo({
+    //           url: '../hosList/hosList',
+    //         })
+    //       }, 500);
+    //     }
+    //   });
+    // }
+    this.setData({
+      loginHpitalName: wx.getStorageSync('loginHpitalName') || '' // app.globalData.loginHpitalName || ''
+    })
+    wx.request({
+      url: app.globalData.url + '/user/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function(res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          app.globalData.userInfoDetail = res.data.data
+          wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+          wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+          wx.showToast({
+            title: '登录成功',
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+            complete: function complete(res) {
+              setTimeout(function() {
+                wx.setStorageSync('codeType', that.data.type)
+                wx.switchTab({
+                  url: '../index/index',
+                })
+              }, 500);
+            }
+          });
+        } else {
+          if (wx.getStorageSync('loginHospitalId') == '' || wx.getStorageSync('loginHospitalId') == undefined || wx.getStorageSync('loginHospitalId') == null) {
             wx.navigateTo({
               url: '../hosList/hosList',
             })
-          }, 500);
+          } else {
+            wx.login({
+              success(res) {
+                var code = res.code
+                wx.request({
+                  url: app.globalData.url + '/user/login-by-wxminapp',
+                  header: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                  },
+                  method: 'post',
+                  data: {
+                    wsJsCode: code,
+                    loginHospitalId: wx.getStorageSync('loginHospitalId'),
+                  },
+                  success: function(res) {
+                    wx.hideToast()
+                    if (res.data.code == 0) {
+
+                      wx.setStorageSync('cookie', res.header['Set-Cookie'])
+                      wx.request({
+                        url: app.globalData.url + '/user/login-refresh',
+                        header: {
+                          "Content-Type": "application/x-www-form-urlencoded",
+                          'cookie': wx.getStorageSync('cookie')
+                        },
+                        method: 'post',
+                        success: function(res) {
+                          wx.hideToast()
+                          if (res.data.code == 0) {
+                            app.globalData.userInfoDetail = res.data.data
+                            wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                            wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+                            wx.setStorageSync('codeType', that.data.type)
+                            wx.showToast({
+                              title: '登录成功',
+                              icon: 'none',
+                              duration: 2000,
+                              mask: true,
+                              complete: function complete(res) {
+                                setTimeout(function() {
+                                  wx.switchTab({
+                                    url: '../index/index',
+                                  })
+                                }, 500);
+                              }
+                            });
+
+                          } else {
+                            wx.showToast({
+                              title: res.data.codeMsg,
+                              icon: 'none'
+                            })
+                          }
+                        }
+                      })
+                    } else {
+                      wx.showToast({
+                        title: res.data.codeMsg,
+                        icon: 'none'
+                      })
+                    }
+                  }
+                })
+              }
+            })
+          }
+
         }
-      });
-    }
-    this.setData({
-      loginHpitalName: wx.getStorageSync('loginHpitalName') || '' // app.globalData.loginHpitalName || ''
+      }
     })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })

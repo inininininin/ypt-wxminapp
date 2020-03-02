@@ -1,6 +1,68 @@
-<!--logs.wxml-->
-<view class="container log-list">
-  <block wx:for="{{logs}}" wx:for-item="log">
-    <text class="log-item">{{index + 1}}. {{log}}</text>
-  </block>
+<!--pages/login/login.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+	<view class="header">
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px">
+		</view>
+	</view>
 </view>
+<image mode="aspectFill" class="logo" src="../icon/logo.png"></image>
+<text class="hosName" bindtap="changeHos">{{loginHpitalName}}</text>
+
+<!-- 手机登录 -->
+<view wx:if='{{showPhone}}'>
+	<text class="title">手机快捷登录</text>
+	<view class="line linephone" style="border-bottom: 1rpx solid #e5e5e5;">
+		<input placeholder-class="placeholder-class" type="number" maxlength="11" value='{{key}}' bindinput="loginPhone" placeholder="请输入手机号"></input>
+		<!-- <image mode="aspectFill" src="../icon/delete.png" wx:if="{{key}}" bindtap="eliminate"></image> -->
+	</view>
+	<view class="line">
+		<input bindinput="code" placeholder-class="placeholder-class" placeholder="请输入验证码"></input>
+    		<text bindtap="smsvcodeGet">{{times}}</text>
+
+	</view>
+	
+	<view class="login" bindtap="login">登录</view>
+  <view class="registerXy" >
+		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{selectAgree}}" src="../icon/select1@2x.png"></image>
+		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{!selectAgree}}" src="../icon/Not-selected1@2x.png"></image>
+		<view>我已经阅读并同意
+			<text style="color:rgb(0,181,252);" bindtap="loginXy">《用户协议与隐私政策》</text>
+		</view>
+	</view>
+	<view class="loginChange">
+		<text class="loginWx" bindtap="loginByPhone">微信登录</text>
+		<text class="changeHos" bindtap="changeHos">更换医院</text>
+	</view>
+</view>
+<view wx:if='{{!showPhone}}'>
+	<view class="loginByWx" bindtap="loginWx">
+		<image mode="aspectFill" src="../icon/weixin.png"></image>
+		微信登录
+	</view>
+	<view class="loginChange" style="margin-top:30rpx;width:596rpx">
+		<text class="loginWx" bindtap="loginByPhone">手机号登录</text>
+		<text class="changeHos" bindtap="changeHos">更换医院</text>
+	</view>
+
+</view>
+<!-- <view class="userZc"><navigator url="../webview/webview?href={{href}}/oss/alive/user-protocol.html">用户协议与隐私政策</navigator></view> -->
+
+<view class="popWindow" wx:if='{{showIs}}'>
+	<view>
+		<!-- <text>微信授权登录</text> -->
+		<view>
+			<import src="../../wxParse/wxParse.wxml" />
+			<view class="wxParse">
+				<template is="wxParse" data="{{wxParseData:article.nodes}}" />
+			</view>
+
+		</view>
+		<view>
+			<button class="refuse" bindtap="refuse">不同意</button>
+			<button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+		</view>
+	</view>
+</view>
+
+<text class="version">ver : {{version}}</text>
