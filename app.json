@@ -19,7 +19,7 @@
     
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "医品通",
     "navigationBarTextStyle": "black",

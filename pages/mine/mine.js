@@ -16,7 +16,8 @@ Page({
     avator:'',
     tcode:'',
     imglist:[],
-    version:''
+    version:'',
+    bgUrl: app.globalData.url +'/wxminapp-resource/bj.jpg'
   },
   tel(e) {
     wx.makePhoneCall({

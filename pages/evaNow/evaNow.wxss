@@ -304,5 +304,5 @@ height: 40rpx;
 position: absolute;
 right: 5rpx;
 top: 5rpx;
-z-index: 1000;
+z-index: 3;
 }

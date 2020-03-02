@@ -6,7 +6,6 @@ page {
 
 .container {
   box-sizing: border-box;
-  background: #fff;
 }
 
 .header {
