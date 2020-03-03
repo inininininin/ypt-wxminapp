@@ -87,7 +87,7 @@ border-radius: 4rpx;
   border-bottom: 1rpx solid #e2e2e2;
   line-height: 72rpx;
 }
-.evaitem>view:nth-child(1) image{
+.evaitem>view:nth-child(1)>image{
   width: 32rpx;
   height: 32rpx;
   margin: 20rpx 10rpx 20rpx 30rpx;
@@ -103,7 +103,7 @@ color: rgba(51,51,51,1);
 line-height: 72rpx;
 letter-spacing: 0.1rpx;
 }
-.evaitem>view:nth-child(1)>text:nth-child(3){
+.evaitem>view:nth-child(1)>text:last-child{
 opacity: 1;
 float: right;
 font-size: 24rpx;
@@ -113,6 +113,18 @@ color: rgba(153,153,153,1);
 line-height: 72rpx;
 margin-right: 30rpx;
 letter-spacing: 0px;
+}
+.evaitem>view:nth-child(1)>view{
+  display: inline-block;
+  height: 72rpx;
+  line-height: 72rpx;
+  margin-left: 20rpx;
+}
+.evaitem>view:nth-child(1)>view image{
+  width: 24rpx;
+  height: 24rpx;
+  vertical-align: middle;
+  margin: 0 10rpx 0 0;
 }
 .evaitem>view:nth-child(2){
   margin: 23rpx 30rpx;
@@ -128,4 +140,15 @@ color: rgba(102,102,102,1);
 line-height: 37rpx;
 letter-spacing: 0rpx;
 word-break:break-all;word-wrap:break-word
+}
+
+.imageBox{
+  width: 642rpx;
+  margin: 0 30rpx;
+  height: auto;
+}
+.imageBox>image{
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 10rpx;
 }

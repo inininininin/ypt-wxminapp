@@ -7,14 +7,9 @@ page {
 
 .container {
   box-sizing: border-box;
-  background: url(https://test.ypt.njshangka.com/wxminapp-resource/bj.jpg) no-repeat;
-  background-size: cover;
-  background-position: center;
   height: 424rpx;
   position: relative;
 }
-
-
 
 .container>text:nth-child(1) {
   width: 100%;
