@@ -247,7 +247,7 @@ vertical-align: middle;
 .loginByWx {
   width: 596rpx;
   height: 90rpx;
-  margin: 200rpx 77rpx 0;
+  margin: 50rpx  77rpx 0;
   background: #17bb07;
   border-radius: 45rpx;
   font-size: 34rpx;
@@ -275,3 +275,33 @@ display: block;
 text-align: center;
 margin: 38rpx 0;
 } */
+.knowHos{
+  width: 596rpx;
+  height: 250rpx;
+  border: 1rpx solid #536d95;
+  margin: 150rpx auto 0;
+}
+.knowHos>image{
+  display: absolute;
+  width: 596rpx;
+  height: 250rpx;
+  margin-top: -250rpx;
+  left: 0;
+}
+.knowHos>view:nth-child(1){
+  width: 100%;
+  text-align: center;
+  font-size: 36rpx;
+  line-height: 120rpx;
+  color: #536d95;
+}
+.knowHos>view:nth-child(2){
+  color: #536d95;
+}
+.knowHos>view:nth-child(2) text{
+  display: inline-block;
+  line-height: 120rpx;
+  font-size: 32rpx;
+  width: 198rpx;
+  text-align: center;
+}

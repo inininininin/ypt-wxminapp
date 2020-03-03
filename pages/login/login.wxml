@@ -18,12 +18,12 @@
 	</view>
 	<view class="line">
 		<input bindinput="code" placeholder-class="placeholder-class" placeholder="请输入验证码"></input>
-    		<text bindtap="smsvcodeGet">{{times}}</text>
+		<text bindtap="smsvcodeGet">{{times}}</text>
 
 	</view>
-	
+
 	<view class="login" bindtap="login">登录</view>
-  <view class="registerXy" >
+	<view class="registerXy">
 		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{selectAgree}}" src="../icon/select1@2x.png"></image>
 		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{!selectAgree}}" src="../icon/Not-selected1@2x.png"></image>
 		<view>我已经阅读并同意
@@ -36,6 +36,15 @@
 	</view>
 </view>
 <view wx:if='{{!showPhone}}'>
+	<view class="knowHos">
+		<view>更全面了解医院</view>
+		<view>
+			<text>医院信息</text>
+			<text>医护评价</text>
+			<text>科室列表</text>
+		</view>
+		<!-- <image mode="aspectFill"  src="../icon/bgc.jpg"></image> -->
+	</view>
 	<view class="loginByWx" bindtap="loginWx">
 		<image mode="aspectFill" src="../icon/weixin.png"></image>
 		微信登录
