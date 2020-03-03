@@ -1,5 +1,5 @@
 <!--pages/mine/mine.wxml-->
-<view class="container" >
+<view class="container" style="background: url({{bgUrl}}) no-repeat;background-size: cover;background-position: center;" >
   <text>{{names||''}}</text>
   <text>{{phone||''}}</text>
   <image mode="aspectFill" class="avator" bindtap="avator" src="{{avator}}"></image>

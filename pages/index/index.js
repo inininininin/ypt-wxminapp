@@ -11,13 +11,17 @@ Page({
   },
   // 查看二维码
   lookCode(e) {
-    var current = e.currentTarget.dataset.src;
+    // var current =  e.currentTarget.dataset.src;
     wx.previewImage({
-      current: current, // 当前显示图片的http链接
-      urls: this.data.imglist // 需要预览的图片http链接列表
+      // current: current, // 当前显示图片的http链接
+      urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
     })
   },
-
+  lookBigPic(e){
+    wx.previewImage({
+      urls: [e.currentTarget.dataset.src]
+    })
+  },
   scan(e) {
     wx.scanCode({
       success(res) {

@@ -12,7 +12,7 @@
 </view>
 <view class="topIndex">
 <!-- src="{{hosDetail.cover||'../icon/Bitmap.png'}}" -->
-  <image  mode="aspectFill"  src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
+  <image  mode="aspectFill" bindtap="lookBigPic"  data-src="{{testImg||'../icon/Bitmap.png'}}" src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
   <view>
   <!-- src="{{item}}" -->
     <view class="lineOne">{{hosDetail.name}} <image mode="aspectFill" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}"  class="tcode" src="../icon/tcode.png"></image></view>
@@ -23,13 +23,13 @@
     </view>
   </view>
 </view>
-<view class="intro">
+<view class="intro"   data-detail='{{hospitalDetail}}' bindtap="lookMoreDetail">
   <view class="introTitle">
     <view>
       <text></text>
       <text>医院简介</text>
     </view>
-    <text bindtap="lookMoreDetail" data-detail='{{hospitalDetail}}'>查看更多</text>
+    <text>查看详情</text>
   </view>
   <text class="lineSix">{{hosDetail.intro}}</text>
 </view>

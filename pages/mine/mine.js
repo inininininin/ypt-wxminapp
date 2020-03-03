@@ -16,7 +16,8 @@ Page({
     avator:'',
     tcode:'',
     imglist:[],
-    version:''
+    version:'',
+    bgUrl: app.globalData.url +'/wxminapp-resource/bj.jpg'
   },
   tel(e) {
     wx.makePhoneCall({
@@ -99,7 +100,8 @@ Page({
           app.globalData.userInfo= null,
           app.globalData.userInfoDetail=[],
           wx.redirectTo({
-            url: '../login/login?from=1',
+            // url: '../login/login?from=1',
+            url: '../logs/logs',
           })
         } else {
           wx.showToast({

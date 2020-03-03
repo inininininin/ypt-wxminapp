@@ -45,15 +45,17 @@
 </view>
 
 <view class="evaNowBtn" bindtap="evaNow">提交评价</view>
-<view class="evaEnd "  wx:if='{{hidden}}'>
-	<view class="evaBox">
-		<image mode="aspectFill" src="../icon/success@2x.png"></image>
-		<text>提交成功</text>
-		<text>您可以在评价中查看</text>
-		<view>
-			<text bindtap="back">返回</text>
-			<text></text>
-			<text bindtap="detail">查看详情</text>
-		</view>
-	</view>
-</view>
+
+<cover-view class="evaEnd "  wx:if='{{hidden}}'>
+	<cover-view class="evaBox">
+		<cover-image mode="aspectFill" src="../icon/success@2x.png"></cover-image>
+		<cover-view class='evaSuccess'>提交成功</cover-view>
+		<cover-view class="evaLook">您可以在评价中查看</cover-view>
+		<cover-view class="evaBtn">
+			<cover-view class="evaback"  catchtap="back">返回主页</cover-view>
+			<cover-view  class="evaline"></cover-view>
+			<cover-view class="evadetail" catchtap="detail">查看详情</cover-view>
+		</cover-view>
+	</cover-view>
+</cover-view>
+
