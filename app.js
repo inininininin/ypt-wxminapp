@@ -8,7 +8,7 @@ App({
     userInfoDetail: [],
     entity: [],
     url: 'https://ypt.njshangka.com',
-    version: '2002282250-b454dbf',
+    version: '2002282250-b454dbf', 
     cookie: ''
   },
   onLaunch: function () {
