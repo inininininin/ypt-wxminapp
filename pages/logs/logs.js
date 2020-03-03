@@ -178,15 +178,12 @@ Page({
                 data: {
                   wsJsCode: code,
                   smsvcode: that.data.code,
+                  phone:that.data.key,
                   loginHospitalId: wx.getStorageSync('loginHospitalId'),
                 },
                 success: function (res) {
                   wx.hideToast()
                   if (res.data.code == 0) {
-                    wx.showToast({
-                      title: '操作成功',
-                      icon: 'none'
-                    })
                     wx.setStorageSync('cookie', res.header['Set-Cookie'])
                     // wx.getStorageSync('cookie') =wx.getStorageSync('cookie')
                     wx.request({
@@ -204,16 +201,20 @@ Page({
                           wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                           wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
                           wx.setStorageSync('codeType', that.data.type)
-                          wx.switchTab({
-                            url: '../index/index',
-                          })
-                          // if (that.data.type == 1) {
-                          //   wx.navigateBack({})
-                          // } else {
-                          //   wx.switchTab({
-                          //     url: '../index/index',
-                          //   })
-                          // }
+                          wx.showToast({
+                            title: '登录成功',
+                            icon: 'none',
+                            duration: 2000,
+                            mask: true,
+                            complete: function complete(res) {
+                              setTimeout(function() {
+                                wx.setStorageSync('codeType', that.data.type)
+                                wx.switchTab({
+                                  url: '../index/index',
+                                })
+                              }, 500);
+                            }
+                          });
                         } else {
                           wx.showToast({
                             title: res.data.codeMsg,
@@ -348,7 +349,6 @@ Page({
     })
   },
   getPhoneNumber(e) {
-
     wx.login({
       success(res) {
         var code = res.code
