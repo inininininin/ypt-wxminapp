@@ -8,6 +8,9 @@ Page({
     titleBarHeight: getApp().globalData.titleBarHeight,
     testImg: "../icon/Bitmap.png",
     imglist: [],
+    hosDetail: '',
+    departDetail: '',
+    docList: [],
   },
   // 查看二维码
   lookCode(e) {
@@ -17,7 +20,7 @@ Page({
       urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
     })
   },
-  lookBigPic(e){
+  lookBigPic(e) {
     wx.previewImage({
       urls: [e.currentTarget.dataset.src]
     })
@@ -72,6 +75,7 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
+
           app.globalData.hospitalName = res.data.data.name
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
@@ -155,7 +159,7 @@ Page({
           that.setData({
             docList: res.data.data.rows
           })
-        } else if(res.data.code==20){
+        } else if (res.data.code == 20) {
           wx.showToast({
             title: res.data.codeMsg,
             icon: 'none',
@@ -163,14 +167,14 @@ Page({
             mask: true,
             complete: function complete(res) {
               setTimeout(function () {
-                  wx.setStorageSync('codeType', that.data.type)
-                  wx.navigateTo({
-                    url: '../login/login',
-                  })
+                wx.setStorageSync('codeType', that.data.type)
+                wx.navigateTo({
+                  url: '../login/login',
+                })
               }, 500);
             }
           });
-        }else{
+        } else {
           wx.showToast({
             title: res.data.codeMsg,
             icon: 'none',
@@ -179,14 +183,13 @@ Page({
       }
     })
   },
-  onLoad: function (options) {
-  },
+  onLoad: function (options) {},
   onShow: function (options) {
-    if(options&&options.hospitalid){
+    if (options && options.hospitalid) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
-    
+
     if (wx.getStorageSync('codeType') == 1) {
       wx.navigateTo({
         url: '../evaNow/evaNow?type=' + wx.getStorageSync('type') + '&isfrom=1&id=' + wx.getStorageSync('id'),
@@ -232,11 +235,11 @@ Page({
     })
   },
   onPullDownRefresh: function () {
-    this.setData({
-      hosDetail: '',
-      departDetail: '',
-      docList: [],
-    })
+    // this.setData({
+    //   hosDetail: '',
+    //   departDetail: '',
+    //   docList: [],
+    // })
     this.hosDetail()
     this.departDetail()
     this.docList()
