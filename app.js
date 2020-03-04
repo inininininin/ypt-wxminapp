@@ -7,7 +7,7 @@ App({
     userInfo: null,
     userInfoDetail: [],
     entity: [],
-    url: 'https://ypt.njshangka.com',
+    url: 'https://test.ypt.njshangka.com',
     version: '2003031011-73a66f0', 
     cookie: ''
   },
