@@ -1,35 +1,42 @@
 <!--pages/mine/mine.wxml-->
-<view class="container" style="background: url({{bgUrl}}) no-repeat;background-size: cover;background-position: center;" >
-  <text>{{names||''}}</text>
-  <text>{{phone||''}}</text>
-  <image mode="aspectFill" class="avator" bindtap="avator" src="{{avator}}"></image>
-  <image mode="aspectFill" class="edit" bindtap="edit" src="../icon/bianji.png"></image>
+<view class="container" style="background: url({{bgUrl}}) no-repeat;background-size: cover;background-position: center;">
+	<text>{{names||''}}</text>
+	<text>{{phone||''}}</text>
+	<image mode="aspectFill" class="avator" bindtap="avator" src="{{avator}}"></image>
+	<image mode="aspectFill" class="edit" bindtap="edit" src="../icon/bianji.png"></image>
+  <text wx:if='{{withoutLogin}}' class="toLogin" bindtap="toLogin">点击登陆</text>
 </view>
+
 <view class="lineBox">
-  <view class="line" bindtap="tCode" wx:if='{{typeUser!=0}}'>
-    <text>二维码</text>
-    <image mode="aspectFill" class="right" src="../icon/right.png"></image>
-    <image  mode="aspectFill" class="tcode" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}" src="{{item}}"></image>
-  </view>
-  <view class="line">
-    <text>服务电话</text>
-    <text bindtap="tel" class="tel" data-tel='{{entityTel}}'>{{entityTel}}</text>
-  </view>
-  <view class="line" bindtap="loginout">
-    <text>退出登录</text>
-    <image mode="aspectFill" class="right" src="../icon/right.png"></image>
-  </view>
+	<view class="line" bindtap="tCode" wx:if='{{!withoutLogin&&typeUser!=0}}'>
+		<text>二维码</text>
+		<image mode="aspectFill" class="right" src="../icon/right.png"></image>
+		<image mode="aspectFill" class="tcode" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}" src="{{item}}"></image>
+	</view>
+	<view class="line">
+		<text>服务电话</text>
+		<text bindtap="tel" class="tel" data-tel='{{entityTel}}'>{{entityTel}}</text>
+	</view>
+	<view class="line" wx:if='{{!withoutLogin}}' bindtap="loginout">
+		<text>退出登录</text>
+		<image mode="aspectFill" class="right" src="../icon/right.png"></image>
+	</view>
+	<!-- <view class="line" wx:if='{{withoutLogin}}' bindtap="toLogin">
+    <text>去登陆</text>
+		<image mode=" aspectFill" class="right" src="../icon/right.png">
+		</image>
+	</view> -->
 </view>
 <text class="version">ver : {{version}}</text>
 <view bindtap="close" class="bgColor" wx:if='{{showIs}}'>
-  <view class="popThis" catchtap="inThis">
-    <text>修改昵称</text>
-    <input bindinput="name" value="{{names}}"></input>
-    <view>
-      <view  catchtap="close">取消</view>
-      <view catchtap="makesure">确定</view>
-    </view>
-  </view>
+	<view class="popThis" catchtap="inThis">
+		<text>修改昵称</text>
+		<input bindinput="name" value="{{names}}"></input>
+		<view>
+			<view catchtap="close">取消</view>
+			<view catchtap="makesure">确定</view>
+		</view>
+	</view>
 </view>
 <!-- <view bindtap="close" class="bgColor" wx:if='{{showIsTcode}}'>
   <image mode="aspectFill" class="showIsTcode"  src="{{tcode}}"></image>

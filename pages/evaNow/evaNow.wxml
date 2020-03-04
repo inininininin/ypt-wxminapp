@@ -52,7 +52,7 @@
 		<cover-view class='evaSuccess'>提交成功</cover-view>
 		<cover-view class="evaLook">您可以在评价中查看</cover-view>
 		<cover-view class="evaBtn">
-			<cover-view class="evaback"  catchtap="back">返回主页</cover-view>
+			<cover-view class="evaback"  catchtap="back">返回</cover-view>
 			<cover-view  class="evaline"></cover-view>
 			<cover-view class="evadetail" catchtap="detail">查看详情</cover-view>
 		</cover-view>

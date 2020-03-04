@@ -89,6 +89,7 @@ Page({
         ps: 15,
         kw:that.data.kw,
         officeId:that.data.officeId,
+        hosptialId:wx.getStorageSync('loginHospitalId')
       },
       method: 'get',
       success: function (res) {

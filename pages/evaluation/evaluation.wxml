@@ -7,7 +7,7 @@
 		</view>
 	</view>
 </view>
-<view>
+<view wx:if='{{!withoutLogin}}'>
 	<view class="introTitle" wx:if='{{doctorNum!=0}}'>
 		<view>
 			<text style="background:#2b77ef"></text>
@@ -20,9 +20,24 @@
 			<view>
 				<image mode="aspectFill" src="../icon/yishi.png"></image>
 				<text>{{item.doctorName||''}}</text>
+				<view class="star" wx:if='{{item.star==3}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==2}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==1}}'>
+					<image src="../icon/star.png"></image>
+				</view>
 				<text>{{item.addTime||''}}</text>
 			</view>
-			<view>{{item.content||''}}</view>
+			<view class="{{item.lineThree}}" data-evatype='1' data-id='{{item.doctorCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
+			<view class="imageBox">
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+			</view>
 		</view>
 
 	</view>
@@ -38,9 +53,24 @@
 			<view>
 				<image mode="aspectFill" src="../icon/yihu.png"></image>
 				<text>{{item.nurseName||''}}</text>
+				<view class="star" wx:if='{{item.star==3}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==2}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==1}}'>
+					<image src="../icon/star.png"></image>
+				</view>
 				<text>{{item.addTime||''}}</text>
 			</view>
-			<view>{{item.content||''}}</view>
+			<view class="{{item.lineThree}}" data-evatype='2' data-id='{{item.nurseCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
+			<view class="imageBox">
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+			</view>
 		</view>
 	</view>
 	<view class="introTitle" wx:if='{{hospitalNum!=0}}'>
@@ -55,16 +85,34 @@
 			<view>
 				<image mode="aspectFill" src="../icon/keshi.png"></image>
 				<text>{{loginHpitalName||''}}</text>
+				<view class="star" wx:if='{{item.star==3}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==2}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==1}}'>
+					<image src="../icon/star.png"></image>
+				</view>
 				<text>{{item.addTime||''}}</text>
 			</view>
-			<view class="lineTwo">{{item.content||''}}</view>
+			<view class="{{item.lineThree}}" data-evatype='3' data-id='{{item.hospitalCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
+			<view class="imageBox">
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+			</view>
 		</view>
 	</view>
+	<view class="showNone" wx:if='{{showNone}}'>
+		无数据
+	</view>
+</view>
+<view wx:if='{{withoutLogin}}' class="withoutLogin">
+	<text>登陆后方可继续访问</text>
+	<view bindtap="toLogin">去登陆</view>
 </view>
 <view class="pageLoading" style="display:{{allHidden}}">
 	<image mode="aspectFill" src="../icon/loadingIs.gif"></image>
 </view>
-<view class="showNone" wx:if='{{showNone}}'>
-  无数据
-</view>
-

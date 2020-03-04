@@ -24,7 +24,7 @@ Page({
 
   loginByPhone(e) {
     wx.redirectTo({
-      url: '../login/login',
+      url: '../login/login?fromType=' + this.data.fromType + '&backUrl=' + this.data.backUrl,
     })
   },
   selectIcon: function (e) {
@@ -170,7 +170,7 @@ Page({
               })
             } else {
               wx.request({
-                url: app.globalData.url + '/user/login-by-wxminapp',
+                url: app.globalData.url + '/user/login-by-smsvcode',//'/user/login-by-wxminapp',
                 header: {
                   "Content-Type": "application/x-www-form-urlencoded",
                 },
@@ -178,7 +178,7 @@ Page({
                 data: {
                   wsJsCode: code,
                   smsvcode: that.data.code,
-                  phone:that.data.key,
+                  phone: that.data.key,
                   loginHospitalId: wx.getStorageSync('loginHospitalId'),
                 },
                 success: function (res) {
@@ -201,17 +201,25 @@ Page({
                           wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                           wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
                           wx.setStorageSync('codeType', that.data.type)
+                          wx.setStorageSync('withoutLogin', false)
                           wx.showToast({
                             title: '登录成功',
                             icon: 'none',
                             duration: 2000,
                             mask: true,
                             complete: function complete(res) {
-                              setTimeout(function() {
-                                wx.setStorageSync('codeType', that.data.type)
-                                wx.switchTab({
-                                  url: '../index/index',
-                                })
+                              setTimeout(function () {
+                                wx.setStorageSync('historyUrl', that.data.backUrl)
+                                if (that.data.fromType == 1) {
+                                  wx.setStorageSync('fromTab', 1)
+                                  wx.switchTab({
+                                    url: '../index/index',
+                                  })
+                                } else {
+                                  wx.switchTab({
+                                    url: '../index/index',
+                                  })
+                                }
                               }, 500);
                             }
                           });
@@ -249,7 +257,9 @@ Page({
     that.setData({
       type: options.type,
       href: app.globalData.url,
-      version: app.globalData.version.split('-')[0]
+      version: app.globalData.version.split('-')[0],
+      fromType: options.fromType,
+      backUrl: options.backUrl
     })
     wx.request({
       url: app.globalData.url + '/oss/alive/user-protocol.html',
@@ -359,7 +369,7 @@ Page({
           },
           method: 'post',
           data: {
-            wsJsCode: code,
+            // wsJsCode: code,
             loginHospitalId: wx.getStorageSync('loginHospitalId'),
             wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData,
             wxMinappIv: e.detail.iv,
@@ -367,10 +377,6 @@ Page({
           success: function (res) {
             wx.hideToast()
             if (res.data.code == 0) {
-              wx.showToast({
-                title: '操作成功',
-                icon: 'none'
-              })
               wx.setStorageSync('cookie', res.header['Set-Cookie'])
               wx.request({
                 url: app.globalData.url + '/user/login-refresh',
@@ -386,9 +392,30 @@ Page({
                     wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                     wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
                     wx.setStorageSync('codeType', that.data.type)
-                    wx.switchTab({
-                      url: '../index/index',
-                    })
+                    wx.setStorageSync('withoutLogin', false)
+
+                    wx.showToast({
+                      title: '登录成功',
+                      icon: 'none',
+                      duration: 2000,
+                      mask: true,
+                      complete: function complete(res) {
+                        setTimeout(function () {
+                          wx.setStorageSync('historyUrl', that.data.backUrl)
+                          if (that.data.fromType == 1) {
+                            wx.setStorageSync('fromTab', 1)
+                            wx.switchTab({
+                              url: '../index/index',
+                            })
+                          } else {
+                            wx.switchTab({
+                              url: '../index/index',
+                            })
+                          }
+                        }, 500);
+                      }
+                    });
+
                     // if (that.data.type == 1) {
                     //   wx.navigateBack({})
                     // } else {
@@ -457,7 +484,7 @@ Page({
     this.setData({
       loginHpitalName: wx.getStorageSync('loginHpitalName') || '' // app.globalData.loginHpitalName || ''
     })
-    
+
   },
 
   /**

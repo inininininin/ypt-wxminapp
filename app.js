@@ -8,10 +8,12 @@ App({
     userInfoDetail: [],
     entity: [],
     url: 'https://test.ypt.njshangka.com',
-    version: '2003031011-73a66f0', 
-    cookie: ''
+    version: '2002281350-7d3e4a4',
+    cookie: '',
+    withoutLogin:'',
   },
   onLaunch: function () {
+
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -74,5 +76,11 @@ App({
     }
     return _cover
 
-  }
+  },
+  historyUrl(){
+    var pages = getCurrentPages()               //获取加载的页面
+    var currentPage = pages[pages.length-1]    //获取当前页面的对象
+    var url ='..'+ currentPage.route.split('pages')[1] 
+    return url
+  },
 })

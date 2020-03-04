@@ -36,15 +36,7 @@
 	</view>
 </view>
 <view wx:if='{{!showPhone}}'>
-	<view class="knowHos">
-		<view>更全面了解医院</view>
-		<view>
-			<text>医院信息</text>
-			<text>医护评价</text>
-			<text>科室列表</text>
-		</view>
-		<!-- <image mode="aspectFill"  src="../icon/bgc.jpg"></image> -->
-	</view>
+
 	<view class="loginByWx" bindtap="loginWx">
 		<image mode="aspectFill" src="../icon/weixin.png"></image>
 		微信登录

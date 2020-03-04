@@ -77,7 +77,6 @@ Page({
         const tempFilePaths = res.tempFilePaths
         var picBlob = that.data.picBlob
         for (var i in tempFilePaths) {
-
           wx.uploadFile({
             url: app.globalData.url + '/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
             filePath: tempFilePaths[i],
@@ -87,7 +86,6 @@ Page({
               var url = data.data.url
               var imglist = that.data.imglist
               if (data.code == 0) {
-                
                 if (that.data.imgBlob == '') {
                   var imgBlob = url
                 } else {
@@ -98,16 +96,19 @@ Page({
                   imglist: imglist,
                   imgBlob: imgBlob
                 })
-
               }
             },
             fail: function (res) {
-              console.log(res)
               wx.showToast({
-                  title: res,
-                  icon: 'success',
-                  duration: 2000
-                })
+                title: res,
+                icon: 'none',
+                duration: 2000,
+                mask: true,
+                complete: function complete(res) {
+                
+                }
+              });
+             
             }
           })
         }
@@ -141,8 +142,11 @@ Page({
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
     var that = this
-    wx.setStorageSync('type', options.type)
+    debugger
+    console.log(options.type,options.isFrom)
+    wx.setStorageSync('type', options.type) 
     wx.setStorageSync('id', options.id)
+    console.log(wx.getStorageSync('type'),wx.getStorageSync('id'))
     if (wx.getStorageSync('type') == 1) {
       wx.request({
         url: app.globalData.url + '/doctor',
@@ -212,7 +216,8 @@ Page({
   evaNow(e) {
     wx.showToast({
       title: '操作中',
-      icon: 'none'
+      icon: 'none',
+      duration:1000
     })
     var that = this
     if (that.data.type == 1) {
@@ -225,7 +230,9 @@ Page({
     if (that.data.star == '' || that.data.content == '') {
       wx.showToast({
         title: '请填写完整',
-      })
+        icon: 'none',
+        duration: 1000
+      });
     } else {
       wx.request({
         url: app.globalData.url + that.data.url + params,
@@ -236,16 +243,11 @@ Page({
         data: {
           star: that.data.star,
           content: that.data.content,
-          cover: that.data.imgBlob
+          image: that.data.imgBlob
         },
         method: 'post',
         success: function (res) {
-          if (res.data.codeMsg) {
-            wx.showModal({
-              showCancel: false,
-              title: res.data.codeMsg
-            })
-          }
+          
           if (res.data.code == 0) {
             wx.hideToast({
               complete: (res) => {},
@@ -254,10 +256,15 @@ Page({
               hidden: true
             })
           } else {
-            wx.showModal({
-              showCancel: false,
-              title: res.data.codeMsg
-            })
+            wx.showToast({
+              title: res.data.codeMsg,
+              icon: 'none',
+              duration: 2000,
+              mask: true,
+              complete: function complete(res) {
+              
+              }
+            });
           }
         }
       });
@@ -270,7 +277,7 @@ Page({
     })
   },
   detail(e) {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../evalutionList/evalutionList?type=' + this.data.type,
     })
   },
@@ -290,6 +297,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that=this
     wx.request({
       url: app.globalData.url + '/user/login-refresh',
       header: {
@@ -300,7 +308,13 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-
+          app.globalData.userInfoDetail = res.data.data
+          if(wx.getStorageSync('type')  == 3){
+            that.setData({
+              navtitle:res.data.data.hospitalName
+            })
+          }
+         
         } else {
           wx.showToast({
             title: res.data.codeMsg,
@@ -309,8 +323,10 @@ Page({
             mask: true,
             complete: function complete(res) {
               setTimeout(function () {
+                console.log( app.historyUrl() )
+                wx.setStorageSync('historyUrl', app.historyUrl() )
                 wx.navigateTo({
-                  url: '../login/login?type=1',
+                  url: '../login/login?fromType=2',
                 })
               }, 500);
             }

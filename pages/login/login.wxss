@@ -247,7 +247,7 @@ vertical-align: middle;
 .loginByWx {
   width: 596rpx;
   height: 90rpx;
-  margin: 50rpx  77rpx 0;
+  margin: 200rpx  77rpx 0;
   background: #17bb07;
   border-radius: 45rpx;
   font-size: 34rpx;
