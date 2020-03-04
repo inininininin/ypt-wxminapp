@@ -52,19 +52,17 @@ Page({
         duration: 1000
       })
     } else if (wx.getStorageSync('loginHospitalId') == '' || wx.getStorageSync('loginHospitalId') == null || wx.getStorageSync('loginHospitalId') == undefined) {
-      wx.showToast({
-        title: '选择医院',
-        icon: 'none',
-        duration: 2000,
-        mask: true,
-        complete: function complete(res) {
-          setTimeout(function () {
+      wx.showModal({
+        content: '请先选择一个医院',
+        showCancel:false,
+        success (res) {
+          if (res.confirm) {
             wx.navigateTo({
               url: '../hosList/hosList',
             })
-          }, 100);
+          } 
         }
-      });
+      })
     } else {
       that.setData({
         showIs: true
@@ -149,19 +147,17 @@ Page({
           if (res.code) {
             var code = res.code
             if (wx.getStorageSync('loginHospitalId') == '') {
-              wx.showToast({
-                title: '选择医院',
-                icon: 'none',
-                duration: 1000,
-                mask: true,
-                complete: function complete(res) {
-                  setTimeout(function () {
+              wx.showModal({
+                content: '请先选择一个医院',
+                showCancel:false,
+                success (res) {
+                  if (res.confirm) {
                     wx.navigateTo({
                       url: '../hosList/hosList',
                     })
-                  }, 500);
+                  } 
                 }
-              });
+              })
             } else if (that.data.key == '' || that.data.code == '') {
               wx.showToast({
                 title: '请填写完整',
@@ -467,19 +463,17 @@ Page({
   onShow: function () {
     var that = this
     if (wx.getStorageSync('loginHospitalId') == '') {
-      wx.showToast({
-        title: '选择医院',
-        icon: 'none',
-        duration: 2000,
-        mask: true,
-        complete: function complete(res) {
-          setTimeout(function () {
+      wx.showModal({
+        content: '请先选择一个医院',
+        showCancel:false,
+        success (res) {
+          if (res.confirm) {
             wx.navigateTo({
               url: '../hosList/hosList',
             })
-          }, 500);
+          } 
         }
-      });
+      })
     }
     this.setData({
       loginHpitalName: wx.getStorageSync('loginHpitalName') || '' // app.globalData.loginHpitalName || ''

@@ -22,7 +22,7 @@ Page({
   },
   toLogin(e) {
     var backUrl = '../mine/mine';
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../logs/logs?fromType=1&backUrl=' + backUrl,
     })
   },
@@ -118,14 +118,7 @@ Page({
           //   url: '../logs/logs',
           // })
 
-          wx.showToast({
-            title: '退出中',
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-            complete: function complete(res) {
-              setTimeout(function () {
-                wx.setStorageSync('cookie', '')
+          wx.setStorageSync('cookie', '')
                 app.globalData.userInfo = '' //null
                 app.globalData.userInfoDetail = []
                 wx.setStorageSync('withoutLogin', true)
@@ -135,9 +128,6 @@ Page({
                   avator: '../icon/moren.png',
                   withoutLogin: true,
                 })
-              }, 500);
-            }
-          });
         } else {
           wx.showToast({
             title: res.data.codeMsg,

@@ -24,7 +24,7 @@ Page({
   },
   toLogin(e) {
     var backUrl = '../news/news';
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../logs/logs?fromType=1&backUrl=' + backUrl,
     })
   },
@@ -32,6 +32,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    debugger
     this.lastPage(0)
   },
   lookAll(e) {
@@ -156,7 +157,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    debugger
   },
 
 
@@ -164,6 +165,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    debugger
     if(wx.getStorageSync('withoutLogin')===true||wx.getStorageSync('withoutLogin')===""){
       this.setData({
         withoutLogin:true
@@ -184,14 +186,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    debugger
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    debugger
   },
 
   /**
@@ -210,6 +212,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+
     var that = this
     var toPageNo = that.data.toPageNo
     that.lastPage(toPageNo)
