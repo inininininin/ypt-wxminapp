@@ -250,7 +250,7 @@ Page({
             avator: avator,
             withoutLogin: false
           })
-          var param = encodeURIComponent('../evaNow/evaNow?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId))
+          var param = encodeURIComponent('pages/evaNow/evaNow?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId))
           console.log(app.globalData.userInfoDetail.type)
           wx.getImageInfo({
             src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=200',
