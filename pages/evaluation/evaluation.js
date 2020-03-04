@@ -16,6 +16,13 @@ Page({
     doctorNum: 0,
     nurseNum: 0,
     hospitalNum: 0,
+    withoutLogin:false
+  },
+  toLogin(e) {
+    var backUrl = '../evaluation/evaluation';
+    wx.navigateTo({
+      url: '../logs/logs?fromType=1&backUrl=' + backUrl,
+    })
   },
   lookDetail(e) {
     var that = this
@@ -119,12 +126,13 @@ Page({
               hospitalNum: res.data.data.rowCount,
             });
           }
-        } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
-          })
-        }
+        } 
+        // else {
+        //   wx.showModal({
+        //     showCancel: false,
+        //     title: res.data.codeMsg
+        //   })
+        // }
       }
     });
   },
@@ -179,12 +187,13 @@ Page({
               hospitalList: res.data.data.rows,
             });
           }
-        } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
-          })
-        }
+        } 
+        // else {
+        //   wx.showModal({
+        //     showCancel: false,
+        //     title: res.data.codeMsg
+        //   })
+        // }
       }
     });
   },
@@ -206,9 +215,30 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if(wx.getStorageSync('withoutLogin')===true||wx.getStorageSync('withoutLogin')===''){
+      this.setData({
+        withoutLogin:true,
+        doctorList: [],
+        nurseList: [],
+        hospitalList: [],
+      })
+    }else{
+      if(this.data.doctorList&&this.data.doctorList.length==0&&this.data.nurseList.length==0&&this.data.hospitalList.length==0){
+        this.lastPage(0, '/user/my-doctor-comments', 'doctorList')
+        this.lastPage(0, '/user/my-nurse-comments', 'nurseList')
+        this.lastPage(0, '/user/my-hospital-comments', 'hospitalList')
+        this.numList(0, '/user/my-doctor-comments-sum', 'doctorList')
+        this.numList(0, '/user/my-nurse-comments-sum', 'nurseList')
+        this.numList(0, '/user/my-hospital-comments-sum', 'hospitalList')
+      }
+      
+      this.setData({
+        withoutLogin:false
+      })
+    }
     this.setData({
       allHidden: 'none',
-      loginHpitalName: wx.getStorageSync('loginHpitalName')
+      loginHpitalName: wx.getStorageSync('loginHpitalName'),
     })
   },
 

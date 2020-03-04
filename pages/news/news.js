@@ -14,11 +14,18 @@ Page({
     showIs: false,
     newDate: '',
     newVal: '',
-    showNone:false
+    showNone:true,
+    withoutLogin:''
   },
   close() {
     this.setData({
       showIs: false
+    })
+  },
+  toLogin(e) {
+    var backUrl = '../news/news';
+    wx.navigateTo({
+      url: '../logs/logs?fromType=1&backUrl=' + backUrl,
     })
   },
   /**
@@ -131,15 +138,17 @@ Page({
           } else {
             that.setData({
               schemeList: newSchemeListArr,
-              toPageNo: String(toPageNo)
+              toPageNo: String(toPageNo),
+              showNone:false
             });
           }
-        } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
-          })
-        }
+        } 
+        // else {
+        //   wx.showModal({
+        //     showCancel: false,
+        //     title: res.data.codeMsg
+        //   })
+        // }
       }
     });
   },
@@ -155,7 +164,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(wx.getStorageSync('withoutLogin')===true||wx.getStorageSync('withoutLogin')===""){
+      this.setData({
+        withoutLogin:true
+      })
+    }else{
+      var that = this
+      that.setData({
+        schemeList: [],
+      })
+      that.lastPage(0)
+      this.setData({
+        withoutLogin:false
+      })
+    }
   },
 
   /**
@@ -181,8 +203,6 @@ Page({
       schemeList: [],
     })
     that.lastPage(0)
-
-
     wx.stopPullDownRefresh()
   },
 

@@ -142,8 +142,11 @@ Page({
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
     var that = this
-    wx.setStorageSync('type', options.type)
+    debugger
+    console.log(options.type,options.isFrom)
+    wx.setStorageSync('type', options.type) 
     wx.setStorageSync('id', options.id)
+    console.log(wx.getStorageSync('type'),wx.getStorageSync('id'))
     if (wx.getStorageSync('type') == 1) {
       wx.request({
         url: app.globalData.url + '/doctor',
@@ -274,7 +277,7 @@ Page({
     })
   },
   detail(e) {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../evalutionList/evalutionList?type=' + this.data.type,
     })
   },
@@ -294,6 +297,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that=this
     wx.request({
       url: app.globalData.url + '/user/login-refresh',
       header: {
@@ -304,7 +308,13 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-
+          app.globalData.userInfoDetail = res.data.data
+          if(wx.getStorageSync('type')  == 3){
+            that.setData({
+              navtitle:res.data.data.hospitalName
+            })
+          }
+         
         } else {
           wx.showToast({
             title: res.data.codeMsg,
@@ -313,8 +323,10 @@ Page({
             mask: true,
             complete: function complete(res) {
               setTimeout(function () {
+                console.log( app.historyUrl() )
+                wx.setStorageSync('historyUrl', app.historyUrl() )
                 wx.navigateTo({
-                  url: '../login/login?type=1',
+                  url: '../login/login?fromType=2',
                 })
               }, 500);
             }

@@ -9,15 +9,22 @@ Page({
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     showIs: false,
-    showIsTcode:false,
+    showIsTcode: false,
     names: '',
     phone: '',
     name: '',
-    avator:'',
-    tcode:'',
-    imglist:[],
-    version:'',
-    bgUrl: app.globalData.url +'/wxminapp-resource/bj.jpg'
+    avator: '../icon/moren.png',
+    tcode: '',
+    imglist: [],
+    version: '',
+    bgUrl: app.globalData.url + '/wxminapp-resource/bj.jpg',
+    withoutLogin: true
+  },
+  toLogin(e) {
+    var backUrl = '../mine/mine';
+    wx.navigateTo({
+      url: '../logs/logs?fromType=1&backUrl=' + backUrl,
+    })
   },
   tel(e) {
     wx.makePhoneCall({
@@ -26,7 +33,7 @@ Page({
   },
   edit(e) {
     this.setData({
-      showIs: true 
+      showIs: true
     })
   },
   tCode(e) {
@@ -37,7 +44,7 @@ Page({
   close(e) {
     this.setData({
       showIs: false,
-      showIsTcode:false
+      showIsTcode: false
     })
   },
   name(e) {
@@ -92,17 +99,45 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
-          app.globalData.loginHospitalId='',
-          app.globalData.loginHpitalName='',
-          wx.setStorageSync('loginHospitalId', '')
-          wx.setStorageSync('loginHpitalName', '')
-          wx.setStorageSync('cookie', '')
-          app.globalData.userInfo= null,
-          app.globalData.userInfoDetail=[],
-          wx.redirectTo({
-            // url: '../login/login?from=1',
-            url: '../logs/logs',
-          })
+          // app.globalData.loginHospitalId='',
+          // app.globalData.loginHpitalName='',
+          // wx.setStorageSync('loginHospitalId', '')
+          // wx.setStorageSync('loginHpitalName', '')
+          // wx.setStorageSync('cookie', '')
+          // app.globalData.userInfo = '', //null
+          //   app.globalData.userInfoDetail = []
+          // that.setData({
+          //   // typeUser:app.globalData.userInfoDetail.type,
+          //   names: '',
+          //   phone: '',
+          //   avator: '../icon/moren.png',
+          //   // entityTel: app.globalData.entity.entityTel,
+          // })
+          // wx.redirectTo({
+          //   // url: '../login/login?from=1',
+          //   url: '../logs/logs',
+          // })
+
+          wx.showToast({
+            title: '退出中',
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+            complete: function complete(res) {
+              setTimeout(function () {
+                wx.setStorageSync('cookie', '')
+                app.globalData.userInfo = '' //null
+                app.globalData.userInfoDetail = []
+                wx.setStorageSync('withoutLogin', true)
+                that.setData({
+                  names: '',
+                  phone: '',
+                  avator: '../icon/moren.png',
+                  withoutLogin: true,
+                })
+              }, 500);
+            }
+          });
         } else {
           wx.showToast({
             title: res.data.codeMsg,
@@ -112,8 +147,8 @@ Page({
       }
     })
   },
-  avator(){
-    var that=this
+  avator() {
+    var that = this
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -161,7 +196,7 @@ Page({
     })
   },
   // 查看二维码
-  lookCode(e){
+  lookCode(e) {
     var current = e.currentTarget.dataset.src;
     wx.previewImage({
       current: current, // 当前显示图片的http链接
@@ -186,9 +221,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that=this
+    var that = this
+    console.log(wx.getStorageSync('cookie'))
     that.setData({
-      version:app.globalData.version.split('-')[0]
+      version: app.globalData.version.split('-')[0],
+      entityTel: app.globalData.entity.entityTel,
     })
     wx.request({
       url: app.globalData.url + '/user/login-refresh',
@@ -200,48 +237,49 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          app.globalData.userInfoDetail=res.data.data  
-          if(app.globalData.userInfoDetail.cover==''||app.globalData.userInfoDetail.cover==null||app.globalData.userInfoDetail.cover==undefined){
-            var avator='../icon/moren.png'
-          }else{
-           var avator=app.globalData.url+app.globalData.userInfoDetail.cover
+          app.globalData.userInfoDetail = res.data.data
+          if (app.globalData.userInfoDetail.cover == '' || app.globalData.userInfoDetail.cover == null || app.globalData.userInfoDetail.cover == undefined) {
+            var avator = '../icon/moren.png'
+          } else {
+            var avator = app.globalData.url + app.globalData.userInfoDetail.cover
           }
-         
           that.setData({
-            typeUser:app.globalData.userInfoDetail.type,
+            typeUser: app.globalData.userInfoDetail.type,
             names: app.globalData.userInfoDetail.name,
             phone: app.globalData.userInfoDetail.phone,
-            avator:avator,
-            entityTel: app.globalData.entity.entityTel,
-          }) 
-        } else {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon:'loading'
+            avator: avator,
+            withoutLogin: false
           })
+          var param = encodeURIComponent('../evaNow/evaNow?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId))
+          console.log(app.globalData.userInfoDetail.type)
+          wx.getImageInfo({
+            src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=200',
+            method: 'get',
+            header: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            success: function (res) {
+              var imglist = []
+              imglist.push(res.path)
+              that.setData({
+                tcode: res.path,
+                imglist: imglist,
+              })
+            },
+            fail(res) {
+              console.log(res)
+            }
+          })
+        } else {
+          // wx.showToast({
+          //   title: res.data.codeMsg,
+          //   icon: 'loading'
+          // })
         }
       }
     })
-// var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
-var param=encodeURIComponent('pages/evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId))
-wx.getImageInfo({
-    src: app.globalData.url + '/wxminqrcode?path='+param+ '&width=200',
-    method:'get',
-    header: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    success: function(res) {
-      var imglist=[]
-      imglist.push(res.path)
-      that.setData({
-        tcode:res.path,
-        imglist:imglist,
-      })
-    },
-    fail(res){
-      console.log(res)
-    }
-  })
+    // var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
+
   },
 
   /**

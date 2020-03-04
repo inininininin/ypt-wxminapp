@@ -7,7 +7,7 @@
 		</view>
 	</view>
 </view>
-<view>
+<view wx:if='{{!withoutLogin}}'>
 	<view class="introTitle" wx:if='{{doctorNum!=0}}'>
 		<view>
 			<text style="background:#2b77ef"></text>
@@ -36,7 +36,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='1' data-id='{{item.doctorCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}'  data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
 			</view>
 		</view>
 
@@ -69,7 +69,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='2' data-id='{{item.nurseCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}'  data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
 			</view>
 		</view>
 	</view>
@@ -99,17 +99,20 @@
 				</view>
 				<text>{{item.addTime||''}}</text>
 			</view>
-			<view class="{{item.lineThree}}" data-evatype='3'  data-id='{{item.hospitalCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
+			<view class="{{item.lineThree}}" data-evatype='3' data-id='{{item.hospitalCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
 				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
 			</view>
 		</view>
 	</view>
+	<view class="showNone" wx:if='{{showNone}}'>
+		无数据
+	</view>
+</view>
+<view wx:if='{{withoutLogin}}' class="withoutLogin">
+	<text>登陆后方可继续访问</text>
+	<view bindtap="toLogin">去登陆</view>
 </view>
 <view class="pageLoading" style="display:{{allHidden}}">
 	<image mode="aspectFill" src="../icon/loadingIs.gif"></image>
 </view>
-<view class="showNone" wx:if='{{showNone}}'>
-  无数据
-</view>
-

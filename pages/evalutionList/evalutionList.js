@@ -68,6 +68,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options.type)
     var type='',url=''
     if(options.type==1){
       type='医生评价列表';
@@ -110,8 +111,6 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-
-
           if (res.data.data.rows) {
             var addTime
             for (var i = 0; i < res.data.data.rows.length; i++) {

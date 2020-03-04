@@ -28,15 +28,19 @@ Page({
   scan(e) {
     wx.scanCode({
       success(res) {
-        if (res.path.slice(3, 4) == 'i') {
-          wx.reLaunch({
-            url: res.path,
-          })
-        } else {
-          wx.navigateTo({
-            url: res.path,
-          })
-        }
+        console.log
+        wx.reLaunch({
+          url: '../index/index?hospitalid=1&hospitalname=忠安医院',
+        })
+        // if (res.path.slice(3, 4) == 'i') {
+        //   wx.reLaunch({
+        //     url: res.path,
+        //   })
+        // } else {
+        //   wx.navigateTo({
+        //     url: res.path,
+        //   })
+        // }
 
       }
     })
@@ -91,9 +95,19 @@ Page({
           })
         } else {
           wx.showToast({
-            title: res.data.codeMsg,
-            icon: 'none'
-          })
+                title: '请先选择医院',
+                icon: 'none',
+                duration: 2000,
+                mask: true,
+                complete: function complete(res) {
+                  setTimeout(function () {
+                    // wx.setStorageSync('codeType', that.data.type)
+                    wx.navigateTo({
+                      url: '../hosList/hosList',
+                    })
+                  }, 500);
+                }
+              });
         }
       }
     })
@@ -110,6 +124,7 @@ Page({
       data: {
         pn: 1,
         ps: 15,
+        hosptialId:wx.getStorageSync('loginHospitalId')
       },
       success: function (res) {
 
@@ -125,12 +140,23 @@ Page({
             departDetail: departDetail,
             depart: res.data.data.rows
           })
-        } else {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon: 'none'
-          })
-        }
+        } 
+        // else {
+        //   wx.showToast({
+        //     title: res.data.codeMsg,
+        //     icon: 'none',
+        //     duration: 2000,
+        //     mask: true,
+        //     complete: function complete(res) {
+        //       setTimeout(function () {
+        //         // wx.setStorageSync('codeType', that.data.type)
+        //         wx.navigateTo({
+        //           url: '../hosList/hosList',
+        //         })
+        //       }, 500);
+        //     }
+        //   });
+        // }
       }
     })
   },
@@ -144,8 +170,7 @@ Page({
       },
       method: 'get',
       data: {
-        //  sort   
-        // order
+        hosptialId:wx.getStorageSync('loginHospitalId'),
         pn: 1,
         ps: 5,
       },
@@ -159,27 +184,29 @@ Page({
           that.setData({
             docList: res.data.data.rows
           })
-        } else if (res.data.code == 20) {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-            complete: function complete(res) {
-              setTimeout(function () {
-                wx.setStorageSync('codeType', that.data.type)
-                wx.navigateTo({
-                  url: '../login/login',
-                })
-              }, 500);
-            }
-          });
-        } else {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon: 'none',
-          })
-        }
+        } 
+        // else if (res.data.code == 20) {
+        //   wx.showToast({
+        //     title: res.data.codeMsg,
+        //     icon: 'none',
+        //     duration: 2000,
+        //     mask: true,
+        //     complete: function complete(res) {
+        //       setTimeout(function () {
+        //         wx.setStorageSync('codeType', that.data.type)
+        //         wx.navigateTo({
+        //           url: '../login/login',
+        //         })
+        //       }, 500);
+        //     }
+        //   });
+        // } 
+        // else {
+        //   wx.showToast({
+        //     title: res.data.codeMsg,
+        //     icon: 'none',
+        //   })
+        // }
       }
     })
   },
@@ -189,11 +216,18 @@ Page({
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
-
-    if (wx.getStorageSync('codeType') == 1) {
-      wx.navigateTo({
-        url: '../evaNow/evaNow?type=' + wx.getStorageSync('type') + '&isfrom=1&id=' + wx.getStorageSync('id'),
+    console.log(wx.getStorageSync('historyUrl'))
+    if(wx.getStorageSync('historyUrl')&&wx.getStorageSync('fromTab')==1){
+      wx.setStorageSync('fromTab', '')
+      wx.switchTab({
+        url: wx.getStorageSync('historyUrl'),
       })
+    }else{
+     
+      wx.navigateTo({
+        url: wx.getStorageSync('historyUrl')+"?type="+wx.getStorageSync('type')+"&id="+wx.getStorageSync('id'),
+      })
+      wx.setStorageSync('historyUrl','')
     }
     this.hosDetail();
     this.departDetail();

@@ -1,5 +1,6 @@
 /* pages/news/news.wxss */
 @import '../../app.wxss';
+
 page {
   height: 100%;
   background: #f2f2f2;
@@ -94,35 +95,39 @@ page {
   margin-left: 30rpx;
   margin-right: 30rpx;
 }
-.newsItem>text{
+
+.newsItem>text {
   position: absolute;
   width: 16rpx;
-height: 16rpx;
-opacity: 1;
-background: rgba(255,26,46,1);
-right: 20rpx;
-top: 20rpx;
-border-radius: 8rpx;
+  height: 16rpx;
+  opacity: 1;
+  background: rgba(255, 26, 46, 1);
+  right: 20rpx;
+  top: 20rpx;
+  border-radius: 8rpx;
 }
-.bgColor{
+
+.bgColor {
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
   position: fixed;
   z-index: 2;
   top: 0;
   left: 0;
 }
-.bgColor>view{
+
+.bgColor>view {
   width: 540rpx;
   height: 770rpx;
-  background:#fff;
+  background: #fff;
   margin: 234rpx 105rpx 0;
   border-radius: 15rpx;
 }
-.bgColor .bgTitle{
+
+.bgColor .bgTitle {
   width: 100%;
-  height:84rpx ;
+  height: 84rpx;
   border-top-left-radius: 15rpx;
   border-top-right-radius: 15rpx;
   line-height: 84rpx;
@@ -130,13 +135,15 @@ border-radius: 8rpx;
   text-align: center;
   border-bottom: 1rpx solid #e5e5e5;
 }
-.bgColor .bgTitle text{
+
+.bgColor .bgTitle text {
   display: inline-block;
   width: 380rpx;
   margin: 0 0 0 80rpx;
   float: left;
 }
-.bgColor .bgTitle image{
+
+.bgColor .bgTitle image {
   width: 20rpx;
   height: 20rpx;
   display: inline-block;
@@ -144,31 +151,67 @@ border-radius: 8rpx;
   padding: 32rpx 30rpx;
   float: right;
 }
-.bgColor .bgContent{
+
+.bgColor .bgContent {
   width: 472rpx;
   margin: 0 34rpx;
 }
-.bgColor .bgContent>text{
+
+.bgColor .bgContent>text {
   width: 100%;
-height: 79rpx;
-font-size: 24rpx;
-font-family: PingFangSC, PingFangSC-Regular;
-font-weight: 400;
-text-align: justify;
-color: #999999;
-line-height: 79rpx;
-letter-spacing: 0px;
+  height: 79rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: justify;
+  color: #999999;
+  line-height: 79rpx;
+  letter-spacing: 0px;
 }
-.bgColor .bgContent view{
+
+.bgColor .bgContent view {
   width: 472rpx;
-max-height: 500rpx;
-overflow-y: scroll;
-font-size: 26rpx;
-font-family: PingFangSC, PingFangSC-Regular;
-font-weight: 400;
-text-align: justify;
-color: #333333;
-line-height: 37rpx;
-letter-spacing: 0pt;
-word-break:break-all;word-wrap:break-word
+  max-height: 500rpx;
+  overflow-y: scroll;
+  font-size: 26rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: justify;
+  color: #333333;
+  line-height: 37rpx;
+  letter-spacing: 0pt;
+  word-break: break-all;
+  word-wrap: break-word
+}
+
+.withoutLogin {
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+.withoutLogin text {
+  width: 100%;
+  height: 48rpx;
+  font-size: 34rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: center;
+  color: #666666;
+  line-height: 48rpx;
+  letter-spacing: 1rpx;
+  margin-top: 400rpx;
+  display: block;
+}
+
+.withoutLogin view {
+  width: 310rpx;
+  margin: 30rpx 220rpx;
+  height: 70rpx;
+  font-size: 34rpx;
+  line-height: 70rpx;
+  color: #fff;
+  text-align: center;
+  background: #ff932e;
+  border-radius: 35rpx;
 }

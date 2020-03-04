@@ -7,9 +7,10 @@ App({
     userInfo: null,
     userInfoDetail: [],
     entity: [],
-    url: 'https://ypt.njshangka.com',
+    url: 'https://test.ypt.njshangka.com',
     version: '2002281350-7d3e4a4',
-    cookie: ''
+    cookie: '',
+    withoutLogin:'',
   },
   onLaunch: function () {
 
@@ -75,5 +76,11 @@ App({
     }
     return _cover
 
-  }
+  },
+  historyUrl(){
+    var pages = getCurrentPages()               //获取加载的页面
+    var currentPage = pages[pages.length-1]    //获取当前页面的对象
+    var url ='..'+ currentPage.route.split('pages')[1] 
+    return url
+  },
 })
