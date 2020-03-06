@@ -300,8 +300,6 @@ Page({
       method: 'get',
       success: function (res) {
         if (res.data.code == 0) {
-          console.log(wx.getStorageSync('userMessageId'))
-          console.log(res.data.data.rows[0].userMessageId)
           if (wx.getStorageSync('userMessageId') != res.data.data.rows[0].userMessageId) {
             wx.setStorageSync('userMessageId', res.data.data.rows[0].userMessageId)
             that.setData({
