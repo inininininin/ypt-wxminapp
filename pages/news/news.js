@@ -164,7 +164,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    // debugger
+
   },
 
 
@@ -172,6 +172,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
 
     var that = this
     wx.request({
@@ -199,6 +200,7 @@ Page({
     });
     if (wx.getStorageSync('withoutLogin') === true || wx.getStorageSync('withoutLogin') === "") {
 
+
       this.setData({
         withoutLogin: true
       })
@@ -220,14 +222,13 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    // debugger
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    // debugger
   },
   // newPage(){
   //   var that=this

@@ -6,7 +6,8 @@
 	<image mode="aspectFill" wx:if='{{!withoutLogin}}' class="avator" bindtap="avator" src="{{avator}}"></image>
 	<image mode="aspectFill" wx:if='{{withoutLogin}}' class="avator" src="{{avator}}"></image>
 	<image mode="aspectFill" wx:if='{{!withoutLogin}}' class="edit" bindtap="edit" src="../icon/bianji.png"></image>
-  <text wx:if='{{withoutLogin}}' class="toLogin" bindtap="toLogin">点击登陆</text>
+  <text wx:if='{{withoutLogin}}' class="toLogin" bindtap="toLogin">点击登录</text>
+
 
 </view>
 
