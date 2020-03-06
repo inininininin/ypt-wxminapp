@@ -2,10 +2,12 @@
 <view class="container" style="background: url({{bgUrl}}) no-repeat;background-size: cover;background-position: center;">
 	<text>{{names||''}}</text>
 	<text>{{phone||''}}</text>
+
 	<image mode="aspectFill" wx:if='{{!withoutLogin}}' class="avator" bindtap="avator" src="{{avator}}"></image>
 	<image mode="aspectFill" wx:if='{{withoutLogin}}' class="avator" src="{{avator}}"></image>
 	<image mode="aspectFill" wx:if='{{!withoutLogin}}' class="edit" bindtap="edit" src="../icon/bianji.png"></image>
   <text wx:if='{{withoutLogin}}' class="toLogin" bindtap="toLogin">点击登陆</text>
+
 </view>
 
 <view class="lineBox">

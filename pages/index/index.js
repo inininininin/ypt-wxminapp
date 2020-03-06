@@ -96,20 +96,19 @@ Page({
             testImg: res.data.data.cover,
           })
         } else {
-          wx.showToast({
-                title: '请先选择医院',
-                icon: 'none',
-                duration: 2000,
-                mask: true,
-                complete: function complete(res) {
-                  setTimeout(function () {
-                    // wx.setStorageSync('codeType', that.data.type)
-                    wx.navigateTo({
-                      url: '../hosList/hosList',
-                    })
-                  }, 500);
-                }
-              });
+          wx.showModal({
+            content: '请先选择一个医院',
+            showCancel:false,
+            success (res) {
+              if (res.confirm) {
+                wx.navigateTo({
+                  url: '../hosList/hosList',
+                })
+              } 
+            }
+          })
+
+         
         }
       }
     })
