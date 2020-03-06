@@ -216,17 +216,8 @@ Page({
   onReady: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    var that = this
-    console.log(wx.getStorageSync('cookie'))
-    that.setData({
-      version: app.globalData.version.split('-')[0],
-      entityTel: app.globalData.entity.entityTel,
-    })
+  refresh(){
+    var that =this
     wx.request({
       url: app.globalData.url + '/user/login-refresh',
       header: {
@@ -237,6 +228,7 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
+          wx.setStorageSync('withoutLogin', false)
           app.globalData.userInfoDetail = res.data.data
           if (app.globalData.userInfoDetail.cover == '' || app.globalData.userInfoDetail.cover == null || app.globalData.userInfoDetail.cover == undefined) {
             var avator = '../icon/moren.png'
@@ -251,7 +243,6 @@ Page({
             withoutLogin: false
           })
           var param = encodeURIComponent('pages/evaNow/evaNow?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId))
-          console.log(app.globalData.userInfoDetail.type)
           wx.getImageInfo({
             src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=200',
             method: 'get',
@@ -278,8 +269,18 @@ Page({
         }
       }
     })
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    var that = this
+    that.setData({
+      version: app.globalData.version.split('-')[0],
+      entityTel: app.globalData.entity.entityTel,
+    })
+    that.refresh()
     // var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
-
   },
 
   /**
@@ -300,7 +301,8 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.refresh()
+    wx.stopPullDownRefresh({})
   },
 
   /**

@@ -142,7 +142,7 @@ Page({
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
     var that = this
-    debugger
+    // debugger
     console.log(options.type,options.isFrom)
     wx.setStorageSync('type', options.type) 
     wx.setStorageSync('id', options.id)
@@ -309,6 +309,7 @@ Page({
         wx.hideToast()
         if (res.data.code == 0) {
           app.globalData.userInfoDetail = res.data.data
+            wx.setStorageSync('withoutLogin', false)
           if(wx.getStorageSync('type')  == 3){
             that.setData({
               navtitle:res.data.data.hospitalName

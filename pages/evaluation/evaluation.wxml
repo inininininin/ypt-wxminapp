@@ -1,4 +1,5 @@
 <!--pages/evaluation/evaluation.wxml-->
+
 <view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
 	<view class="header">
 		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
@@ -7,7 +8,7 @@
 		</view>
 	</view>
 </view>
-<view wx:if='{{!withoutLogin}}'>
+<view wx:if='{{!withoutLogin&&userType==0}}'>
 	<view class="introTitle" wx:if='{{doctorNum!=0}}'>
 		<view>
 			<text style="background:#2b77ef"></text>
@@ -19,7 +20,7 @@
 		<view class="evaitem" wx:for='{{doctorList}}'>
 			<view>
 				<image mode="aspectFill" src="../icon/yishi.png"></image>
-				<text>{{item.doctorName||''}}</text>
+				<text class="lineOne">{{item.doctorName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
 					<image src="../icon/star.png"></image>
@@ -52,7 +53,7 @@
 		<view class="evaitem" wx:for='{{nurseList}}'>
 			<view>
 				<image mode="aspectFill" src="../icon/yihu.png"></image>
-				<text>{{item.nurseName||''}}</text>
+				<text class="lineOne">{{item.nurseName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
 					<image src="../icon/star.png"></image>
@@ -84,7 +85,7 @@
 		<view class="evaitem" wx:for='{{hospitalList}}'>
 			<view>
 				<image mode="aspectFill" src="../icon/keshi.png"></image>
-				<text>{{loginHpitalName||''}}</text>
+				<text class="lineOne">{{loginHpitalName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
 					<image src="../icon/star.png"></image>
@@ -105,6 +106,62 @@
 			</view>
 		</view>
 	</view>
+	<view class="showNone" wx:if='{{showNone}}'>
+		无数据
+	</view>
+</view>
+
+
+<view wx:if='{{!withoutLogin&&userType!=0}}'>
+	<view class="doctorEva" style="margin-top:20rpx;">
+		<view class="evaitem"  wx:if='{{list1Num!=0}}' wx:for='{{list1}}'>
+			<view>
+				<image mode="aspectFill" src="../icon/yonghu.png"></image>
+				<text class="lineOne">{{item.userName||''}}</text>
+				<view class="star" wx:if='{{item.star==3}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==2}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==1}}'>
+					<image src="../icon/star.png"></image>
+				</view>
+				<text>{{item.addTime||''}}</text>
+			</view>
+			<view class="{{item.lineThree}}" data-evatype='4' data-id='{{item.doctorCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
+			<view class="imageBox">
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+			</view>
+		</view>
+		<view class="evaitem"  wx:if='{{list2Num!=0}}' wx:for='{{list2}}'>
+			<view>
+				<image mode="aspectFill" src="../icon/yonghu.png"></image>
+				<text class="lineOne">{{item.userName||''}}</text>
+				<view class="star" wx:if='{{item.star==3}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==2}}'>
+					<image src="../icon/star.png"></image>
+					<image src="../icon/star.png"></image>
+				</view>
+				<view class="star" wx:if='{{item.star==1}}'>
+					<image src="../icon/star.png"></image>
+				</view>
+				<text>{{item.addTime||''}}</text>
+			</view>
+			<view class="{{item.lineThree}}" data-evatype='5' data-id='{{item.nurseCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
+			<view class="imageBox">
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+			</view>
+		</view>
+	</view>
+
 	<view class="showNone" wx:if='{{showNone}}'>
 		无数据
 	</view>

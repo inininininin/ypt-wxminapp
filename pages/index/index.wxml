@@ -36,9 +36,9 @@
 <view class="doctorDetail">
   <image mode="aspectFill" src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
   <view>
-    <view class="evaDoctor" data-type='1' bindtap="evaList">医生列表</view>
-    <view class="evanurse" data-type='2' bindtap="evaList">医护列表</view>
-    <view class="evadepart" bindtap="evadepart">科室列表</view>
+    <view class="evaDoctor" style="background: url({{bgUrl1}}) no-repeat;background-size: cover;background-position: center;" data-type='1' bindtap="evaList">医生列表</view>
+    <view class="evanurse" style="background: url({{bgUrl2}}) no-repeat;background-size: cover;background-position: center;" data-type='2' bindtap="evaList">医护列表</view>
+    <view class="evadepart" style="background: url({{bgUrl3}}) no-repeat;background-size: cover;background-position: center;" bindtap="evadepart">科室列表</view>
   </view>
 </view>
 <view class="doctorList">

@@ -11,6 +11,9 @@ Page({
     hosDetail: '',
     departDetail: '',
     docList: [],
+    bgUrl1: app.globalData.url + '/wxminapp-resource/1.png',
+    bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
+    bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
   },
   // 查看二维码
   lookCode(e) {
@@ -28,7 +31,6 @@ Page({
   scan(e) {
     wx.scanCode({
       success(res) {
-        console.log
         wx.reLaunch({
           url: '../index/index?hospitalid=1&hospitalname=忠安医院',
         })
@@ -216,14 +218,12 @@ Page({
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
-    console.log(wx.getStorageSync('historyUrl'))
     if(wx.getStorageSync('historyUrl')&&wx.getStorageSync('fromTab')==1){
       wx.setStorageSync('fromTab', '')
-      wx.switchTab({
+      wx.reLaunch({
         url: wx.getStorageSync('historyUrl'),
       })
     }else{
-     
       wx.navigateTo({
         url: wx.getStorageSync('historyUrl')+"?type="+wx.getStorageSync('type')+"&id="+wx.getStorageSync('id'),
       })
@@ -279,4 +279,24 @@ Page({
     this.docList()
     wx.stopPullDownRefresh()
   },
+  // 分享
+  onShareAppMessage: function (res) {
+    wx.request({
+      url: app.globalData.url + '/user/share',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        if (res.data.code == 0) {
+          wx.showR
+        }
+      }
+    })
+    return {
+      title: '自定义转发标题',
+      path: '/page/user?id=123'
+    }
+  }
 })

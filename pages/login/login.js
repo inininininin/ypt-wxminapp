@@ -212,7 +212,6 @@ Page({
                             mask: true,
                             complete: function complete(res) {
                               setTimeout(function () {
-                               
                                 if (that.data.fromType == 1) {
                                   wx.setStorageSync('fromTab', 1)
                                   wx.switchTab({

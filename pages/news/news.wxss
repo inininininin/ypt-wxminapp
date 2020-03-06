@@ -50,7 +50,7 @@ page {
 
 .newsItem {
   width: 702rpx;
-  height: 190rpx;
+  height: 150rpx;
   opacity: 1;
   background: rgba(255, 255, 255, 1);
   margin: 20rpx 24rpx;

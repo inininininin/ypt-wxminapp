@@ -260,7 +260,7 @@ page {
   font-size: 36rpx;
   font-family: PingFangSC;
   font-weight: 500;
-  color: rgba(38, 91, 215, 1);
+  /* color: rgba(38, 91, 215, 1); */
   line-height: 130rpx;
   letter-spacing: 0px;
 }

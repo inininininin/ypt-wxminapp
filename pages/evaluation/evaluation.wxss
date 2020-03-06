@@ -101,6 +101,7 @@ page {
 }
 
 .evaitem>view:nth-child(1)>text:nth-child(2) {
+  max-width: 250rpx;
   float: left;
   opacity: 1;
   font-size: 30rpx;
