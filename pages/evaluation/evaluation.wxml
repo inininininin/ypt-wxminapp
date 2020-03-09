@@ -1,6 +1,6 @@
 <!--pages/evaluation/evaluation.wxml-->
 <view class="pageLoading" style="display:{{allHidden}}">
-	<image mode="aspectFill" src="../icon/loadingIs.gif"></image>
+	<image mode="aspectFill" lazy-load="true" src="../icon/loadingIs.gif"></image>
 </view>
 <view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
 	<view class="header">
@@ -21,7 +21,7 @@
 	<view class="doctorEva">
 		<view class="evaitem" wx:for='{{doctorList}}'>
 			<view>
-				<image mode="aspectFill" src="../icon/yishi.png"></image>
+				<image mode="aspectFill" lazy-load="true" src="../icon/yishi.png"></image>
 				<text class="lineOne">{{item.doctorName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
@@ -39,7 +39,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='1' data-id='{{item.doctorCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 
@@ -54,7 +54,7 @@
 	<view class="nurseEva">
 		<view class="evaitem" wx:for='{{nurseList}}'>
 			<view>
-				<image mode="aspectFill" src="../icon/yihu.png"></image>
+				<image mode="aspectFill" lazy-load="true" src="../icon/yihu.png"></image>
 				<text class="lineOne">{{item.nurseName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
@@ -72,7 +72,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='2' data-id='{{item.nurseCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 	</view>
@@ -86,7 +86,7 @@
 	<view class="departEva">
 		<view class="evaitem" wx:for='{{hospitalList}}'>
 			<view>
-				<image mode="aspectFill" src="../icon/keshi.png"></image>
+				<image mode="aspectFill" lazy-load="true" src="../icon/keshi.png"></image>
 				<text class="lineOne">{{loginHpitalName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
@@ -104,7 +104,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='3' data-id='{{item.hospitalCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 	</view>
@@ -118,7 +118,7 @@
 	<view class="doctorEva" style="margin-top:20rpx;">
 		<view class="evaitem"  wx:if='{{list1Num!=0}}' wx:for='{{list1}}'>
 			<view>
-				<image mode="aspectFill" src="../icon/yonghu.png"></image>
+				<image mode="aspectFill" lazy-load="true" src="../icon/yonghu.png"></image>
 				<text class="lineOne">{{item.userName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
@@ -136,12 +136,12 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='4' data-id='{{item.doctorCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 		<view class="evaitem"  wx:if='{{list2Num!=0}}' wx:for='{{list2}}'>
 			<view>
-				<image mode="aspectFill" src="../icon/yonghu.png"></image>
+				<image mode="aspectFill" lazy-load="true" src="../icon/yonghu.png"></image>
 				<text class="lineOne">{{item.userName||''}}</text>
 				<view class="star" wx:if='{{item.star==3}}'>
 					<image src="../icon/star.png"></image>
@@ -159,7 +159,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='5' data-id='{{item.nurseCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 	</view>

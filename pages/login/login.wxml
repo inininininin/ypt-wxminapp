@@ -6,7 +6,7 @@
 		</view>
 	</view>
 </view>
-<image mode="aspectFill" class="logo" src="../icon/logo.png"></image>
+<image mode="aspectFill" lazy-load="true" class="logo" src="../icon/logo.png"></image>
 <text class="hosName" bindtap="changeHos">{{loginHpitalName}}</text>
 
 <!-- 手机登录 -->
@@ -14,7 +14,7 @@
 	<text class="title">手机快捷登录</text>
 	<view class="line linephone" style="border-bottom: 1rpx solid #e5e5e5;">
 		<input placeholder-class="placeholder-class" type="number" maxlength="11" value='{{key}}' bindinput="loginPhone" placeholder="请输入手机号"></input>
-		<!-- <image mode="aspectFill" src="../icon/delete.png" wx:if="{{key}}" bindtap="eliminate"></image> -->
+		<!-- <image mode="aspectFill" lazy-load="true" src="../icon/delete.png" wx:if="{{key}}" bindtap="eliminate"></image> -->
 	</view>
 	<view class="line">
 		<input bindinput="code" placeholder-class="placeholder-class" placeholder="请输入验证码"></input>
@@ -24,8 +24,8 @@
 
 	<view class="login" bindtap="login">登录</view>
 	<view class="registerXy">
-		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{selectAgree}}" src="../icon/select1@2x.png"></image>
-		<image mode="aspectFill" bindtap="selectIcon" wx:if="{{!selectAgree}}" src="../icon/Not-selected1@2x.png"></image>
+		<image mode="aspectFill" lazy-load="true" bindtap="selectIcon" wx:if="{{selectAgree}}" src="../icon/select1@2x.png"></image>
+		<image mode="aspectFill" lazy-load="true" bindtap="selectIcon" wx:if="{{!selectAgree}}" src="../icon/Not-selected1@2x.png"></image>
 		<view>我已经阅读并同意
 			<text style="color:rgb(0,181,252);" bindtap="loginXy">《用户协议与隐私政策》</text>
 		</view>
@@ -38,7 +38,7 @@
 <view wx:if='{{!showPhone}}'>
 
 	<view class="loginByWx" bindtap="loginWx">
-		<image mode="aspectFill" src="../icon/weixin.png"></image>
+		<image mode="aspectFill" lazy-load="true" src="../icon/weixin.png"></image>
 		微信登录
 	</view>
 	<view class="loginChange" style="margin-top:30rpx;width:596rpx">

@@ -3,9 +3,9 @@
 	<text>{{names||''}}</text>
 	<text>{{phone||''}}</text>
 
-	<image mode="aspectFill" wx:if='{{!withoutLogin}}' class="avator" bindtap="avator" src="{{avator}}"></image>
-	<image mode="aspectFill" wx:if='{{withoutLogin}}' class="avator" src="{{avator}}"></image>
-	<image mode="aspectFill" wx:if='{{!withoutLogin}}' class="edit" bindtap="edit" src="../icon/bianji.png"></image>
+	<image mode="aspectFill" lazy-load="true" wx:if='{{!withoutLogin}}' class="avator" bindtap="avator" src="{{avator}}"></image>
+	<image mode="aspectFill" lazy-load="true" wx:if='{{withoutLogin}}' class="avator" src="{{avator}}"></image>
+	<image mode="aspectFill" lazy-load="true" wx:if='{{!withoutLogin}}' class="edit" bindtap="edit" src="../icon/bianji.png"></image>
   <text wx:if='{{withoutLogin}}' class="toLogin" bindtap="toLogin">点击登录</text>
 
 </view>
@@ -13,8 +13,8 @@
 <view class="lineBox">
 	<view class="line" bindtap="tCode" wx:if='{{!withoutLogin&&typeUser!=0}}'>
 		<text>二维码</text>
-		<image mode="aspectFill" class="right" src="../icon/right.png"></image>
-		<image mode="aspectFill" class="tcode" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}" src="{{item}}"></image>
+		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
+		<image mode="aspectFill" lazy-load="true" class="tcode" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}" src="{{item}}"></image>
 	</view>
 	<view class="line">
 		<text>服务电话</text>
@@ -22,11 +22,11 @@
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="taskList">
 		<text>任务中心</text>
-		<image mode="aspectFill" class="right" src="../icon/right.png"></image>
+		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="loginout">
 		<text>退出登录</text>
-		<image mode="aspectFill" class="right" src="../icon/right.png"></image>
+		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<!-- <view class="line" wx:if='{{withoutLogin}}' bindtap="toLogin">
     <text>去登陆</text>
@@ -46,5 +46,5 @@
 	</view>
 </view>
 <!-- <view bindtap="close" class="bgColor" wx:if='{{showIsTcode}}'>
-  <image mode="aspectFill" class="showIsTcode"  src="{{tcode}}"></image>
+  <image mode="aspectFill" lazy-load="true" class="showIsTcode"  src="{{tcode}}"></image>
 </view> -->
