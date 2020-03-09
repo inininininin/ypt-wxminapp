@@ -54,9 +54,9 @@ button::after{
   z-index: 3;
 }
 .pageLoading>image{
-  width: 120rpx;
-  height: 120rpx;
-  margin: 400rpx 315rpx;
+  width: 100rpx;
+  height: 100rpx;
+  margin: 450rpx 325rpx;
 }
 .showNone{
   width: 100%;

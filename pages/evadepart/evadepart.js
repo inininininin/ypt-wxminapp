@@ -10,7 +10,11 @@ Page({
     titleBarHeight: getApp().globalData.titleBarHeight,
     navtitle: '科室列表',
   },
-
+  departDetail(e){
+    wx.navigateTo({
+      url: '../departDetail/departDetail?id='+e.currentTarget.dataset.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

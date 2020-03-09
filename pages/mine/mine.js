@@ -20,6 +20,11 @@ Page({
     bgUrl: app.globalData.url + '/wxminapp-resource/bj.jpg',
     withoutLogin: true
   },
+  taskList(e){
+    wx.navigateTo({
+      url: '../taskList/taskList',
+    })
+  },
   toLogin(e) {
     var backUrl = '../mine/mine';
     wx.redirectTo({
@@ -99,25 +104,6 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
-          // app.globalData.loginHospitalId='',
-          // app.globalData.loginHpitalName='',
-          // wx.setStorageSync('loginHospitalId', '')
-          // wx.setStorageSync('loginHpitalName', '')
-          // wx.setStorageSync('cookie', '')
-          // app.globalData.userInfo = '', //null
-          //   app.globalData.userInfoDetail = []
-          // that.setData({
-          //   // typeUser:app.globalData.userInfoDetail.type,
-          //   names: '',
-          //   phone: '',
-          //   avator: '../icon/moren.png',
-          //   // entityTel: app.globalData.entity.entityTel,
-          // })
-          // wx.redirectTo({
-          //   // url: '../login/login?from=1',
-          //   url: '../logs/logs',
-          // })
-
           wx.setStorageSync('cookie', '')
                 app.globalData.userInfo = '' //null
                 app.globalData.userInfoDetail = []

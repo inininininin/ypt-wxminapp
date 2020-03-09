@@ -4,7 +4,6 @@
     "pages/login/login",
     "pages/hosList/hosList",
     "pages/logs/logs",
-   
     "pages/common/common",
     "pages/evaluation/evaluation",
     "pages/news/news",
@@ -15,8 +14,9 @@
     "pages/doctor/doctor",
     "pages/evaNow/evaNow",
     "pages/webview/webview",
-    "pages/evalutionList/evalutionList"
-    
+    "pages/evalutionList/evalutionList",
+    "pages/taskList/taskList",
+    "pages/departDetail/departDetail"
   ],
   "window": {
     "backgroundTextStyle": "dark",

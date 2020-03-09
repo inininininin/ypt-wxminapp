@@ -60,7 +60,7 @@ page {
 
 .container {
   box-sizing: border-box;
-  background: #fff;
+  /* background: #fff; */
 }
 
 .header {

@@ -9,5 +9,5 @@
   </view>
 </view>
 <view class="boxlist">
-  <view wx:for='{{departList}}'>{{item.name}}</view>
+  <view wx:for='{{departList}}' bindtap="departDetail" data-id='{{item.officeId}}'>{{item.name}}</view>
 </view>

@@ -1,3 +1,8 @@
+
+<view class="pageLoading" style="display:{{allHidden}}">
+  <image mode="aspectFill" src="../icon/loadingIs.gif"></image>
+</view>
+
 <view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
   <view class="header">
     <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
@@ -58,10 +63,6 @@
   </view>
 </view>
 
-
-<view class="pageLoading" style="display:{{allHidden}}">
-  <image mode="aspectFill" src="../icon/loadingIs.gif"></image>
-</view>
 
 
 

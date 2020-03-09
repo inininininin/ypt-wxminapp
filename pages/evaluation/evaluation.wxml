@@ -1,5 +1,7 @@
 <!--pages/evaluation/evaluation.wxml-->
-
+<view class="pageLoading" style="display:{{allHidden}}">
+	<image mode="aspectFill" src="../icon/loadingIs.gif"></image>
+</view>
 <view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
 	<view class="header">
 		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
@@ -169,7 +171,4 @@
 <view wx:if='{{withoutLogin}}' class="withoutLogin">
 	<text>登陆后方可继续访问</text>
 	<view bindtap="toLogin">去登陆</view>
-</view>
-<view class="pageLoading" style="display:{{allHidden}}">
-	<image mode="aspectFill" src="../icon/loadingIs.gif"></image>
 </view>

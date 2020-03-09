@@ -34,6 +34,31 @@ Page({
    */
   onLoad: function (options) {
     this.lastPage(0)
+    
+    wx.request({
+      url: app.globalData.url + '/hospitals-sum',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      data: {
+        // pn: toPageNo,
+        // ps: 55,
+        // kw:that.data.kw,
+      },
+      method: 'get',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          
+        } else {
+          wx.showModal({
+            showCancel: false,
+            title: res.data.codeMsg
+          })
+        }
+      }
+    });
   },
   search(e){
     this.setData({
@@ -53,7 +78,7 @@ Page({
       },
       data: {
         pn: toPageNo,
-        ps: 15,
+        ps: 30,
         kw:that.data.kw,
       },
       method: 'get',
@@ -127,14 +152,19 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.setData({
+      schemeList: [],
+    })
+    this.lastPage(0)
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var toPageNo = this.data.toPageNo;
+    this.lastPage(toPageNo)
   },
 
   /**
