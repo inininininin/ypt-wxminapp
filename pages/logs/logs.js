@@ -21,7 +21,22 @@ Page({
     version: app.globalData.version,
     showPhone: true
   },
-
+  version(e){
+    wx.showModal({
+      title: 'ver: '+app.globalData.version,
+      content: app.globalData.versionIntro ? app.globalData.versionIntro : "",
+      showCancel: false,
+      cancelText: "取消111",
+      cancelColor: "#000",
+      confirmText: "确定",
+      confirmColor: "#0f0",
+      success: function (res) {
+        if (res.confirm) {
+    
+        }
+      }
+    })
+  },
   loginByPhone(e) {
     wx.redirectTo({
       url: '../login/login?fromType=' + this.data.fromType + '&backUrl=' + this.data.backUrl,

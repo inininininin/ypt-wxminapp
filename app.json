@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/search/saerch",
+    
     "pages/login/login",
     "pages/hosList/hosList",
     "pages/logs/logs",

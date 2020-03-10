@@ -1,13 +1,21 @@
 // pages/search/saerch.js
+var app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    statusBarHeight: getApp().globalData.statusBarHeight,
+    titleBarHeight: getApp().globalData.titleBarHeight,
+    // navtitle: '详情',
 
   },
-
+  backHistory(e) {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
