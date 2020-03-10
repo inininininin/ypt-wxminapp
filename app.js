@@ -9,6 +9,7 @@ App({
     entity: [],
     url: 'https://test.ypt.njshangka.com',
     version: '2003041740-30bf493',
+    versionIntro: '这是一个新的版本这是一个\n新的版本这是一个新的版本，\n这是一个新的版本',
     cookie: '',
     withoutLogin:'',
   },
