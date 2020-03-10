@@ -21,7 +21,8 @@ Page({
     imglist: [],
     imgBlob: '',
     star:'',
-    content:''
+    content:'',
+    placeholder:'请输入评价'
     // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
   },
   select(e) {
@@ -32,6 +33,7 @@ Page({
         showIs3: 'active',
         select: e.currentTarget.dataset.select,
         star: 3,
+        placeholder:'满意'
       })
     } else if (e.currentTarget.dataset.select == 2) {
       this.setData({
@@ -39,7 +41,8 @@ Page({
         showIs2: '',
         showIs3: 'active',
         select: e.currentTarget.dataset.select,
-        star: 2
+        star: 2,
+        placeholder:'一般'
       })
     } else {
       {
@@ -48,7 +51,8 @@ Page({
           showIs2: 'active',
           showIs3: '',
           select: e.currentTarget.dataset.select,
-          star: 1
+          star: 1,
+          placeholder:'不满意'
         })
       }
     }
@@ -225,13 +229,28 @@ Page({
     } else {
       var params = ''
     }
-    if (that.data.star == '' || that.data.content == '') {
+    if (that.data.star == '' ) {
       wx.showToast({
-        title: '请填写完整',
+        title: '请选择满意度',
         icon: 'none',
         duration: 1000
       });
     } else {
+      if(that.data.content == ''){
+        if(that.data.star == 1){
+          that.setData({
+            content:'满意'
+          })
+        }else if(that.data.star == 2){
+          that.setData({
+            content:'一般'
+          })
+        }else{
+          that.setData({
+            content:'不满意'
+          })
+        }
+      }
       wx.request({
         url: app.globalData.url + that.data.url + params,
         header: {

@@ -28,7 +28,7 @@
 </view>
 <view class="evaVal">
 	<text>{{title2}}</text>
-	<textarea bindinput="textarea" maxlength="500"></textarea>
+	<textarea placeholder="{{placeholder}}" bindinput="textarea" maxlength="500"></textarea>
 	<view><text class="textVal">{{length}}</text>/500</view>
 </view>
 <view class="evaCover">

@@ -1,2 +1,17 @@
 <!--pages/search/saerch.wxml-->
-<view></view>
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+	<view class="header" style="background:{{background}}">
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px">
+			<image mode="aspectFill" lazy-load="true" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+			<view class="searchBox">
+				<image src="../icon/sousuo@2x.png"></image>
+        <input placeholder="请输入搜索内容"></input>
+        <view>搜索</view>
+			</view>
+		</view>
+	</view>
+</view>
+<view >
+  
+</view>
