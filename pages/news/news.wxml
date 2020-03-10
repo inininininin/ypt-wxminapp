@@ -24,7 +24,7 @@
 		<view>
 			<view class="bgTitle">
 				<text>消息通知</text>
-				<image mode="aspectFill" catchtap="close" src="../icon/delete.png"></image>
+				<image mode="aspectFill" lazy-load="true" catchtap="close" src="../icon/delete.png"></image>
 			</view>
 			<view class="bgContent">
 				<text>{{newDate}}</text>

@@ -128,13 +128,13 @@ Page({
       this.numList( '/user/my-hospital-comments-sum', 'hospitalList')
     } else if (app.globalData.userInfoDetail.type == 1) {
       this.lastPageSelf(0, '/user/to-me-doctor-comments')
-      this.numList( '/user/to-me-doctor-comments-sum', 'doctorList')
+      this.numList( '/user/to-me-doctor-comments-sum', 'list1')
     } else if (app.globalData.userInfoDetail.type == 2) {
       this.lastPageSelf(0, '/user/to-me-nurse-comments')
-      this.numList( '/user/to-me-nurse-comments-sum', 'doctorList')
+      this.numList( '/user/to-me-nurse-comments-sum', 'list2')
     }
 
-    if (this.data.doctorNum == 0 && this.data.doctorNum == 0 && this.data.doctorNum == 0) {
+    if (this.data.doctorNum == 0 && this.data.nurseNum == 0 && this.data.hospitalNum == 0) {
       this.setData({
         showNone: true,
       });
@@ -152,6 +152,7 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
+          console.log(22222)
           if (res.data.data.rowCount != 0) {
             that.setData({
               showNone: false,
@@ -173,10 +174,12 @@ Page({
             that.setData({
               list1Num: res.data.data.rowCount,
             });
+            console.log(that.data.list1Num)
           } else if (list == 'list2') {
             that.setData({
               list2Num: res.data.data.rowCount,
             });
+            console.log(that.data.list2Num)
           }
         }
         // else {
@@ -288,15 +291,16 @@ Page({
               toPageNo: String(toPageNo)
             });
           } else {
+            console.log(111111111)
             var list2 = that.data.list2.concat(res.data.data.rows)
             that.setData({
               list2: list2,
               list1Num:0,
               toPageNo: String(toPageNo)
             });
+            console.log(that.data.list1Num,that.data.list2Num)
           }
-          console.log(that.data.list1)
-          console.log(that.data.list2)
+
         }
       }
     });
@@ -362,6 +366,7 @@ Page({
                 that.lastPageSelf(0, '/user/to-me-nurse-comments', 'list2')
                 that.numList( '/user/to-me-nurse-comments-sum', 'list2')
               }
+              console.log(that.data.list2)
             }
           } else {
            

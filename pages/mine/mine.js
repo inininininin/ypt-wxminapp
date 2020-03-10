@@ -15,10 +15,33 @@ Page({
     name: '',
     avator: '../icon/moren.png',
     tcode: '',
+    detail:'',
     imglist: [],
     version: '',
     bgUrl: app.globalData.url + '/wxminapp-resource/bj.jpg',
     withoutLogin: true
+  },
+  version(e){
+    wx.showModal({
+      title: 'ver: '+app.globalData.version,
+      content: app.globalData.versionIntro ? app.globalData.versionIntro : "",
+      showCancel: false,
+      cancelText: "取消111",
+      cancelColor: "#000",
+      confirmText: "确定",
+      confirmColor: "#0f0",
+      success: function (res) {
+        console.log(res)
+        if (res.confirm) {
+          // 重新设置缓存
+          //wx.setStorageSync('cache_key', cache);
+          // 更新数据绑定,从而切换图片
+          //that.setData({
+            //collection: currentCache
+          //})
+        }
+      }
+    })
   },
   taskList(e){
     wx.navigateTo({
@@ -216,7 +239,8 @@ Page({
             names: app.globalData.userInfoDetail.name,
             phone: app.globalData.userInfoDetail.phone,
             avator: avator,
-            withoutLogin: false
+            withoutLogin: false,
+            detail:res.data.data
           })
           var param = encodeURIComponent('pages/evaNow/evaNow?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId))
           wx.getImageInfo({

@@ -3,7 +3,7 @@
 	<view class="header" style="background:{{background}}">
 		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
 		<view class="title-bar" style="height:{{titleBarHeight}}px">
-			<image mode="aspectFill" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
 			<text class="evahospital">{{navtitle}}</text>
 		</view>
 	</view>
@@ -13,16 +13,16 @@
 	<text>{{title1}}</text>
 	<view>
 		<view bindtap="select" data-select='1'>
-			<image mode="aspectFill" class="eva" src="../icon/eva1.png"></image>
-			<image mode="aspectFill" class="{{showIs1}}" src="../icon/green.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="eva" src="../icon/eva1.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="{{showIs1}}" src="../icon/green.png"></image>
 		</view>
 		<view bindtap="select" data-select='2'>
-			<image mode="aspectFill" class="eva" src="../icon/eva2.png"></image>
-			<image mode="aspectFill" class="{{showIs2}}" src="../icon/blue.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="eva" src="../icon/eva2.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="{{showIs2}}" src="../icon/blue.png"></image>
 		</view>
 		<view bindtap="select" data-select='3'>
-			<image mode="aspectFill" class="eva" src="../icon/eva3.png"></image>
-			<image mode="aspectFill" class="{{showIs3}}" src="../icon/red.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="eva" src="../icon/eva3.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="{{showIs3}}" src="../icon/red.png"></image>
 		</view>
 	</view>
 </view>
@@ -35,11 +35,11 @@
 	<text>{{title3}}</text>
 	<view class='invoicePhoto'>
 		<view bindtap="addPic">
-			<image mode="aspectFill" src="../icon/jia.png"></image>
+			<image mode="aspectFill" lazy-load="true" src="../icon/jia.png"></image>
 		</view>
 		<view class="imageItem" wx:for='{{imglist}}'>
-			<image mode="aspectFill" data-src="{{item}}" mode="aspectFill" bindtap="previewImage" src='{{item}}'></image>
-			<image mode="aspectFill" class="deletThis" bindtap="deletThis" data-src='{{item}}' src="../icon/deleteC.png"></image>
+			<image mode="aspectFill" lazy-load="true" data-src="{{item}}"  bindtap="previewImage" src='{{item}}'></image>
+			<image mode="aspectFill" lazy-load="true" class="deletThis" bindtap="deletThis" data-src='{{item}}' src="../icon/deleteC.png"></image>
 		</view>
 	</view>
 </view>
@@ -48,7 +48,7 @@
 
 <cover-view class="evaEnd "  wx:if='{{hidden}}'>
 	<cover-view class="evaBox">
-		<cover-image mode="aspectFill" src="../icon/success@2x.png"></cover-image>
+		<cover-image mode="aspectFill" lazy-load="true" src="../icon/success@2x.png"></cover-image>
 		<cover-view class='evaSuccess'>提交成功</cover-view>
 		<cover-view class="evaLook">您可以在评价中查看</cover-view>
 		<cover-view class="evaBtn">
