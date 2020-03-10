@@ -31,14 +31,8 @@ Page({
       confirmText: "确定",
       confirmColor: "#0f0",
       success: function (res) {
-        console.log(res)
         if (res.confirm) {
-          // 重新设置缓存
-          //wx.setStorageSync('cache_key', cache);
-          // 更新数据绑定,从而切换图片
-          //that.setData({
-            //collection: currentCache
-          //})
+    
         }
       }
     })

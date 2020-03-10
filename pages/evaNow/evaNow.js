@@ -143,10 +143,8 @@ Page({
     }
     var that = this
     // debugger
-    console.log(options.type,options.isFrom)
     wx.setStorageSync('type', options.type) 
     wx.setStorageSync('id', options.id)
-    console.log(wx.getStorageSync('type'),wx.getStorageSync('id'))
     if (wx.getStorageSync('type') == 1) {
       wx.request({
         url: app.globalData.url + '/doctor',
@@ -324,7 +322,6 @@ Page({
             mask: true,
             complete: function complete(res) {
               setTimeout(function () {
-                console.log( app.historyUrl() )
                 wx.setStorageSync('historyUrl', app.historyUrl() )
                 wx.navigateTo({
                   url: '../login/login?fromType=2',
