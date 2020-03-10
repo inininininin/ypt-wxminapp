@@ -31,8 +31,6 @@ Page({
   },
   lookDetail(e) {
     var that = this
-    console.log(1)
-    console.log(e.currentTarget.dataset.evatype)
     if (e.currentTarget.dataset.evatype == 1) {
       for (var i in that.data.doctorList) {
         if (e.currentTarget.dataset.id == that.data.doctorList[i].doctorCommentId) {
@@ -73,7 +71,6 @@ Page({
         hospitalList: that.data.hospitalList
       })
     } else  if (e.currentTarget.dataset.evatype == 4){
-      // console.log('4里面',e.currentTarget.dataset.id,that.data.list1[0].doctorCommentId)
       for (var i in that.data.list1) {
         if (e.currentTarget.dataset.id == that.data.list1[i].doctorCommentId) {
           if (e.currentTarget.dataset.line == 'lineThree') {
@@ -118,7 +115,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('onload='+app.globalData.userInfoDetail.type)
     if (app.globalData.userInfoDetail.type == 0) {
       this.lastPage(0, '/user/my-doctor-comments', 'doctorList')
       this.lastPage(0, '/user/my-nurse-comments', 'nurseList')
@@ -152,7 +148,6 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          console.log(22222)
           if (res.data.data.rowCount != 0) {
             that.setData({
               showNone: false,
@@ -174,12 +169,10 @@ Page({
             that.setData({
               list1Num: res.data.data.rowCount,
             });
-            console.log(that.data.list1Num)
           } else if (list == 'list2') {
             that.setData({
               list2Num: res.data.data.rowCount,
             });
-            console.log(that.data.list2Num)
           }
         }
         // else {
@@ -291,14 +284,12 @@ Page({
               toPageNo: String(toPageNo)
             });
           } else {
-            console.log(111111111)
             var list2 = that.data.list2.concat(res.data.data.rows)
             that.setData({
               list2: list2,
               list1Num:0,
               toPageNo: String(toPageNo)
             });
-            console.log(that.data.list1Num,that.data.list2Num)
           }
 
         }
@@ -323,7 +314,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log('onshow='+app.globalData.userInfoDetail.type, app.globalData.userInfoDetail,wx.getStorageSync('withoutLogin'))
   var that=this
     if (wx.getStorageSync('withoutLogin') === true || wx.getStorageSync('withoutLogin') === '') {
       that.setData({
@@ -366,7 +356,6 @@ Page({
                 that.lastPageSelf(0, '/user/to-me-nurse-comments', 'list2')
                 that.numList( '/user/to-me-nurse-comments-sum', 'list2')
               }
-              console.log(that.data.list2)
             }
           } else {
            
@@ -410,7 +399,6 @@ Page({
       list1: [],
       list2: []
     })
-console.log(app.globalData.userInfoDetail.type)
     if (app.globalData.userInfoDetail.type == 0) {
       this.lastPage(0, '/user/my-doctor-comments', 'doctorList')
       this.lastPage(0, '/user/my-nurse-comments', 'nurseList')

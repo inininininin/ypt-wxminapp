@@ -258,7 +258,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    console.log(options)
     that.setData({
       type: options.type,
       href: app.globalData.url,
@@ -406,9 +405,7 @@ Page({
                       duration: 2000,
                       mask: true,
                       complete: function complete(res) {
-                        setTimeout(function () {
-                          console.log(that.data.backUrl)
-                          
+                        setTimeout(function () {                          
                           if (that.data.fromType == 1) {
                             wx.setStorageSync('fromTab', 1)
                             wx.switchTab({

@@ -68,7 +68,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.type)
     var type='',url=''
     if(options.type==1){
       type='医生评价列表';

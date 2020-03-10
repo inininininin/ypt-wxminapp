@@ -125,7 +125,6 @@ Page({
             var schemeListArr = that.data.schemeList;
           }
           var schemeListArr = that.data.schemeList;
-          console.log(that.data.schemeList)
           var newSchemeListArr = schemeListArr.concat(res.data.data.rows)
           if (res.data.data.rows.length == 0) {
             that.setData({

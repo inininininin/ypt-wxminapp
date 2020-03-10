@@ -66,7 +66,6 @@ Page({
             if (res.data.data.rows[i].type==0){
               var list1 = that.data.list1.concat(res.data.data.rows[i]) 
               res.data.data.rows[i].percent = (parseInt(res.data.data.rows[i].type0TodayGain) / parseInt(res.data.data.rows[i].type0TopLimitDaily))*100+"%"
-              console.log( res.data.data.rows[i].percent)
               if( res.data.data.rows[i].percent=='100%'){
                 res.data.data.rows[i].doneIs=1
               }else{
