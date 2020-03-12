@@ -5,13 +5,143 @@
 		<view class="title-bar" style="height:{{titleBarHeight}}px">
 			<image mode="aspectFill" lazy-load="true" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
 			<view class="searchBox">
-				<image src="../icon/sousuo@2x.png"></image>
-        <input placeholder="请输入搜索内容"></input>
-        <view>搜索</view>
+				<image mode="aspectFill" src="../icon/sousuo@2x.png"></image>
+				<input placeholder="请输入搜索内容"></input>
+				<view>搜索</view>
 			</view>
 		</view>
 	</view>
 </view>
-<view >
-  
+<view wx:if="{{searchVal==2}}" style='width:750rpx;background:#fff;height:86rpx;position:fixed;top:{{statusBarHeight+titleBarHeight}}px;z-index:999'>
+	<view class="navbar">
+		<view wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</view>
+	</view>
+</view>
+<!-- 人物列表 -->
+<view class="doctorList">
+	<view class="doctorTitle">
+		<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>医生</text>
+	</view>
+	<view class="doctorItem">
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text class="lineOne">女医生女医生女医生女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/more.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+	</view>
+</view>
+<view class="nurseList">
+	<view class="doctorTitle">
+		<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>医生</text>
+	</view>
+	<view class="doctorItem">
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text class="lineOne">女医生女医生女医生女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/tou.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/more.png"></image>
+			<text  class="lineOne">女医生</text>
+		</view>
+	</view>
+</view>
+<!-- 科室列表 -->
+<view class="departList">
+	<view class="titleMore">
+		<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>科室</text><text>查看更多</text>
+	</view>
+	<view class="departItem">
+		<view>
+			<image mode="aspectFill" src="../icon/menzhen.png"></image>
+			<text class="lineOne">某某医院下的某科室某某医院下的某科室某某医院下的某科室某某医院下的某科室</text>
+			<image mode="aspectFill" src="../icon/right.png"></image>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/menzhen.png"></image>
+			<text class="lineOne">某某医院下的某科室</text>
+			<image mode="aspectFill" src="../icon/right.png"></image>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/menzhen.png"></image>
+			<text class="lineOne">某某医院下的某科室</text>
+			<image mode="aspectFill" src="../icon/right.png"></image>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/menzhen.png"></image>
+			<text class="lineOne">某某医院下的某科室</text>
+			<image mode="aspectFill" src="../icon/right.png"></image>
+		</view>
+		<view>
+			<image mode="aspectFill" src="../icon/menzhen.png"></image>
+			<text class="lineOne">某某医院下的某科室</text>
+			<image mode="aspectFill" src="../icon/right.png"></image>
+		</view>
+	</view>
+</view>
+<!-- 病源、用户等 -->
+<view class="userList">
+	<view class="titleMore">
+		<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>用户</text><text>查看更多</text>
+	</view>
+	<view class="userItem">
+		<text class="lineOne">路人甲路人甲路人甲路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+	</view>
+	<view style="clear:both"></view>
+</view>
+<!-- 文章等 -->
+<view class="articleList">
+	<view class="titleMore">
+		<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>文章</text><text>查看更多</text>
+	</view>
+	<view>
+		<view class="articleOne">
+			<view>
+				<text class="lineTwo">身体有这些症状，说明你可能感染了幽门螺旋杆菌</text>
+				<view>
+					<image src="../icon/time@2x.png"></image>
+					<text class="lineOne">2019-02-19 12:39</text>
+				</view>
+			</view>
+			<image src="../icon/bj.png"></image>
+		</view>
+		<view class="articleTwo">
+			<text class="lineOne">身体有这些症状，说明你可能感染了幽门螺旋…</text>
+			<text class="lineOne">2019-02-19 12:39</text>
+		</view>
+	</view>
 </view>

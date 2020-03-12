@@ -9,11 +9,20 @@ Page({
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     // navtitle: '详情',
-
+    searchVal:2,
+    navbar: ['综合', '医生', '护士','评价'],
+    currentTab: 0,
   },
   backHistory(e) {
     wx.navigateBack({
       delta: 1
+    })
+  },
+  navbarTap: function(e) {
+    this.setData({
+      currentTab: e.currentTarget.dataset.idx,
+      productIs: e.currentTarget.dataset.idx,
+      qx:1,
     })
   },
   /**
@@ -55,7 +64,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh({
+      complete: (res) => {},
+    })
   },
 
   /**

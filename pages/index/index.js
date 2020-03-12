@@ -59,7 +59,7 @@ Page({
   },
   panoramaVrUrl(e) {
     wx.navigateTo({
-      url: '../webview/webview?href=' + encodeURIComponent(this.data.hosDetail.panoramaVrUrl),
+      url: '../webview/webview?href=' + encodeURIComponent(app.globalData.url+this.data.hosDetail.panoramaVrUrl),
     })
   },
   //事件处理函数

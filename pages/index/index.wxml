@@ -39,7 +39,7 @@
   <text class="lineSix">{{hosDetail.intro}}</text>
 </view>
 <view class="doctorDetail">
-  <image mode="aspectFill" lazy-load="true" src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
+  <image lazy-load="true" src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
   <view>
     <view class="evaDoctor" style="background: url({{bgUrl1}}) no-repeat;background-size: cover;background-position: center;" data-type='1' bindtap="evaList">医生列表</view>
     <view class="evanurse" style="background: url({{bgUrl2}}) no-repeat;background-size: cover;background-position: center;" data-type='2' bindtap="evaList">医护列表</view>

@@ -13,7 +13,7 @@ Page({
   },
   panoramaVrUrl(e){
     wx.navigateTo({
-      url: '../webview/webview?href=' + encodeURIComponent(this.data.detail.panoramaVrUrl),
+      url: '../webview/webview?href=' + encodeURIComponent(app.globalData.url+this.data.detail.panoramaVrUrl),
     })
   },
   evahospital(e){

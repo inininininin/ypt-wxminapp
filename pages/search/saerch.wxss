@@ -1,7 +1,7 @@
 /* pages/search/saerch.wxss */
 page {
   height: 100%;
-  background: #fff;
+  background: #f2f2f2;
 }
 
 .container {
@@ -62,14 +62,16 @@ page {
   line-height: 60rpx;
   font-size: 30rpx;
 }
-.searchBox image{
+
+.searchBox image {
   width: 26rpx;
   height: 29rpx;
   margin-left: 20rpx;
   margin-top: 16rpx;
   float: left;
 }
-.searchBox>input{
+
+.searchBox>input {
   width: 273rpx;
   height: 60rpx;
   display: inline-block;
@@ -77,13 +79,332 @@ page {
   margin-left: 12rpx;
   padding-right: 10rpx;
 }
-.searchBox>view{
+
+.searchBox>view {
   display: inline-block;
   width: 120rpx;
-height: 60rpx;
-background: #ed2828;
-color: #fff;
-border-radius: 0rpx 30rpx 30rpx 0rpx;
-text-align: center;
-float: left;
+  height: 60rpx;
+  background: #ed2828;
+  color: #fff;
+  border-radius: 0rpx 30rpx 30rpx 0rpx;
+  text-align: center;
+  float: left;
+}
+
+.navbar {
+  position: fixed;
+  /* top: 80rpx; */
+  height: 96rpx;
+  width: 678rpx;
+  left: 36rpx;
+  /* border-bottom: 2rpx solid rgb(243, 243, 243); */
+}
+
+.navbar>view.active {
+  color: #333;
+  font-size: 34rpx;
+}
+
+.navbar>view {
+  position: relative;
+  padding-top: 24rpx;
+  padding-right: 80rpx;
+  /* margin-top: 38rpx; */
+  font-size: 30rpx;
+  line-height: 42rpx;
+  color: #333;
+  /* border-bottom: 4rpx solid rgb(255,149,27); */
+  display: inline-block;
+  /* position: fixed; */
+  flex: auto;
+  /* width: 34rpx; */
+  /* margin-right: 80rpx; */
+}
+
+.navbar>view.active:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 72rpx;
+  left: 17rpx;
+  width: 38rpx;
+  height: 8rpx;
+  background: linear-gradient(to right, #ed2828, rgba(247, 81, 120, 0));
+}
+
+.doctorList {
+  width: 750rpx;
+  height: 212rpx;
+  background: #ffffff;
+  margin-top: 106rpx;
+}
+
+.doctorTitle image {
+  width: 21rpx;
+  height: 21rpx;
+  margin: 27rpx 6rpx 0 24rpx;
+}
+
+.doctorTitle text {
+  height: 33rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #888888;
+  line-height: 33rpx;
+  letter-spacing: 0rpx;
+}
+
+.doctorItem>view {
+  width: 150rpx;
+  height: 140rpx;
+  /* float: left; */
+  display: inline-block;
+  text-align: center;
+}
+
+.doctorItem image {
+  width: 78rpx;
+  height: 78rpx;
+  margin: 20rpx 36rpx 6rpx;
+}
+
+.doctorItem text {
+  height: 33rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #333333;
+  line-height: 33rpx;
+  letter-spacing: 0rpx;
+  text-align: center;
+  width: 120rpx;
+  margin: 0 auto;
+}
+
+.nurseList {
+  width: 750rpx;
+  height: 212rpx;
+  background: #ffffff;
+  margin-top: 20rpx;
+}
+
+/* 科室这样的 */
+.departList {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  margin-top: 20rpx;
+}
+
+.titleMore {
+  width: 100%;
+}
+
+.titleMore image {
+  width: 21rpx;
+  height: 21rpx;
+  margin: 27rpx 6rpx 0 24rpx;
+}
+
+.titleMore text:nth-child(2) {
+  height: 33rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #333333;
+  line-height: 33rpx;
+  letter-spacing: 0rpx;
+  text-align: center;
+  width: 120rpx;
+  margin: 0 auto;
+}
+
+.titleMore text:last-child {
+  float: right;
+  padding: 20rpx 36rpx 0rpx 20rpx;
+  width: 97rpx;
+  height: 33rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: right;
+  color: #888888;
+  line-height: 33rpx;
+  letter-spacing: 0rpx;
+}
+
+.departItem>view {
+  width: 718rpx;
+  margin-left: 32rpx;
+  height: 82rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  line-height: 82rpx;
+}
+
+.departItem>view:last-child {
+  border-bottom: 0;
+}
+
+.departItem>view image:first-child {
+  width: 36rpx;
+  height: 36rpx;
+  margin: 23rpx 20rpx 23rpx 0;
+  float: left;
+}
+
+.departItem>view text {
+  /* width: 257rpx; */
+  max-width: 580rpx;
+  height: 82rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #333333;
+  line-height: 82rpx;
+  letter-spacing: 0rpx;
+  float: left;
+  /* display: inline-block; */
+}
+
+.departItem>view image:last-child {
+  width: 16rpx;
+  height: 26rpx;
+  padding: 18rpx 32rpx 28rpx 20rpx;
+  float: right;
+  margin-top: 10rpx;
+}
+
+.userList {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  margin-top: 20rpx;
+  clear: both;
+}
+
+.userItem {
+  width: 100%;
+  background: #fff;
+  clear: both;
+  float: left;
+  padding-bottom: 24rpx;
+}
+
+.userItem>text {
+  padding: 0 10rpx;
+  width: 186rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  background: #ffffff;
+  border: 1rpx solid #e2e2e2;
+  border-radius: 6rpx;
+  text-align: center;
+  margin-top: 24rpx;
+  margin-left: 30rpx;
+  float: left;
+  /* display: inline-block; */
+}
+
+.userItem>text:nth-child(3n+1) {
+  margin-left: 36rpx !important;
+}
+
+.articleList {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  margin-top: 20rpx;
+  clear: both;
+}
+
+.articleOne {
+  width: 686rpx;
+  height: 218rpx;
+  margin-left: 32rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  position: relative;
+}
+
+.articleOne>view {
+  width: 416rpx;
+  /* display: inline-block; */
+  float: left;
+  margin-top: 24rpx;
+
+}
+
+.articleOne>view>text {
+  width: 416rpx;
+  height: 90rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #333333;
+  line-height: 45rpx;
+}
+
+.articleOne>view>view {
+  position: absolute;
+  bottom: 28rpx;
+  left: 0;
+  height: 32rpx;
+  line-height: 32rpx;
+}
+
+.articleOne>view>view image {
+  width: 22rpx;
+  height: 22rpx;
+  float: left;
+  vertical-align: middle;
+  margin-top: 5rpx;
+}
+
+.articleOne>view>view text {
+  /* width: 202rpx; */
+  height: 33rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #999999;
+  line-height: 33rpx;
+  float: left;
+  margin-left: 10rpx;
+}
+
+.articleOne>image {
+  width: 216rpx;
+  height: 170rpx;
+  margin: 24rpx 0 24rpx 54rpx;
+  display: inline-block;
+}
+
+.articleTwo {
+  width: 686rpx;
+  height: 136rpx;
+  margin-left: 32rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+
+.articleTwo text {
+  width: 686rpx;
+  height: 45rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: left;
+  color: #333333;
+  line-height: 45rpx;
+  margin-top: 24rpx;
+  margin-bottom: 10rpx;
+}
+
+.articleTwo view{
+
 }
