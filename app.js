@@ -1,15 +1,15 @@
 //app.js
 App({
-  
+   
   globalData: {
     loginHospitalId: '',
     loginHpitalName: '',
     userInfo: null,
     userInfoDetail: [],
     entity: [],
-    url: 'https://test.ypt.njshangka.com',
-    version: '2003041740-30bf493',
-    versionIntro: '这是一个新的版本这是一个\n新的版本这是一个新的版本，\n这是一个新的版本',
+    url: 'https://ypt.njshangka.com',
+    version: '2003101704-b14be1b',
+    versionIntro: '修复了部分BUG\n优化了部分体验',
     cookie: '',
     withoutLogin:'',
   },
