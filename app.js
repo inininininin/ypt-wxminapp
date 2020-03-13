@@ -1,6 +1,6 @@
 //app.js
 App({
-    
+     
   globalData: {
     loginHospitalId: '',
     loginHpitalName: '',
