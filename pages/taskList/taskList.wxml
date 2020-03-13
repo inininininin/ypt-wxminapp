@@ -20,7 +20,7 @@
       </view>
       <view>{{item.intro||''}}</view>
     </view>
-    <text wx:if='{{item.doneIs==0}}' class='nofinish' bindtap='gofinish' data-url='{{item.taskId}}'>去完成</text>
+    <!-- <text wx:if='{{item.doneIs==0}}' class='nofinish' bindtap='gofinish' data-url='{{item.taskId}}'>去完成</text> -->
     <text wx:if='{{item.doneIs==1}}' class='finish'>已完成</text>
   </view>
   </view>

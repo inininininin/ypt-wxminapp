@@ -239,7 +239,7 @@ Page({
       if(that.data.content == ''){
         if(that.data.star == 1){
           that.setData({
-            content:'满意'
+            content:'不满意'
           })
         }else if(that.data.star == 2){
           that.setData({
@@ -247,7 +247,7 @@ Page({
           })
         }else{
           that.setData({
-            content:'不满意'
+            content:'满意'
           })
         }
       }
@@ -371,7 +371,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh({
+      complete: (res) => {},
+    })
   },
 
   /**
