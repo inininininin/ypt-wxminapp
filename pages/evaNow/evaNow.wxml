@@ -38,7 +38,7 @@
 			<image mode="aspectFill" lazy-load="true" src="../icon/jia.png"></image>
 		</view>
 		<view class="imageItem" wx:for='{{imglist}}'>
-			<image mode="aspectFill" lazy-load="true" data-src="{{item}}"  bindtap="previewImage" src='{{item}}'></image>
+			<image mode="aspectFit" style="background-color: #eeeeee;" lazy-load="true" data-src="{{item}}"  bindtap="previewImage" src='{{item}}'></image>
 			<image mode="aspectFill" lazy-load="true" class="deletThis" bindtap="deletThis" data-src='{{item}}' src="../icon/deleteC.png"></image>
 		</view>
 	</view>

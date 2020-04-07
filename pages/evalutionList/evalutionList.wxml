@@ -37,7 +37,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='1' data-id='{{item.doctorCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFit" style="background-color: #eeeeee;" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 
@@ -70,7 +70,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='2' data-id='{{item.nurseCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFit" style="background-color: #eeeeee;" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 	</view>
@@ -102,7 +102,7 @@
 			</view>
 			<view class="{{item.lineThree}}" data-evatype='3' data-id='{{item.hospitalCommentId}}' data-line='{{item.lineThree}}' bindtap="lookDetail">{{item.content||''}}</view>
 			<view class="imageBox">
-				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFill" lazy-load="true" src="{{items}}"></image>
+				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFit" style="background-color: #eeeeee;" lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
 	</view>

@@ -1,5 +1,6 @@
 // pages/search/saerch.js
 var app = getApp()
+var utils = require('../../utils/util.js');
 Page({
 
   /**
@@ -8,10 +9,17 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    // navtitle: '详情',
+    keyword: '',
     searchVal:2,
     navbar: ['综合', '医生', '护士','评价'],
     currentTab: 0,
+    docList: [],
+    numlist1:[],
+    numlist1Show:true,
+    numlist2:[],
+    numlist2Show:true,
+    numlist3:[],
+    numlist3Show:true
   },
   backHistory(e) {
     wx.navigateBack({
@@ -29,7 +37,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      keyword:options.kw
+    })
+    if(options.kw){
+      this.docList(0,15,options.kw)
+    }else{
+      this.docList(0,15,'')
+    }
+    
   },
 
   /**
@@ -81,5 +97,39 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 请求数据方法
+  // 医生列表
+  docList(pn,ps,kw) {
+    var that = this
+    pn++
+    wx.request({
+      url: app.globalData.url + '/user/doctors',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'get',
+      data: {
+        hosptialId:wx.getStorageSync('loginHospitalId'),
+        pn: pn,
+        ps: ps,
+        kw:kw,
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          if (res.data.data.rows) {
+            for (var i in res.data.data.rows) {
+              res.data.data.rows[i].cover = app.cover(res.data.data.rows[i].cover)
+            }
+          }
+          that.setData({
+            docList: res.data.data.rows,
+            pn:pn
+          })
+        } 
+      }
+    })
+  },
 })

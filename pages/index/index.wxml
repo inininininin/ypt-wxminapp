@@ -8,7 +8,7 @@
     <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
     <view class="title-bar" style="height:{{titleBarHeight}}px">
       <!-- <image mode="aspectFill" class="scan" bindtap="scan" src="../icon/scan.png"></image> -->
-      <view>
+      <view bindtap="searchkey">
         <image mode="aspectFill" lazy-load="true" class="searchIcon" src="../icon/sousuo.png"></image>
         <input disabled="disabled" placeholder="搜索你需要的内容"></input>
       </view>

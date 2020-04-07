@@ -1,0 +1,43 @@
+<!--pages/searchPage/searchPage.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+	<view class="header" style="background:{{background}}">
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px">
+			<image mode="aspectFill" lazy-load="true" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+			<view class="searchBox">
+				<image mode="aspectFill" src="../icon/sousuo@2x.png"></image>
+				<input placeholder="请输入搜索内容" bindconfirm="searchKey"></input>
+				<!-- <view>搜索</view> -->
+			</view>
+		</view>
+	</view>
+</view>
+<!-- 历史搜索 -->
+<view wx:if='{{searchKeysThisShow}}'>
+	<view class="doctorTitle">
+		<image mode="aspectFill" src="../icon/sousuoAll.png"></image><text>历史搜索</text>
+	</view>
+  <view class="userItem">
+		<text class="lineOne" bindtap="searchKeyHos" data-kw='{{item}}' wx:for='{{searchKeysThis}}'>{{item}}</text>
+		<!-- <text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text>
+		<text class="lineOne">路人甲</text> -->
+	</view>
+	<view style="clear:both"></view>
+  <view class="clearAll" bindtap="clearAll">清空历史记录</view>
+</view>
+<view class="linef2f2f2"></view>
+<!-- 热搜榜 -->
+<view  wx:if='{{hotSearchListShow}}'>
+  <view class="doctorTitle">
+		<image mode="aspectFill" src="../icon/sousuoAll.png"></image><text>热搜榜</text>
+	</view>
+  <view class="hotSearch">
+    <view wx:for='{{hotSearchList}}'  bindtap="searchKey" data-kw='{{item.name}}' class="lineOne">{{item.name}} <text>{{item.searchCount}}</text></view>
+  </view>
+</view>

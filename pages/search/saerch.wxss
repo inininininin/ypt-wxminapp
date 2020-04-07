@@ -131,12 +131,15 @@ page {
   height: 8rpx;
   background: linear-gradient(to right, #ed2828, rgba(247, 81, 120, 0));
 }
+.label{
+  margin-top:106rpx;
+}
 
 .doctorList {
   width: 750rpx;
   height: 212rpx;
   background: #ffffff;
-  margin-top: 106rpx;
+  /* margin-top: 20rpx; */
 }
 
 .doctorTitle image {
@@ -159,7 +162,7 @@ page {
 .doctorItem>view {
   width: 150rpx;
   height: 140rpx;
-  /* float: left; */
+  float: left;
   display: inline-block;
   text-align: center;
 }
@@ -405,6 +408,59 @@ page {
   margin-bottom: 10rpx;
 }
 
-.articleTwo view{
+/* 人员列表 */
+.doctorListItem{
+  width: 720rpx;
+  height: 215rpx;
+  margin-left:30rpx; 
+  border-bottom: 1rpx solid #E2E2E2;
+}
+.doctorListItem:last-child{
+  border-bottom:0;
+}
+.doctorListItem>image{
+  width: 130rpx;
+  height: 130rpx;
+  float: left;
+  border-radius: 65rpx;
+  margin: 38rpx 34rpx 47rpx 0;
+}
+.doctorListItem>view{
+  width: 525rpx;
+  height: 155rpx;
+  margin-top: 30rpx;
+  float: left;
+}
+.doctorListItem>view text:nth-child(1){
+height: 48rpx;
+opacity: 1;
+font-size: 34rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(51,51,51,1);
+line-height: 48rpx;
+letter-spacing: 0px;
+float: left;
+}
+.doctorListItem>view text:nth-child(2){
+  height: 48rpx;
+  line-height: 48rpx;
+  /* display: inline-block; */
+  width: 420rpx;
+  margin-left: 10rpx;
+  font-size: 24rpx;
+  letter-spacing: 0px;
+  float: left;
+}
 
+.doctorListItem>view text:nth-child(3){
+  clear: both;
+height: 99rpx;
+opacity: 1;
+font-size: 24rpx;
+font-family: PingFangSC;
+font-weight: 400;
+color: rgba(153,153,153,1);
+line-height: 33rpx;
+letter-spacing: 0px;
 }

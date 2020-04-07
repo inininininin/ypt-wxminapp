@@ -76,3 +76,9 @@ button::after{
   line-height: 300rpx;
   text-align: center;
 }
+
+.linef2f2f2{
+  width: 100%;
+  height: 20rpx;
+  background: #f2f2f2;
+}

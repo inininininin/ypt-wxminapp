@@ -15,6 +15,12 @@ Page({
     bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
   },
+  // 搜索跳转
+  searchkey(e){
+    wx.navigateTo({
+      url: '../searchPage/searchPage',
+    })
+  },
   // 查看二维码
   lookCode(e) {
     // var current =  e.currentTarget.dataset.src;

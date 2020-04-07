@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/search/saerch",
-    
+    "pages/searchPage/searchPage",
+  
+   
     "pages/login/login",
     "pages/hosList/hosList",
     "pages/logs/logs",
@@ -19,6 +21,7 @@
     "pages/evalutionList/evalutionList",
     "pages/taskList/taskList",
     "pages/departDetail/departDetail"
+    
   ],
   "window": {
     "backgroundTextStyle": "dark",

@@ -1,14 +1,14 @@
 //app.js
 App({
-      
+   
   globalData: {
     loginHospitalId: '',
     loginHpitalName: '',
     userInfo: null,
     userInfoDetail: [],
     entity: [],
-    url: 'https://ypt.njshangka.com',
-    version: '2003160917-8bdaf1f',
+    url: 'https://test.ypt.njshangka.com',
+    version: '2003121038-b13c138',
     versionIntro: '修复了部分BUG\n优化了部分体验',
     cookie: '',
     withoutLogin:'',
@@ -20,7 +20,7 @@ App({
       // 请求完新版本信息的回调
       console.log(res.hasUpdate)
     })
-
+    wx.setStorageSync('searchKeys', '我的,你的')
     updateManager.onUpdateReady(function () {
       wx.showModal({
         title: '更新提示',
