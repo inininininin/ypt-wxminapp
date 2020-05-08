@@ -108,41 +108,61 @@ Page({
     })
   },
   loginout(e) {
-    wx.showToast({
-      title: '退出登录',
-      icon:'none'
-    })
+    // wx.showToast({
+    //   title: '退出登录',
+    //   icon:'none'
+    // })
     var that = this
-    wx.request({
-      url: app.globalData.url + '/user/logout',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': wx.getStorageSync('cookie')
-      },
-      method: 'post',
-      data: {
-        name: that.data.name,
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          wx.setStorageSync('cookie', '')
-                app.globalData.userInfo = '' //null
-                app.globalData.userInfoDetail = []
-                wx.setStorageSync('withoutLogin', true)
-                that.setData({
-                  names: '',
-                  phone: '',
-                  avator: '../icon/moren.png',
-                  withoutLogin: true,
-                })
-        } else {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon: 'none'
-          })
-        }
-      }
+    wx.showModal({
+      title: '退出',
+         content: '确定要退出登录？',
+         showCancel: true,//是否显示取消按钮
+         cancelText:"否",//默认是“取消”
+         cancelColor:'skyblue',//取消文字的颜色
+         confirmText:"是",//默认是“确定”
+         confirmColor: 'skyblue',//确定文字的颜色
+         success: function (res) {
+            if (res.cancel) {
+               //点击取消,默认隐藏弹框
+            } else {
+               //点击确定
+               
+               wx.request({
+                 url: app.globalData.url + '/user/logout',
+                 header: {
+                   "Content-Type": "application/x-www-form-urlencoded",
+                   'cookie': wx.getStorageSync('cookie')
+                 },
+                 method: 'post',
+                 data: {
+                   name: that.data.name,
+                 },
+                 success: function (res) {
+                   if (res.data.code == 0) {
+                     wx.setStorageSync('cookie', '')
+                           app.globalData.userInfo = '' //null
+                           app.globalData.userInfoDetail = []
+                           wx.setStorageSync('withoutLogin', true)
+                           that.setData({
+                             names: '',
+                             phone: '',
+                             avator: '../icon/moren.png',
+                             withoutLogin: true,
+                           })
+                   } else {
+                     wx.showToast({
+                       title: res.data.codeMsg,
+                       icon: 'none'
+                     })
+                   }
+                 }
+               })
+            }
+         },
+         fail: function (res) { }, 
+         complete: function (res) { },
     })
+    
   },
   avator() {
     var that = this

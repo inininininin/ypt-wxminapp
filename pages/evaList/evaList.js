@@ -16,6 +16,7 @@ Page({
     kw:'',
     officeId:'',
     allHidden:'block',
+    toPageNo:0,
   },
   // 点击下拉显示框
   selectTaps() {
@@ -113,7 +114,11 @@ Page({
               schemeList: newSchemeListArr,
               toPageNo: String(toPageNo)
             });
+           
           }
+          // that.setData({
+          //   toPageNo: String(toPageNo)
+          // })
         } else {
           wx.showModal({
             showCancel: false,
@@ -173,8 +178,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    var pageNo = this.data.pageNo;
-    this.lastPage(pageNo)
+    var toPageNo = this.data.toPageNo;
+    this.lastPage(toPageNo)
   },
 
   /**
