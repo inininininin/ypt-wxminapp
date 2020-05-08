@@ -14,6 +14,8 @@ Page({
     navbar: ['综合', '医生', '护士','评价'],
     currentTab: 0,
     docList: [],
+    nursesList:[],
+    officesList:[],
     numlist1:[],
     numlist1Show:true,
     numlist2:[],
@@ -41,9 +43,13 @@ Page({
       keyword:options.kw
     })
     if(options.kw){
-      this.docList(0,15,options.kw)
+      this.docList(0,4,options.kw)
+      this.nurseList(0,4,options.kw)
+      this.evaList(0,5,options.kw)
     }else{
-      this.docList(0,15,'')
+      this.docList(0,4,'')
+      this.nurseList(0,4,'')
+      this.evaList(0,5,'')
     }
     
   },
@@ -119,13 +125,88 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
-          if (res.data.data.rows) {
+          if (res.data.data.rows&&res.data.data.rows.length>0) {
+            var numlist1Show=true
             for (var i in res.data.data.rows) {
               res.data.data.rows[i].cover = app.cover(res.data.data.rows[i].cover)
             }
+          }else{
+            var numlist1Show=false
           }
           that.setData({
+            numlist1Show:numlist1Show,
             docList: res.data.data.rows,
+            pn:pn
+          })
+          console.log(that.data.docList)
+        } 
+      }
+    })
+  },
+  nurseList(pn,ps,kw) {
+    var that = this
+    pn++
+    wx.request({
+      url: app.globalData.url + '/user/nurses',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'get',
+      data: {
+        hosptialId:wx.getStorageSync('loginHospitalId'),
+        pn: pn,
+        ps: ps,
+        kw:kw,
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          if (res.data.data.rows&&res.data.data.rows.length>0) {
+            var numlist2Show=true
+            for (var i in res.data.data.rows) {
+              res.data.data.rows[i].cover = app.cover(res.data.data.rows[i].cover)
+            }
+          }else{
+            var numlist2Show=false
+          }
+          that.setData({
+            numlist2Show:numlist2Show,
+            nursesList: res.data.data.rows,
+            pn:pn
+          })
+        } 
+      }
+    })
+  },
+  evaList(pn,ps,kw) {
+    var that = this
+    pn++
+    wx.request({
+      url: app.globalData.url + '/user/offices',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'get',
+      data: {
+        hosptialId:wx.getStorageSync('loginHospitalId'),
+        pn: pn,
+        ps: ps,
+        kw:kw,
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          if (res.data.data.rows) {
+            for (var i in res.data.data.rows&&res.data.data.rows.length>0) {
+              var numlist3Show=true
+              res.data.data.rows[i].cover = app.cover(res.data.data.rows[i].cover)
+            }
+          }else{
+            var numlist3Show=false
+          }
+          that.setData({
+            numlist3Show:numlist3Show,
+            officesList: res.data.data.rows,
             pn:pn
           })
         } 

@@ -253,7 +253,7 @@ page {
 .doctorDetail>view>view {
   width: 223rpx;
   height: 130rpx;
-  margin-right: 21rpx;
+  margin-right: 20rpx;
   display: inline-block;
   text-align: center;
   opacity: 1;
@@ -263,6 +263,7 @@ page {
   /* color: rgba(38, 91, 215, 1); */
   line-height: 130rpx;
   letter-spacing: 0px;
+  float: left;
 }
 
 .doctorDetail>view>view:last-child {

@@ -24,25 +24,14 @@
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>医生</text>
 		</view>
 		<view class="doctorItem">
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text class="lineOne">女医生女医生女医生女医生</text>
+			<view  wx:for='{{docList}}'>
+				<image mode="aspectFill" src="{{item.cover}}"></image>
+				<text class="lineOne">{{item.name}}</text>
 			</view>
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text  class="lineOne">女医生</text>
-			</view>
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text  class="lineOne">女医生</text>
-			</view>
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text  class="lineOne">女医生</text>
-			</view>
-			<view>
+	
+			<view wx:if='{{docList.length==4}}'>
 				<image mode="aspectFill" src="../icon/more.png"></image>
-				<text  class="lineOne">女医生</text>
+				<text  class="lineOne">更多</text>
 			</view>
 		</view>
 	</view>
@@ -51,25 +40,14 @@
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>医生</text>
 		</view>
 		<view class="doctorItem">
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text class="lineOne">女医生女医生女医生女医生</text>
+			<view  wx:for='{{nursesList}}'>
+				<image mode="aspectFill" src="{{item.cover}}"></image>
+				<text class="lineOne">{{item.name}}</text>
 			</view>
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text  class="lineOne">女医生</text>
-			</view>
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text  class="lineOne">女医生</text>
-			</view>
-			<view>
-				<image mode="aspectFill" src="../icon/tou.png"></image>
-				<text  class="lineOne">女医生</text>
-			</view>
-			<view>
+		
+			<view wx:if='{{nursesList.length==4}}'>
 				<image mode="aspectFill" src="../icon/more.png"></image>
-				<text  class="lineOne">女医生</text>
+				<text  class="lineOne">更多</text>
 			</view>
 		</view>
 	</view>

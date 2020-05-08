@@ -171,6 +171,7 @@ page {
   width: 78rpx;
   height: 78rpx;
   margin: 20rpx 36rpx 6rpx;
+  border-radius: 39rpx;
 }
 
 .doctorItem text {

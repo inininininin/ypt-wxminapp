@@ -38,6 +38,6 @@
 		<image mode="aspectFill" src="../icon/sousuoAll.png"></image><text>热搜榜</text>
 	</view>
   <view class="hotSearch">
-    <view wx:for='{{hotSearchList}}'  bindtap="searchKey" data-kw='{{item.name}}' class="lineOne">{{item.name}} <text>{{item.searchCount}}</text></view>
+    <view wx:for='{{hotSearchList}}'  bindtap="searchKeyWords"  data-kw='{{item.name}}' class="lineOne">{{item.name}} <text>{{item.searchCount}}</text></view>
   </view>
 </view>

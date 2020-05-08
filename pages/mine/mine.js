@@ -108,6 +108,10 @@ Page({
     })
   },
   loginout(e) {
+    wx.showToast({
+      title: '退出登录',
+      icon:'none'
+    })
     var that = this
     wx.request({
       url: app.globalData.url + '/user/logout',

@@ -37,33 +37,33 @@ Page({
       searchKeysThisShow:false
     })
   },
-  searchKey(e){
-    console.log(e.detail.value)
-    // var searchKeys =wx.getStorageSync('searchKeys') 
-    // // var searchKeysThis=[]
-    // console.log(searchKeys)
-    // var keys=this.data.searchKeysThis
-    // console.log(searchKeys)
-    // if(searchKeys.slice(searchKeys.length-1,searchKeys.length)==','){
-    //   searchKeys=searchKeys.slice(0,searchKeys.length-1)
-    // }
-
-    // for(var r in keys){
-    //   if(e.detail.value==keys[r]){
-    //     var reg = new RegExp(e.detail.value);
-    //     console.log(searchKeys)
-    //     searchKeys=searchKeys.replace(reg,"");
-    //     console.log(searchKeys)
-    //     searchKeys=e.detail.value+','+searchKeys
-    //     console.log(searchKeys)
-    //   }else{
-    //     searchKeys=e.detail.value+','+searchKeys
-    //   }
-    // }
-console.log(123221)
-   
+  searchKeyWords(e){
     var searchKeysThis=this.data.searchKeysThis
-    console.log(searchKeysThis)
+    var key=searchKeysThis
+    var searchKeys=''
+    for(var i in key){
+      searchKeys=searchKeys+','+key[i]
+      console.log(searchKeys)
+    }
+    var searchKeys=e.currentTarget.dataset.kw+searchKeys
+    var keys=searchKeys.split(',')
+    var searchKeysThisOn=[]
+    for(var i in keys){
+      searchKeysThisOn.push(keys[i])
+    }
+    this.setData({
+      searchKeysThis:searchKeysThisOn,
+      searchKeysThisShow:true
+    })
+    console.log(searchKeysThis,this.data.searchKeysThis)
+    wx.setStorageSync('searchKeys', searchKeys)
+    console.log(searchKeys)
+    wx.navigateTo({
+      url: '../search/saerch?kw='+e.currentTarget.dataset.kw,
+    })
+  },
+  searchKey(e){
+    var searchKeysThis=this.data.searchKeysThis
     var key=searchKeysThis
     var searchKeys=''
     for(var i in key){
