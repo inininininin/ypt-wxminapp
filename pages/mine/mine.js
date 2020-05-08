@@ -108,10 +108,7 @@ Page({
     })
   },
   loginout(e) {
-    // wx.showToast({
-    //   title: '退出登录',
-    //   icon:'none'
-    // })
+ 
     var that = this
     wx.showModal({
       title: '退出',
