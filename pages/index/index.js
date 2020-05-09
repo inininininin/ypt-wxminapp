@@ -295,13 +295,10 @@ Page({
       method: 'post',
       success: function (res) {
         if (res.data.code == 0) {
-          wx.showR
+
         }
       }
     })
-    return {
-      title: '自定义转发标题',
-      path: '/page/user?id=123'
-    }
+    
   }
 })

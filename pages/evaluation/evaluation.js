@@ -22,6 +22,9 @@ Page({
     list2:[],
     list1Num:0,
     list2Num:0,
+    doctorList:[],
+    nurseList:[],
+    hospitalList:[]
   },
   toLogin(e) {
     var backUrl = '../evaluation/evaluation';
@@ -174,6 +177,8 @@ Page({
               list2Num: res.data.data.rowCount,
             });
           }
+
+          // console.log(that.data.list1)
         }
         // else {
         //   wx.showModal({
@@ -315,6 +320,7 @@ Page({
    */
   onShow: function () {
   var that=this
+  console.log(wx.getStorageSync('withoutLogin'))
     if (wx.getStorageSync('withoutLogin') === true || wx.getStorageSync('withoutLogin') === '') {
       that.setData({
         withoutLogin: true,
@@ -337,7 +343,12 @@ Page({
           if (res.data.code == 0) {
             wx.setStorageSync('withoutLogin', false)
             app.globalData.userInfoDetail = res.data.data
+            that.setData({
+              withoutLogin: false,
+              userType: app.globalData.userInfoDetail.type,
+            })
             if (app.globalData.userInfoDetail.type == 0) {
+              console.log(that.data.doctorList)
               if (that.data.doctorList && that.data.doctorList.length == 0 && that.data.nurseList.length == 0 && that.data.hospitalList.length == 0) {
                 that.lastPage(0, '/user/my-doctor-comments', 'doctorList')
                 that.lastPage(0, '/user/my-nurse-comments', 'nurseList')
@@ -362,11 +373,7 @@ Page({
           }
         }
       })
-      
-      that.setData({
-        withoutLogin: false,
-        userType: app.globalData.userInfoDetail.type,
-      })
+    
     }
     that.setData({
       allHidden: 'none',
