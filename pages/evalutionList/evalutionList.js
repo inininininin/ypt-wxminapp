@@ -88,8 +88,12 @@ Page({
     this.lastPage(0, url)
   },
   backHistory(e) {
-    wx.navigateBack({
-      delta: 1
+    // wx.navigateBack({
+    //   delta: 1
+    // })
+    console.log(123)
+    wx.switchTab({
+      url: '../index/index',
     })
   },
   lastPage: function (toPageNo, url) {
