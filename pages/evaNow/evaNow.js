@@ -15,7 +15,7 @@ Page({
     length: 0,
     title1: '',
     title2: '',
-    title3: '请上传挂号发票或诊治单',
+    title3: '请上传图片:',//'请上传挂号发票或诊治单',
     hidden: false,
     star: '',
     imglist: [],
