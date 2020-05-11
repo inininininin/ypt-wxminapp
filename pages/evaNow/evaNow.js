@@ -169,7 +169,7 @@ Page({
               type: options.type,
               id: res.data.data.doctorId,
               navtitle: res.data.data.name,
-              title1: '您对本次就医医生诊断体验：',
+              title1: '您对本次的服务体验：',
               title2: '请填写您对该医生的评价：',
             })
           }
@@ -197,7 +197,7 @@ Page({
               type: options.type,
               id: res.data.data.nurseId,
               navtitle: res.data.data.name,
-              title1: '您对本次就医医护人员服务体验：',
+              title1: '您对本次的服务体验：',
               title2: '请填写您对该医护人员的评价：',
             })
           }
@@ -209,7 +209,7 @@ Page({
         type: wx.getStorageSync('type'),
         id: wx.getStorageSync('id'),
         navtitle: options.name,
-        title1: '您本次就医体验：',
+        title1: '您对本次的服务体验：',
         title2: '请填写您对该医院的具体评价及建议：',
       })
     }
@@ -289,8 +289,12 @@ Page({
 
   },
   back(e) {
-    wx.navigateBack({
-      delta: 1
+    // wx.navigateBack({
+    //   delta: 1
+    // })
+    console.log(123123)
+    wx.switchTab({
+      url: '../index/index',
     })
   },
   detail(e) {
