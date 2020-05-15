@@ -3,8 +3,6 @@
     "pages/index/index",
     "pages/search/saerch",
     "pages/searchPage/searchPage",
-  
-   
     "pages/login/login",
     "pages/hosList/hosList",
     "pages/logs/logs",
@@ -20,8 +18,8 @@
     "pages/webview/webview",
     "pages/evalutionList/evalutionList",
     "pages/taskList/taskList",
-    "pages/departDetail/departDetail"
-    
+    "pages/departDetail/departDetail",
+    "pages/evaNowShare/evaNowShare"
   ],
   "window": {
     "backgroundTextStyle": "dark",
