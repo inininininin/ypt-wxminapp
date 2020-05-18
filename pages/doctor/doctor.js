@@ -20,9 +20,6 @@ Page({
       type:options.type,
       id:options.id,
     })
-    wx.navigateTo({
-      url: '../doctor/doctor',
-    })
   },
   evaNow(e){
     wx.navigateTo({
@@ -39,9 +36,7 @@ Page({
     wx.navigateBack({
       delta: 1
     })
-    // wx.navigateTo({
-    //   url: '../doctor/doctor',
-    // })
+    
   },
   /**
    * 生命周期函数--监听页面显示
