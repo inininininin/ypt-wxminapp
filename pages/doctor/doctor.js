@@ -20,6 +20,9 @@ Page({
       type:options.type,
       id:options.id,
     })
+    wx.navigateTo({
+      url: '../doctor/doctor',
+    })
   },
   evaNow(e){
     wx.navigateTo({
