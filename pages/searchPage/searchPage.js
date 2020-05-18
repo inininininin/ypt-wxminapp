@@ -98,18 +98,25 @@ Page({
   onLoad: function (options) {
     var searchKeys=wx.getStorageSync('searchKeys')
     console.log(searchKeys)
-    if(searchKeys.slice(searchKeys.length-1,searchKeys.length)==','){
-      searchKeys=searchKeys.slice(0,searchKeys.length-1)
-    }
-    var key=searchKeys.split(',')
+    // if(searchKeys.slice(searchKeys.length-1,searchKeys.length)==','){
+    //   searchKeys=searchKeys.slice(0,searchKeys.length-1)
+    // }
+    
     var searchKeysThis=[]
-    for(var i in key){
-      searchKeysThis.push(key[i])
-      console.log(searchKeysThis)
+    var searchKeysThisShow=false
+    if(searchKeys){
+      var key=searchKeys.split(',')
+      searchKeysThisShow=true
+      for(var i in key){
+        searchKeysThis.push(key[i])
+        console.log(searchKeysThis)
+      }
     }
+   
     
     this.setData({
-      searchKeysThis:searchKeysThis
+      searchKeysThis:searchKeysThis,
+      searchKeysThisShow:searchKeysThisShow
     })
     this.hotSearch()
   },
