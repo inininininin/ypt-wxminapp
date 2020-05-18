@@ -57,7 +57,7 @@
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>科室</text><text bindtap="evadepart">查看更多</text>
 		</view>
 		<view class="departItem">
-			<view wx:for='{{officesList}}' bindtap="departDetail" data-id='{{item.officeId}}'>
+			<view wx:for='{{officesList}}' bindtap="departDetails" data-id='{{item.officeId}}'>
 				<image mode="aspectFill" src="../icon/menzhen.png"></image>
 				<text class="lineOne">{{item.name}}</text>
 				<image mode="aspectFill" src="../icon/right.png"></image>

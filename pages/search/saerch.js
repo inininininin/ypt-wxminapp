@@ -71,12 +71,12 @@ Page({
     }
     
   },
-  doctors(e) {
+  doctor(e) {
     wx.navigateTo({
       url: '../doctor/doctor?id=' + e.currentTarget.dataset.id + '&type=1' + '&detail=' + JSON.stringify(e.currentTarget.dataset.detail),
     })
   },
-  departDetail(e){
+  departDetails(e){
     wx.navigateTo({
       url: '../departDetail/departDetail?id='+e.currentTarget.dataset.id,
     })
