@@ -85,7 +85,7 @@
 		</view>
 	</view>
 	<!-- 病源、用户等 -->
-	<view class="userList">
+	<!-- <view class="userList">
 		<view class="titleMore">
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>用户</text><text>查看更多</text>
 		</view>
@@ -101,9 +101,9 @@
 			<text class="lineOne">路人甲</text>
 		</view>
 		<view style="clear:both"></view>
-	</view>
+	</view> -->
 	<!-- 文章等 -->
-	<view class="articleList">
+	<!-- <view class="articleList">
 		<view class="titleMore">
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>文章</text><text>查看更多</text>
 		</view>
@@ -123,7 +123,7 @@
 				<text class="lineOne">2019-02-19 12:39</text>
 			</view>
 		</view>
-	</view>
+	</view> -->
 
 </view>
 <!-- 医生 -->

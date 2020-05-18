@@ -251,6 +251,8 @@ Page({
         url: wx.getStorageSync('historyUrl'),
       })
     }else{
+      console.log(wx.getStorageSync('historyUrl'))
+      debugger
       wx.navigateTo({
         url: wx.getStorageSync('historyUrl')+"?type="+wx.getStorageSync('type')+"&id="+wx.getStorageSync('id'),
       })

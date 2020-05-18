@@ -178,6 +178,41 @@ Page({
       }
     })
   },
+  officeList(pn,ps,kw) {
+    var that = this
+    pn++
+    wx.request({
+      url: app.globalData.url + '/user/nurses',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'get',
+      data: {
+        hosptialId:wx.getStorageSync('loginHospitalId'),
+        pn: pn,
+        ps: ps,
+        kw:kw,
+      },
+      success: function (res) {
+        if (res.data.code == 0) {
+          if (res.data.data.rows&&res.data.data.rows.length>0) {
+            var numlist2Show=true
+            for (var i in res.data.data.rows) {
+              res.data.data.rows[i].cover = app.cover(res.data.data.rows[i].cover)
+            }
+          }else{
+            var numlist2Show=false
+          }
+          that.setData({
+            numlist2Show:numlist2Show,
+            nursesList: res.data.data.rows,
+            pn:pn
+          })
+        } 
+      }
+    })
+  },
   evaList(pn,ps,kw) {
     var that = this
     pn++
