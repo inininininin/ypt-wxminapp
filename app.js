@@ -12,6 +12,7 @@ App({
     versionIntro: '修复了部分BUG\n优化了部分体验',
     cookie: '',
     withoutLogin:'',
+    hospitaiDetail:[],
   },
   onLaunch: function () {
     const updateManager = wx.getUpdateManager()

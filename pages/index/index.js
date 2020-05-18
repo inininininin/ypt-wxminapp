@@ -89,6 +89,9 @@ Page({
         if (res.data.code == 0) {
 
           app.globalData.hospitalName = res.data.data.name
+          app.globalData.hospitaiDetail= res.data.data
+          console.log(app.globalData.hospitaiDetail)
+          
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
@@ -101,6 +104,25 @@ Page({
             hosDetail: res.data.data,
             testImg: res.data.data.cover,
           })
+          var param = encodeURIComponent('pages/index/index?hospitalid=' + app.globalData.hospitaiDetail.hospitalId + '&hospitalname=' + app.globalData.hospitaiDetail.name)
+    wx.getImageInfo({
+      src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=2',
+      method: 'get',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      success: function (res) {
+        var imglist = []
+        imglist.push(res.path)
+        that.setData({
+          tcode: res.path,
+          imglist: imglist,
+        })
+      },
+      fail(res) {
+        console.log(res)
+      }
+    })
         } else {
           wx.showModal({
             content: '请先选择一个医院',
@@ -238,25 +260,8 @@ Page({
     this.departDetail();
     this.docList();
     var that = this
-    var param = encodeURIComponent('pages/index/index?hospitalid=' + app.globalData.userInfoDetail.hospitalId + '&hospitalname=' + app.globalData.userInfoDetail.hospitalName)
-    wx.getImageInfo({
-      src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=2',
-      method: 'get',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      success: function (res) {
-        var imglist = []
-        imglist.push(res.path)
-        that.setData({
-          tcode: res.path,
-          imglist: imglist,
-        })
-      },
-      fail(res) {
-        console.log(res)
-      }
-    })
+    // console.log(app.globalData.hospitaiDetail)
+    
   },
   onReady: function () {
     this.setData({
