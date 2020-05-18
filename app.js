@@ -21,7 +21,7 @@ App({
       // 请求完新版本信息的回调
       console.log(res.hasUpdate)
     })
-    wx.setStorageSync('searchKeys', '我的,你的')
+    wx.setStorageSync('searchKeys', '')
     updateManager.onUpdateReady(function () {
       wx.showModal({
         title: '更新提示',

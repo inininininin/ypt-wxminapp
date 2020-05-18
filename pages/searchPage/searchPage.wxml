@@ -33,7 +33,7 @@
 </view>
 <view class="linef2f2f2"></view>
 <!-- 热搜榜 -->
-<view  wx:if='{{hotSearchListShow}}'>
+<view  wx:if='{{hotSearchListShow}}' style="display:none">
   <view class="doctorTitle">
 		<image mode="aspectFill" src="../icon/sousuoAll.png"></image><text>热搜榜</text>
 	</view>

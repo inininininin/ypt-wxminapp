@@ -6,8 +6,8 @@
 			<image mode="aspectFill" lazy-load="true" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
 			<view class="searchBox">
 				<image mode="aspectFill" src="../icon/sousuo@2x.png"></image>
-				<input value="{{keyword}}" placeholder="请输入搜索内容"></input>
-				<view>搜索</view>
+				<input value="{{keyword}}" placeholder="请输入搜索内容" bindinput="inputVal" bindconfirm="searchThis"></input>
+				<view bindtap="searchThis">搜索</view>
 			</view>
 		</view>
 	</view>
@@ -24,12 +24,12 @@
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>医生</text>
 		</view>
 		<view class="doctorItem">
-			<view  wx:for='{{docList}}'>
+			<view  wx:for='{{docList}}' bindtap="doctor"  data-id='{{item.doctorId}}' data-detail='{{item}}'>
 				<image mode="aspectFill" src="{{item.cover}}"></image>
 				<text class="lineOne">{{item.name}}</text>
 			</view>
 	
-			<view wx:if='{{docList.length==4}}'>
+			<view wx:if='{{docList.length==4}}' bindtap="evaList1" data-type='1'>
 				<image mode="aspectFill" src="../icon/more.png"></image>
 				<text  class="lineOne">更多</text>
 			</view>
@@ -37,15 +37,15 @@
 	</view>
 	<view class="nurseList" wx:if='{{numlist2Show}}'>
 		<view class="doctorTitle">
-			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>医生</text>
+			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>护士</text>
 		</view>
 		<view class="doctorItem">
-			<view  wx:for='{{nursesList}}'>
+			<view  wx:for='{{nursesList}}' bindtap="doctor"  data-id='{{item.doctorId}}' data-detail='{{item}}' >
 				<image mode="aspectFill" src="{{item.cover}}"></image>
 				<text class="lineOne">{{item.name}}</text>
 			</view>
 		
-			<view wx:if='{{nursesList.length==4}}'>
+			<view wx:if='{{nursesList.length==4}}' bindtap="evaList1" data-type='2'>
 				<image mode="aspectFill" src="../icon/more.png"></image>
 				<text  class="lineOne">更多</text>
 			</view>
@@ -54,20 +54,15 @@
 	<!-- 科室列表 -->
 	<view class="departList" wx:if='{{numlist3Show}}'>
 		<view class="titleMore">
-			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>科室</text><text>查看更多</text>
+			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>科室</text><text bindtap="evadepart">查看更多</text>
 		</view>
 		<view class="departItem">
-			<view>
+			<view wx:for='{{officesList}}' bindtap="departDetail" data-id='{{item.officeId}}'>
 				<image mode="aspectFill" src="../icon/menzhen.png"></image>
-				<text class="lineOne">某某医院下的某科室某某医院下的某科室某某医院下的某科室某某医院下的某科室</text>
+				<text class="lineOne">{{item.name}}</text>
 				<image mode="aspectFill" src="../icon/right.png"></image>
 			</view>
-			<view>
-				<image mode="aspectFill" src="../icon/menzhen.png"></image>
-				<text class="lineOne">某某医院下的某科室</text>
-				<image mode="aspectFill" src="../icon/right.png"></image>
-			</view>
-			<view>
+			<!-- <view>
 				<image mode="aspectFill" src="../icon/menzhen.png"></image>
 				<text class="lineOne">某某医院下的某科室</text>
 				<image mode="aspectFill" src="../icon/right.png"></image>
@@ -82,6 +77,11 @@
 				<text class="lineOne">某某医院下的某科室</text>
 				<image mode="aspectFill" src="../icon/right.png"></image>
 			</view>
+			<view>
+				<image mode="aspectFill" src="../icon/menzhen.png"></image>
+				<text class="lineOne">某某医院下的某科室</text>
+				<image mode="aspectFill" src="../icon/right.png"></image>
+			</view> -->
 		</view>
 	</view>
 	<!-- 病源、用户等 -->
@@ -128,7 +128,7 @@
 </view>
 <!-- 医生 -->
 <view class="label tab2" wx:if='{{currentTab==1}}'>
-	<view class="doctorListItem" wx:for='{{docList}}' data-id='{{item.doctorId}}' data-detail='{{item}}' bindtap="doctor">
+	<view class="doctorListItem" wx:for='{{docList}}' data-id='{{item.doctorId}}' data-detail='{{item}}' bindtap="doctors">
     <image mode="aspectFill" lazy-load="true" src="{{item.cover||'../icon/yisheng.png'}}"></image>
     <view>
       <text>{{item.name||''}}</text><text class="tag lineOne">{{item.tag||""}}</text>
