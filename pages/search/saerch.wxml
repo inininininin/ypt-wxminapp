@@ -24,7 +24,7 @@
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>医生</text>
 		</view>
 		<view class="doctorItem">
-			<view  wx:for='{{docList}}' bindtap="doctor"  data-id='{{item.doctorId}}' data-detail='{{item}}'>
+			<view  wx:for='{{docList}}' bindtap="doctor" data-type='1'  data-id='{{item.doctorId}}' data-detail='{{item}}'>
 				<image mode="aspectFill" src="{{item.cover}}"></image>
 				<text class="lineOne">{{item.name}}</text>
 			</view>
@@ -40,7 +40,7 @@
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>护士</text>
 		</view>
 		<view class="doctorItem">
-			<view  wx:for='{{nursesList}}' bindtap="doctor"  data-id='{{item.doctorId}}' data-detail='{{item}}' >
+			<view  wx:for='{{nursesList}}' bindtap="doctor" data-type='2'  data-id='{{item.nurseId}}' data-detail='{{item}}' >
 				<image mode="aspectFill" src="{{item.cover}}"></image>
 				<text class="lineOne">{{item.name}}</text>
 			</view>

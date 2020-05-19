@@ -141,6 +141,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     if(options.hospitalid!=''&&options.hospitalid!=undefined&&options.hospitalid!=null){
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
@@ -336,7 +337,6 @@ Page({
               navtitle:res.data.data.hospitalName
             })
           }
-         
         } else {
           wx.showToast({
             title: res.data.codeMsg,
