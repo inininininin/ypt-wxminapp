@@ -20,6 +20,7 @@ Page({
     // app.globalData.loginHpitalName=e.currentTarget.dataset.name
     wx.setStorageSync('loginHospitalId', e.currentTarget.dataset.id)
     wx.setStorageSync('loginHpitalName', e.currentTarget.dataset.name)
+    
     wx.navigateBack({
       
     })

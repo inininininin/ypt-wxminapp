@@ -16,7 +16,7 @@ Page({
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
   },
   // 搜索跳转
-  searchkey(e){
+  searchkey(e) {
     wx.navigateTo({
       url: '../searchPage/searchPage',
     })
@@ -65,7 +65,7 @@ Page({
   },
   panoramaVrUrl(e) {
     wx.navigateTo({
-      url: '../webview/webview?href=' + encodeURIComponent(app.globalData.url+this.data.hosDetail.panoramaVrUrl),
+      url: '../webview/webview?href=' + encodeURIComponent(app.globalData.url + this.data.hosDetail.panoramaVrUrl),
     })
   },
   //事件处理函数
@@ -75,6 +75,9 @@ Page({
 
   hosDetail() {
     var that = this
+    // wx.showToast({
+    //   title:  wx.getStorageSync('loginHospitalId'),
+    // })
     wx.request({
       url: app.globalData.url + '/user/hospital',
       header: {
@@ -87,11 +90,10 @@ Page({
       },
       success: function (res) {
         if (res.data.code == 0) {
-
           app.globalData.hospitalName = res.data.data.name
-          app.globalData.hospitaiDetail= res.data.data
+          app.globalData.hospitaiDetail = res.data.data
           console.log(app.globalData.hospitaiDetail)
-          
+
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
@@ -105,38 +107,38 @@ Page({
             testImg: res.data.data.cover,
           })
           var param = encodeURIComponent('pages/index/index?hospitalid=' + app.globalData.hospitaiDetail.hospitalId + '&hospitalname=' + app.globalData.hospitaiDetail.name)
-    wx.getImageInfo({
-      src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=2',
-      method: 'get',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      success: function (res) {
-        var imglist = []
-        imglist.push(res.path)
-        that.setData({
-          tcode: res.path,
-          imglist: imglist,
-        })
-      },
-      fail(res) {
-        console.log(res)
-      }
-    })
+          wx.getImageInfo({
+            src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=2',
+            method: 'get',
+            header: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            success: function (res) {
+              var imglist = []
+              imglist.push(res.path)
+              that.setData({
+                tcode: res.path,
+                imglist: imglist,
+              })
+            },
+            fail(res) {
+              console.log(res)
+            }
+          })
         } else {
           wx.showModal({
             content: '请先选择一个医院',
-            showCancel:false,
-            success (res) {
+            showCancel: false,
+            success(res) {
               if (res.confirm) {
                 wx.navigateTo({
                   url: '../hosList/hosList',
                 })
-              } 
+              }
             }
           })
 
-         
+
         }
       }
     })
@@ -153,7 +155,7 @@ Page({
       data: {
         pn: 1,
         ps: 15,
-        hosptialId:wx.getStorageSync('loginHospitalId')
+        hosptialId: wx.getStorageSync('loginHospitalId')
       },
       success: function (res) {
 
@@ -169,7 +171,7 @@ Page({
             departDetail: departDetail,
             depart: res.data.data.rows
           })
-        } 
+        }
         // else {
         //   wx.showToast({
         //     title: res.data.codeMsg,
@@ -199,7 +201,7 @@ Page({
       },
       method: 'get',
       data: {
-        hosptialId:wx.getStorageSync('loginHospitalId'),
+        hosptialId: wx.getStorageSync('loginHospitalId'),
         pn: 1,
         ps: 5,
       },
@@ -213,7 +215,7 @@ Page({
           that.setData({
             docList: res.data.data.rows
           })
-        } 
+        }
         // else if (res.data.code == 20) {
         //   wx.showToast({
         //     title: res.data.codeMsg,
@@ -239,29 +241,29 @@ Page({
       }
     })
   },
-  onLoad: function (options) {},
+  onLoad: function (options) { },
   onShow: function (options) {
     if (options && options.hospitalid) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
-    if(wx.getStorageSync('historyUrl')&&wx.getStorageSync('fromTab')==1){
+    if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 1) {
       wx.setStorageSync('fromTab', '')
       wx.reLaunch({
         url: wx.getStorageSync('historyUrl'),
       })
-    }else{
+    } else {
       wx.navigateTo({
-        url: wx.getStorageSync('historyUrl')+"?type="+wx.getStorageSync('type')+"&id="+wx.getStorageSync('id'),
+        url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id'),
       })
-      wx.setStorageSync('historyUrl','')
+      wx.setStorageSync('historyUrl', '')
     }
     this.hosDetail();
     this.departDetail();
     this.docList();
     var that = this
     // console.log(app.globalData.hospitaiDetail)
-    
+
   },
   onReady: function () {
     this.setData({
@@ -304,6 +306,6 @@ Page({
         }
       }
     })
-    
+
   }
 })

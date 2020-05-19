@@ -257,7 +257,8 @@ Page({
             withoutLogin: false,
             detail:res.data.data
           })
-          var param = encodeURIComponent('pages/evaNowShare/evaNowShare?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId))
+          // Share
+          var param = encodeURIComponent('pages/evaNowShare/evaNowShare?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId)+'&hospitalid='+(wx.getStorageSync('loginHospitalId')||''))
           wx.getImageInfo({
             src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=200',
             method: 'get',
