@@ -252,6 +252,7 @@ Page({
           that.setData({
             typeUser: app.globalData.userInfoDetail.type,
             names: app.globalData.userInfoDetail.name,
+            name: app.globalData.userInfoDetail.name,
             phone: app.globalData.userInfoDetail.phone,
             avator: avator,
             withoutLogin: false,
