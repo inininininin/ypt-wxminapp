@@ -242,6 +242,7 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
+          
           wx.setStorageSync('withoutLogin', false)
           app.globalData.userInfoDetail = res.data.data
           if (app.globalData.userInfoDetail.cover == '' || app.globalData.userInfoDetail.cover == null || app.globalData.userInfoDetail.cover == undefined) {
