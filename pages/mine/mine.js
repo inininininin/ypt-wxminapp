@@ -199,6 +199,8 @@ Page({
                   that.setData({
                     avator: app.globalData.url + url
                   })
+                  that.lookCode()
+                  
                 }
               })
             }
@@ -254,6 +256,9 @@ Page({
   // },
   canvasdraw: function (canvas) {
     var that = this;
+    that.setData({
+      canvasShow:true
+    })
     wx.downloadFile({
       url: that.data.avator,//注意公众平台是否配置相应的域名
       success: function (res) {
@@ -280,11 +285,7 @@ Page({
         canvas.fillText( app.globalData.hospitalName, 70, 70)
         canvas.draw(true,setTimeout(function(){
           that.saveCanvas()
-          setTimeout(function(){
-            that.setData({
-              canvasShow:false
-            })
-          },200)
+
         },100));
       }
     })
@@ -295,10 +296,12 @@ Page({
     // canvas.draw();
   },
   saveCanvas: function () {
-    console.log('a');
     var that = this;
     var windowW = that.data.windowW;
     var windowH = that.data.windowH;
+    that.setData({
+      canvasShow:true
+    })
     wx.canvasToTempFilePath({
       x: 0,
       y: 0,
@@ -308,14 +311,11 @@ Page({
       destHeight: windowW,
       canvasId: 'canvas',
       success: function (res) {
-        console.log(res)
-        // wx.saveImageToPhotosAlbum({
-        //   filePath: res.tempFilePath,
-        //   success(res) {
-        //   }
-        // })
-        wx.previewImage({
-          urls: [res.tempFilePath],
+        that.setData({
+          canvasShow:false
+        })
+        that.setData({
+          urls:res.tempFilePath
         })
       }
     })
@@ -324,9 +324,18 @@ Page({
     var that = this;
     var canvas = wx.createCanvasContext('canvas');
     that.canvasdraw(canvas);
-    that.setData({
-      canvasShow:true
+    // that.setData({
+    //   canvasShow:true
+    // })
+  },
+  lookCodeShow(){
+    var that=this
+    console.log(112121)
+    console.log(that.data.urls)
+    wx.previewImage({
+      urls: [that.data.urls],
     })
+    // that.saveCanvas()
   },
   closeCanvas: function () {
     var that = this;
@@ -384,6 +393,10 @@ Page({
                 tcode: res.path,
                 imglist: imglist,
               })
+
+              if(!that.data.avatorShare){
+                that.lookCode()
+              }
             },
             fail(res) {
               console.log(res)

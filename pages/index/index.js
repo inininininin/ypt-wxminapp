@@ -14,6 +14,7 @@ Page({
     bgUrl1: app.globalData.url + '/wxminapp-resource/1.png',
     bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
+    canvasShow:false,
   },
   // 搜索跳转
   searchkey(e) {
@@ -22,13 +23,13 @@ Page({
     })
   },
   // 查看二维码
-  lookCode(e) {
-    // var current =  e.currentTarget.dataset.src;
-    wx.previewImage({
-      // current: current, // 当前显示图片的http链接
-      urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
-    })
-  },
+  // lookCode(e) {
+  //   // var current =  e.currentTarget.dataset.src;
+  //   wx.previewImage({
+  //     // current: current, // 当前显示图片的http链接
+  //     urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
+  //   })
+  // },
   lookBigPic(e) {
     wx.previewImage({
       urls: [e.currentTarget.dataset.src]
@@ -120,6 +121,9 @@ Page({
                 tcode: res.path,
                 imglist: imglist,
               })
+              if(!that.data.avatorShare){
+                that.lookCode()
+              }
             },
             fail(res) {
               console.log(res)
@@ -337,7 +341,11 @@ Page({
   // },
   canvasdraw: function (canvas) {
     var that = this;
+   
     console.log(that.data.testImg)
+    that.setData({
+      canvasShow:true
+    })
     wx.downloadFile({
       url: that.data.testImg,//注意公众平台是否配置相应的域名
       success: function (res) {
@@ -362,12 +370,12 @@ Page({
         // canvas.font="15px Georgia";
         // canvas.fillText( app.globalData.hospitalName, 70, 70)
         canvas.draw(true,setTimeout(function(){
+          
           that.saveCanvas()
-          setTimeout(function(){
-            that.setData({
-              canvasShow:false
-            })
-          },200)
+         
+          // setTimeout(function(){
+            
+          // },200)
         },100));
       }
     })
@@ -380,9 +388,15 @@ Page({
   },
   saveCanvas: function () {
     console.log('a');
+  
     var that = this;
+   
     var windowW = that.data.windowW;
     var windowH = that.data.windowH;
+    console.log(windowW,windowH);
+    that.setData({
+      canvasShow:true
+    })
     wx.canvasToTempFilePath({
       x: 0,
       y: 0,
@@ -392,15 +406,19 @@ Page({
       destHeight: windowW,
       canvasId: 'canvas',
       success: function (res) {
-        console.log(res)
-        // wx.saveImageToPhotosAlbum({
-        //   filePath: res.tempFilePath,
-        //   success(res) {
-        //   }
-        // })
-        wx.previewImage({
-          urls: [res.tempFilePath],
+        console.log(res.tempFilePath)
+        that.setData({
+          canvasShow:false
         })
+        that.setData({
+          urls:res.tempFilePath
+        })
+      },
+      error:function(res){
+        console.log(res)
+      },
+      fail:function(res){
+        console.log(res)
       }
     })
   },
@@ -408,9 +426,18 @@ Page({
     var that = this;
     var canvas = wx.createCanvasContext('canvas');
     that.canvasdraw(canvas);
-    that.setData({
-      canvasShow:true
+    // that.setData({
+    //   canvasShow:true
+    // })
+  },
+  lookCodeShow(){
+    var that=this
+    console.log(112121)
+    console.log(that.data.urls)
+    wx.previewImage({
+      urls: [that.data.urls],
     })
+    // that.saveCanvas()
   },
   closeCanvas: function () {
     var that = this;
