@@ -62,9 +62,9 @@
     </view>
   </view>
 </view>
-
-
-
+<view class="canvasShow" wx:if='{{canvasShow}}' bindtap="closeCanvas">
+<canvas canvas-id='canvas' style='width:{{windowW}}px;height:{{windowH+30}}px;margin-top:{{windowTop}}px;border:1rpx solid #e5e5e5' catchlongtap="saveCanvas"></canvas>
+</view>
 
 
 

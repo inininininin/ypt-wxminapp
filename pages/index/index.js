@@ -241,7 +241,7 @@ Page({
       }
     })
   },
-  onLoad: function (options) { },
+  onLoad: function (options) {   this.sys();},
   onShow: function (options) {
     if (options && options.hospitalid) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
@@ -307,5 +307,115 @@ Page({
       }
     })
 
-  }
+  },
+  // canvas绘图部分
+  sys: function () {
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          windowW: res.windowWidth,
+          windowH:res.windowHeight,
+          windowTop:(res.windowHeight-res.windowWidth)/2
+        })
+      },
+    })
+  },
+  // bginfo: function () {
+  //   var that = this;
+  //   console.log( that.data.avator)
+  //   wx.downloadFile({
+  //     url: that.data.avator,//注意公众平台是否配置相应的域名
+  //     success: function (res) {
+  //       console.log( res)
+  //       that.setData({
+  //         avatorShare: res.tempFilePath
+  //       })
+        
+  //     }
+  //   })
+  // },
+  canvasdraw: function (canvas) {
+    var that = this;
+    console.log(that.data.testImg)
+    wx.downloadFile({
+      url: that.data.testImg,//注意公众平台是否配置相应的域名
+      success: function (res) {
+        console.log( res.tempFilePath)
+        that.setData({
+          avatorShare: res.tempFilePath
+        })
+        var leftW=(that.data.windowW-175)/2
+        var windowW = that.data.windowW;
+        var windowH = that.data.windowH;
+        console.log(windowW,windowH)
+        canvas.drawImage('../icon/fang.png', 0, 0, windowW, windowW);
+        canvas.drawImage(that.data.avatorShare||'../icon/Bitmap.png', 15, 30, 50, 50);
+        canvas.drawImage(that.data.imglist[0], leftW, 140, 175, 175);
+        // canvas.setFontSize(50)
+        canvas.font="20px Georgia";
+        // if(that.data.detail.type2NurseName){
+        //   canvas.fillText('护士：'+that.data.detail.type1DoctorName, 70, 50)
+        // }else if(that.data.detail.type1DoctorName){
+          canvas.fillText(that.data.hosDetail.name, 70, 50)
+        // }
+        // canvas.font="15px Georgia";
+        // canvas.fillText( app.globalData.hospitalName, 70, 70)
+        canvas.draw(true,setTimeout(function(){
+          that.saveCanvas()
+          setTimeout(function(){
+            that.setData({
+              canvasShow:false
+            })
+          },200)
+        },100));
+      }
+    })
+   
+    console.log(that.data.avatorShare,that.data.imglist[0])
+  
+   
+   
+    // canvas.draw();
+  },
+  saveCanvas: function () {
+    console.log('a');
+    var that = this;
+    var windowW = that.data.windowW;
+    var windowH = that.data.windowH;
+    wx.canvasToTempFilePath({
+      x: 0,
+      y: 0,
+      width: windowW,
+      height: windowW,
+      destWidth: windowW,
+      destHeight: windowW,
+      canvasId: 'canvas',
+      success: function (res) {
+        console.log(res)
+        // wx.saveImageToPhotosAlbum({
+        //   filePath: res.tempFilePath,
+        //   success(res) {
+        //   }
+        // })
+        wx.previewImage({
+          urls: [res.tempFilePath],
+        })
+      }
+    })
+  },
+  lookCode: function () {
+    var that = this;
+    var canvas = wx.createCanvasContext('canvas');
+    that.canvasdraw(canvas);
+    that.setData({
+      canvasShow:true
+    })
+  },
+  closeCanvas: function () {
+    var that = this;
+    that.setData({
+      canvasShow:false
+    })
+  },
 })

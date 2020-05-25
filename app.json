@@ -1,5 +1,6 @@
 {
   "pages": [
+   
     "pages/index/index",
     "pages/search/saerch",
     "pages/searchPage/searchPage",
@@ -19,7 +20,9 @@
     "pages/evalutionList/evalutionList",
     "pages/taskList/taskList",
     "pages/departDetail/departDetail",
+    "pages/picDemo/picDemo",
     "pages/evaNowShare/evaNowShare"
+   
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -47,7 +50,6 @@
         "selectedIconPath": "pages/icon/222.png",
         "text": "评价"
       },
-      
       {
         "pagePath": "pages/mine/mine",
         "iconPath": "pages/icon/888.png",
