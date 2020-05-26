@@ -21,7 +21,6 @@
     "pages/taskList/taskList",
     "pages/departDetail/departDetail",
     "pages/picDemo/picDemo",
-    "pages/evaNowGb/evaNowGb",
     "pages/evaNowShare/evaNowShare"
     
   ],
