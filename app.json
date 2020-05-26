@@ -1,6 +1,6 @@
 {
   "pages": [
-   
+  
     "pages/index/index",
     "pages/search/saerch",
     "pages/searchPage/searchPage",
@@ -21,8 +21,9 @@
     "pages/taskList/taskList",
     "pages/departDetail/departDetail",
     "pages/picDemo/picDemo",
+    "pages/evaNowGb/evaNowGb",
     "pages/evaNowShare/evaNowShare"
-   
+    
   ],
   "window": {
     "backgroundTextStyle": "dark",

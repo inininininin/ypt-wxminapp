@@ -9,9 +9,9 @@ Page({
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     navtitle: '',
-    showIs1: 'active',
-    showIs2: 'active',
-    showIs3: 'active',
+    showIs1: '',
+    showIs2: '',
+    showIs3: '',
     length: 0,
     title1: '',
     title2: '',
@@ -28,18 +28,18 @@ Page({
   select(e) {
     if (e.currentTarget.dataset.select == 1) {
       this.setData({
-        showIs1: '',
-        showIs2: 'active',
-        showIs3: 'active',
+        showIs1: 'active',
+        showIs2: '',
+        showIs3: '',
         select: e.currentTarget.dataset.select,
         star: 3,
         placeholder:'满意'
       })
     } else if (e.currentTarget.dataset.select == 2) {
       this.setData({
-        showIs1: 'active',
-        showIs2: '',
-        showIs3: 'active',
+        showIs1: '',
+        showIs2: 'active',
+        showIs3: '',
         select: e.currentTarget.dataset.select,
         star: 2,
         placeholder:'一般'
@@ -47,9 +47,9 @@ Page({
     } else {
       {
         this.setData({
-          showIs1: 'active',
-          showIs2: 'active',
-          showIs3: '',
+          showIs1: '',
+          showIs2: '',
+          showIs3: 'active',
           select: e.currentTarget.dataset.select,
           star: 1,
           placeholder:'不满意'

@@ -10,24 +10,70 @@
 </view>
 
 <view class="evaTitle">
-	<text>{{title1}}</text>
+	<text style="text-align:center;">{{title1}}</text>
 	<view>
 		<view bindtap="select" data-select='1'>
-			<image mode="aspectFill" lazy-load="true" class="eva" src="../icon/eva1.png"></image>
-			<image mode="aspectFill" lazy-load="true" class="{{showIs1}}" src="../icon/green.png"></image>
+			<view class="viewBox">
+				<image src="../icon/manyi.svg"></image>
+				<text>很好，非常满意</text>
+				<view class="viewBoxRound  {{showIs1}}">
+					<view></view>
+				</view>
+			</view>
+			<!-- <view class="viewBox" class="{{showIs1}}">
+				<image src="../icon/manyi.svg"></image>
+				<text>很好，非常满意</text>
+				<view class="viewBoxRound active">
+					<view></view>
+				</view>
+			</view> -->
+			<!-- <image mode="aspectFill" lazy-load="true" class="eva" src="../icon/eva1.png"></image>
+			<image mode="aspectFill" lazy-load="true" class="{{showIs1}}" src="../icon/green.png"></image> -->
 		</view>
 		<view bindtap="select" data-select='2'>
+			<view class="viewBox">
+				<image src="../icon/yiban.svg"></image>
+				<text>感觉一般</text>
+				<view class="viewBoxRound {{showIs2}}">
+					<view></view>
+				</view>
+			</view>
+			<!-- <view class="viewBox" class="{{showIs2}}">
+				<image src="../icon/yiban.svg"></image>
+				<text>感觉一般</text>
+				<view class="viewBoxRound active">
+					<view></view>
+				</view>
+			</view> -->
+		</view>
+		<view bindtap="select" data-select='3'>
+			<view class="viewBox">
+				<image src="../icon/bumanyi.svg"></image>
+				<text>不满意</text>
+				<view class="viewBoxRound {{showIs3}}">
+					<view></view>
+				</view>
+			</view>
+			<!-- <view class="viewBox" class="{{showIs3}}">
+				<image src="../icon/bumanyi.svg"></image>
+				<text>不满意</text>
+				<view class="viewBoxRound active">
+					<view></view>
+				</view>
+			</view> -->
+		</view>
+		<!-- <view bindtap="select" data-select='2'>
 			<image mode="aspectFill" lazy-load="true" class="eva" src="../icon/eva2.png"></image>
 			<image mode="aspectFill" lazy-load="true" class="{{showIs2}}" src="../icon/blue.png"></image>
 		</view>
 		<view bindtap="select" data-select='3'>
 			<image mode="aspectFill" lazy-load="true" class="eva" src="../icon/eva3.png"></image>
 			<image mode="aspectFill" lazy-load="true" class="{{showIs3}}" src="../icon/red.png"></image>
-		</view>
+		</view> -->
 	</view>
 </view>
 <view class="evaVal">
-	<text>{{title2}}</text>
+	<!-- <text>{{title2}}</text> -->
 	<textarea placeholder="{{placeholder}}" bindinput="textarea" maxlength="500"></textarea>
 	<view><text class="textVal">{{length}}</text>/500</view>
 </view>
@@ -38,7 +84,7 @@
 			<image mode="aspectFill" lazy-load="true" src="../icon/jia.png"></image>
 		</view>
 		<view class="imageItem" wx:for='{{imglist}}'>
-			<image mode="aspectFit" style="background-color: #eeeeee;" lazy-load="true" data-src="{{item}}"  bindtap="previewImage" src='{{item}}'></image>
+			<image mode="aspectFit" style="background-color: #eeeeee;" lazy-load="true" data-src="{{item}}" bindtap="previewImage" src='{{item}}'></image>
 			<image mode="aspectFill" lazy-load="true" class="deletThis" bindtap="deletThis" data-src='{{item}}' src="../icon/deleteC.png"></image>
 		</view>
 	</view>
@@ -46,16 +92,15 @@
 
 <view class="evaNowBtn" bindtap="evaNow">提交评价</view>
 
-<cover-view class="evaEnd "  wx:if='{{hidden}}'>
+<cover-view class="evaEnd " wx:if='{{hidden}}'>
 	<cover-view class="evaBox">
 		<cover-image mode="aspectFill" lazy-load="true" src="../icon/success@2x.png"></cover-image>
 		<cover-view class='evaSuccess'>提交成功</cover-view>
 		<cover-view class="evaLook">您可以在评价中查看</cover-view>
 		<cover-view class="evaBtn">
-			<cover-view class="evaback"  catchtap="back">返回</cover-view>
-			<cover-view  class="evaline"></cover-view>
+			<cover-view class="evaback" catchtap="back">返回</cover-view>
+			<cover-view class="evaline"></cover-view>
 			<cover-view class="evadetail" catchtap="detail">查看详情</cover-view>
 		</cover-view>
 	</cover-view>
 </cover-view>
-

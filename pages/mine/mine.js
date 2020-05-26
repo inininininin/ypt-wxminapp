@@ -267,13 +267,13 @@ Page({
           avatorShare: res.tempFilePath
         })
         console.log(that.data.avator,that.data.imglist[0])
-        var leftW=(that.data.windowW-175)/2
+        var leftW=(that.data.windowW-275)/2
         var windowW = that.data.windowW;
         var windowH = that.data.windowH;
         console.log(windowW,windowH)
         canvas.drawImage('../icon/fang.png', 0, 0, windowW, windowW);
         canvas.drawImage(that.data.avatorShare, 15, 30, 50, 50);
-        canvas.drawImage(that.data.imglist[0], leftW, 140, 175, 175);
+        canvas.drawImage(that.data.imglist[0], leftW, 140, 275, 275);
         // canvas.setFontSize(50)
         canvas.font="20px Georgia";
         // if(that.data.detail.type2NurseName){
