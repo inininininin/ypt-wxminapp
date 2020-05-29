@@ -121,9 +121,9 @@ Page({
                 tcode: res.path,
                 imglist: imglist,
               })
-              if(!that.data.avatorShare){
-                that.lookCode()
-              }
+              // if(!that.data.avatorShare){
+              //   that.lookCode()
+              // }
             },
             fail(res) {
               console.log(res)
@@ -247,6 +247,9 @@ Page({
   },
   onLoad: function (options) {   this.sys();},
   onShow: function (options) {
+    this.setData({
+      canvasShow:false
+    })
     if (options && options.hospitalid) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
@@ -265,7 +268,7 @@ Page({
     this.hosDetail();
     this.departDetail();
     this.docList();
-    var that = this
+   
     // console.log(app.globalData.hospitaiDetail)
 
   },
@@ -407,9 +410,7 @@ Page({
       canvasId: 'canvas',
       success: function (res) {
         console.log(res.tempFilePath)
-        that.setData({
-          canvasShow:false
-        })
+       
         that.setData({
           urls:res.tempFilePath
         })
@@ -432,17 +433,50 @@ Page({
   },
   lookCodeShow(){
     var that=this
-    console.log(112121)
-    console.log(that.data.urls)
-    wx.previewImage({
-      urls: [that.data.urls],
-    })
+    if(that.data.imglist){
+        that.setData({
+          canvasShow:true
+        })
+        that.lookCode()
+    }else{
+      wx.showToast({
+        title: '维护中',
+      })
+    }
+    // console.log(112121)
+    // console.log(that.data.urls)
+    // wx.previewImage({
+    //   urls: [that.data.urls],
+    // })
     // that.saveCanvas()
   },
   closeCanvas: function () {
     var that = this;
     that.setData({
       canvasShow:false
+    })
+  },
+  saveIs: function() {
+    var that = this
+    //生产环境时 记得这里要加入获取相册授权的代码
+    wx.saveImageToPhotosAlbum({
+      filePath: that.data.urls,
+      success(res) {
+        wx.showModal({
+          content: '图片已保存到相册，赶紧晒一下吧~',
+          showCancel: false,
+          confirmText: '好哒',
+          confirmColor: '#72B9C3',
+          success: function(res) {
+            if (res.confirm) {
+              console.log('用户点击确定');
+              that.setData({
+                hidden: true
+              })
+            }
+          }
+        })
+      }
     })
   },
 })

@@ -63,8 +63,9 @@
 </view>
 
 
-<view class="canvasShow" wx-if='{{canvasShow}}' style="opacity:0" bindtap="closeCanvas">
-<canvas canvas-id='canvas' style='opacity:0;width:{{windowW}}px;height:{{windowH+30}}px;margin-top:{{windowTop}}px;border:1rpx solid #e5e5e5' catchlongtap="saveCanvas"></canvas>
+<view class="canvasShow" wx-if='{{canvasShow}}'   style="opacity:1" bindtap="closeCanvas">
+<canvas canvas-id='canvas'   style='width:{{windowW}}px;height:{{windowW}}px;margin-top:{{windowTop}}px;border:1rpx solid #e5e5e5' catchlongtap="saveCanvas"></canvas>
+	<button type='primary' size='mini' bindtap='saveIs'>保存分享图</button>
 </view>
 
 

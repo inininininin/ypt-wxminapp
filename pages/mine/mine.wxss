@@ -219,17 +219,48 @@ page {
   bottom: -130rpx;
   color: #666;
 }
-.canvasShow{
+/* .canvasShow{ */
   /* position: fixed; */
   /* top: 0; */
   /* left: 0; */
   /* width:1px; */
   /* height:1px; */
-  z-index: 0;
-  background: rgba(0,0,0,0);
-  opacity:0
+  /* z-index: 0; */
+  /* background: rgba(0,0,0,0); */
+  /* opacity:0 */
+/* } */
+/* canvas{ */
+  /* z-index: 0; */
+  /* opacity:0 */
+/* } */
+
+
+.canvasShow{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:750rpx;
+  height:100%;
+  z-index: 999;
+  background: #fff;
+  /* background: rgba(0,0,0,1); */
+  /* opacity:1 */
 }
 canvas{
-  z-index: 0;
-  opacity:0
+  z-index: 1000;
+  opacity:1
+}
+.canvasShow>button{
+  padding: 0 !important;
+  width: 200rpx !important;
+  height: 80rpx !important;
+  border-radius: 5rpx !important;
+  background: #fff !important;
+  color: #333 !important;
+  font-size: 30rpx !important;
+  line-height: 80rpx !important;
+  text-align: center !important;
+  margin: 30rpx 275rpx 0 !important;
+  background:#1890FF !important;
+  color: #fff !important;
 }
