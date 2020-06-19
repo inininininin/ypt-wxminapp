@@ -14,6 +14,7 @@ Page({
     bgUrl1: app.globalData.url + '/wxminapp-resource/1.png',
     bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
+    canvasShow:false,
   },
   // 搜索跳转
   searchkey(e) {
@@ -22,13 +23,13 @@ Page({
     })
   },
   // 查看二维码
-  lookCode(e) {
-    // var current =  e.currentTarget.dataset.src;
-    wx.previewImage({
-      // current: current, // 当前显示图片的http链接
-      urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
-    })
-  },
+  // lookCode(e) {
+  //   // var current =  e.currentTarget.dataset.src;
+  //   wx.previewImage({
+  //     // current: current, // 当前显示图片的http链接
+  //     urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
+  //   })
+  // },
   lookBigPic(e) {
     wx.previewImage({
       urls: [e.currentTarget.dataset.src]
@@ -120,6 +121,9 @@ Page({
                 tcode: res.path,
                 imglist: imglist,
               })
+              // if(!that.data.avatorShare){
+              //   that.lookCode()
+              // }
             },
             fail(res) {
               console.log(res)
@@ -241,8 +245,11 @@ Page({
       }
     })
   },
-  onLoad: function (options) { },
+  onLoad: function (options) {   this.sys();},
   onShow: function (options) {
+    this.setData({
+      canvasShow:false
+    })
     if (options && options.hospitalid) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
@@ -261,7 +268,7 @@ Page({
     this.hosDetail();
     this.departDetail();
     this.docList();
-    var that = this
+   
     // console.log(app.globalData.hospitaiDetail)
 
   },
@@ -307,5 +314,169 @@ Page({
       }
     })
 
-  }
+  },
+  // canvas绘图部分
+  sys: function () {
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          windowW: res.windowWidth,
+          windowH:res.windowHeight,
+          windowTop:(res.windowHeight-res.windowWidth)/2
+        })
+      },
+    })
+  },
+  // bginfo: function () {
+  //   var that = this;
+  //   console.log( that.data.avator)
+  //   wx.downloadFile({
+  //     url: that.data.avator,//注意公众平台是否配置相应的域名
+  //     success: function (res) {
+  //       console.log( res)
+  //       that.setData({
+  //         avatorShare: res.tempFilePath
+  //       })
+        
+  //     }
+  //   })
+  // },
+  canvasdraw: function (canvas) {
+    var that = this;
+   
+    console.log(that.data.testImg)
+    that.setData({
+      canvasShow:true
+    })
+    wx.downloadFile({
+      url: that.data.testImg,//注意公众平台是否配置相应的域名
+      success: function (res) {
+        console.log( res.tempFilePath)
+        that.setData({
+          avatorShare: res.tempFilePath
+        })
+        var leftW=(that.data.windowW-220)/2
+        var windowW = that.data.windowW;
+        var windowH = that.data.windowH;
+        console.log(windowW,windowH)
+        canvas.drawImage('../icon/fang.png', 0, 0, windowW, windowW);
+        canvas.drawImage(that.data.avatorShare||'../icon/Bitmap.png', 15, 30, 50, 50);
+        canvas.drawImage(that.data.imglist[0], leftW, 100, 220, 220);
+        // canvas.setFontSize(50)
+        canvas.font="20px Georgia";
+        // if(that.data.detail.type2NurseName){
+        //   canvas.fillText('护士：'+that.data.detail.type1DoctorName, 70, 50)
+        // }else if(that.data.detail.type1DoctorName){
+          canvas.fillText(that.data.hosDetail.name, 70, 50)
+        // }
+        // canvas.font="15px Georgia";
+        // canvas.fillText( app.globalData.hospitalName, 70, 70)
+        canvas.draw(true,setTimeout(function(){
+          
+          that.saveCanvas()
+         
+          // setTimeout(function(){
+            
+          // },200)
+        },100));
+      }
+    })
+   
+    console.log(that.data.avatorShare,that.data.imglist[0])
+  
+   
+   
+    // canvas.draw();
+  },
+  saveCanvas: function () {
+    console.log('a');
+  
+    var that = this;
+   
+    var windowW = that.data.windowW;
+    var windowH = that.data.windowH;
+    console.log(windowW,windowH);
+    that.setData({
+      canvasShow:true
+    })
+    wx.canvasToTempFilePath({
+      x: 0,
+      y: 0,
+      width: windowW,
+      height: windowW,
+      destWidth: windowW,
+      destHeight: windowW,
+      canvasId: 'canvas',
+      success: function (res) {
+        console.log(res.tempFilePath)
+       
+        that.setData({
+          urls:res.tempFilePath
+        })
+      },
+      error:function(res){
+        console.log(res)
+      },
+      fail:function(res){
+        console.log(res)
+      }
+    })
+  },
+  lookCode: function () {
+    var that = this;
+    var canvas = wx.createCanvasContext('canvas');
+    that.canvasdraw(canvas);
+    // that.setData({
+    //   canvasShow:true
+    // })
+  },
+  lookCodeShow(){
+    var that=this
+    if(that.data.imglist){
+        that.setData({
+          canvasShow:true
+        })
+        that.lookCode()
+    }else{
+      wx.showToast({
+        title: '维护中',
+      })
+    }
+    // console.log(112121)
+    // console.log(that.data.urls)
+    // wx.previewImage({
+    //   urls: [that.data.urls],
+    // })
+    // that.saveCanvas()
+  },
+  closeCanvas: function () {
+    var that = this;
+    that.setData({
+      canvasShow:false
+    })
+  },
+  saveIs: function() {
+    var that = this
+    //生产环境时 记得这里要加入获取相册授权的代码
+    wx.saveImageToPhotosAlbum({
+      filePath: that.data.urls,
+      success(res) {
+        wx.showModal({
+          content: '图片已保存到相册，赶紧晒一下吧~',
+          showCancel: false,
+          confirmText: '好哒',
+          confirmColor: '#72B9C3',
+          success: function(res) {
+            if (res.confirm) {
+              console.log('用户点击确定');
+              that.setData({
+                hidden: true
+              })
+            }
+          }
+        })
+      }
+    })
+  },
 })

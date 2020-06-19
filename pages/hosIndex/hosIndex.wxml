@@ -1,5 +1,5 @@
 <!--pages/hosIndex/hosIndex.wxml-->
-<view class="container" bindtap="panoramaVrUrl" data-url="{{detail.panoramaVrUrl||''}}" style="padding-top:{{statusBarHeight+titleBarHeight}}px;background:url({{detail.cover||'https://test.zaylt.njshangka.com/oss/static/20200106121239682168432372632991.png'}})  no-repeat;background-size:cover;background-position: center;">
+<view class="container"  style="padding-top:{{statusBarHeight+titleBarHeight}}px;background:url({{detail.cover||'https://test.zaylt.njshangka.com/oss/static/20200106121239682168432372632991.png'}})  no-repeat;background-size:cover;background-position: center;">
 	<view class="header" style="background:{{background}}">
 		<!-- background -->
 		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
@@ -7,7 +7,7 @@
 			<image mode="aspectFill" lazy-load="true" class="back" catchtap="backHistory" src="../icon/fanhui.png"></image>
 		</view>
 	</view>
-  <view class="actor" > 
+  <view class="actor" wx:if='{{detail.panoramaVrUrl}}' bindtap="panoramaVrUrl" data-url="{{detail.panoramaVrUrl||''}}"> 
   <image src="../icon/actor.png"></image>
   </view>
 	<text class="evahospital" catchtap="evahospital">医院评价</text>

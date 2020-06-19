@@ -2,7 +2,6 @@
 <view class="pageLoading" style="display:{{allHidden}}">
   <image mode="aspectFill" lazy-load="true" src="../icon/loadingIs.gif"></image>
 </view>
-
 <view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
   <view class="header">
     <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
@@ -20,7 +19,7 @@
   <image  mode="aspectFill" lazy-load="true" bindtap="lookBigPic"  data-src="{{testImg||'../icon/Bitmap.png'}}" src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
   <view>
   <!-- src="{{item}}" -->
-    <view class="lineOne">{{hosDetail.name}} <image mode="aspectFill" lazy-load="true" bindtap="lookCode" wx:for='{{imglist}}' data-src="{{item}}"  class="tcode" src="../icon/tcode.png"></image></view>
+    <view class="lineOne">{{hosDetail.name}} <image mode="aspectFill" lazy-load="true" catchtap="lookCodeShow" wx:for='{{imglist}}' data-src="{{item}}"  class="tcode" src="../icon/tcode.png"></image></view>
 
     <view class="lineOne">{{departDetail}}</view>
     <view class="lineOne">
@@ -64,7 +63,10 @@
 </view>
 
 
-
+<view class="canvasShow" wx-if='{{canvasShow}}'   style="opacity:1" bindtap="closeCanvas">
+<canvas canvas-id='canvas'   style='width:{{windowW}}px;height:{{windowW}}px;margin-top:{{windowTop}}px;border:2rpx solid #e5e5e5;' catchlongtap="saveCanvas"></canvas>
+	<button type='primary' size='mini' bindtap='saveIs'>保存分享图</button>
+</view>
 
 
 

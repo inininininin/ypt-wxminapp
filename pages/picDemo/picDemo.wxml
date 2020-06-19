@@ -1,0 +1,3 @@
+
+<canvas canvas-id='canvas' style='width:{{windowW}}px;height:{{windowH}}px'></canvas>
+<button bindtap='chooseImage'>相册</button>
