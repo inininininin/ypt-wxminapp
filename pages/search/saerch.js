@@ -262,7 +262,7 @@ Page({
       method: 'get',
       data: {
         pn: 1,
-        ps: 15,
+        ps: 200,
         hosptialId:wx.getStorageSync('loginHospitalId')
       },
       success: function (res) {
