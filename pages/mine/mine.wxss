@@ -121,6 +121,7 @@ page {
   margin: 480rpx 105rpx 0;
   border-radius: 8rpx;
   position: relative;
+  box-sizing: border-box;
 }
 
 .popThis>text {
@@ -160,10 +161,11 @@ page {
 
 .popThis>view>view {
   display: inline-block;
+  float: left;
 }
 
 .popThis>view>view:nth-child(1) {
-  width: 269.5rpx;
+  width: 268.5rpx;
   opacity: 1;
   font-size: 36rpx;
   font-family: PingFangSC;
@@ -176,7 +178,7 @@ page {
 }
 
 .popThis>view>view:nth-child(2) {
-  width: 269.5rpx;
+  width: 268.5rpx;
   opacity: 1;
   font-size: 36rpx;
   font-family: PingFangSC;

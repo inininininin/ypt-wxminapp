@@ -63,29 +63,37 @@ Page({
     })
   },
   searchKey(e){
-    var searchKeysThis=this.data.searchKeysThis
-    var key=searchKeysThis
-    var searchKeys=''
-    for(var i in key){
-      searchKeys=searchKeys+','+key[i]
+    if(e.detail.value==''){
+      wx.showToast({
+        title: '请输入搜索内容',
+        icon:'none'
+      })
+    }else{
+      var searchKeysThis=this.data.searchKeysThis
+      var key=searchKeysThis
+      var searchKeys=''
+      for(var i in key){
+        searchKeys=searchKeys+','+key[i]
+        console.log(searchKeys)
+      }
+      var searchKeys=e.detail.value+searchKeys
+      var keys=searchKeys.split(',')
+      var searchKeysThisOn=[]
+      for(var i in keys){
+        searchKeysThisOn.push(keys[i])
+      }
+      this.setData({
+        searchKeysThis:searchKeysThisOn,
+        searchKeysThisShow:true
+      })
+      console.log(searchKeysThis,this.data.searchKeysThis)
+      wx.setStorageSync('searchKeys', searchKeys)
       console.log(searchKeys)
+      wx.navigateTo({
+        url: '../search/saerch?kw='+e.detail.value,
+      })
     }
-    var searchKeys=e.detail.value+searchKeys
-    var keys=searchKeys.split(',')
-    var searchKeysThisOn=[]
-    for(var i in keys){
-      searchKeysThisOn.push(keys[i])
-    }
-    this.setData({
-      searchKeysThis:searchKeysThisOn,
-      searchKeysThisShow:true
-    })
-    console.log(searchKeysThis,this.data.searchKeysThis)
-    wx.setStorageSync('searchKeys', searchKeys)
-    console.log(searchKeys)
-    wx.navigateTo({
-      url: '../search/saerch?kw='+e.detail.value,
-    })
+    
   },
   searchKeyHos(e){
     wx.navigateTo({
