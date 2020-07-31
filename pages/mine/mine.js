@@ -227,18 +227,7 @@ Page({
     that.sys();
     // that.bginfo();
   },
-  sys: function () {
-    var that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          windowW: res.windowWidth,
-          windowH:res.windowHeight,
-          windowTop:(res.windowHeight-res.windowWidth)/2
-        })
-      },
-    })
-  },
+  
   // bginfo: function () {
   //   var that = this;
   //   console.log( that.data.avator)
@@ -253,6 +242,18 @@ Page({
   //     }
   //   })
   // },
+  sys: function () {
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          windowW: res.windowWidth,
+          windowH:res.windowHeight,
+          windowTop:(res.windowHeight-res.windowWidth)/2
+        })
+      },
+    })
+  },
   canvasdraw: function (canvas) {
     var that = this;
     that.setData({

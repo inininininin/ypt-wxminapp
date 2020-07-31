@@ -57,7 +57,6 @@
 			<view class="wxParse">
 				<template is="wxParse" data="{{wxParseData:article.nodes}}" />
 			</view>
-
 		</view>
 		<view>
 			<button class="refuse" bindtap="refuse">不同意</button>
