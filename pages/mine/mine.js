@@ -369,22 +369,21 @@ Page({
   lookCodeShow(){
     var that=this
     if(that.data.imglist){
-    
-      // wx.request({
-      //   url: app.globalData.url +'/c2/share?articleId=' + that.data.id,
-      //   method: 'get',
-      //   header: {
-      //     "Content-Type": "application/x-www-form-urlencoded",
-      //     'cookie': app.globalData.cookie
-      //   },
-      //   success: function (res) {
-      //   }
-      // })
-        that.setData({
-          canvasShow:true
-        })
-        that.lookCode()
-        console.log('n1')
+        // that.setData({
+        //   canvasShow:true
+        // })
+        // that.lookCode()
+        console.log(that.data.imglist[0],that.data.avator)
+        if(that.data.detail.type2NurseName){
+          wx.navigateTo({
+            url: '../canvasEve/canvasEve?img='+that.data.imglist[0]+'&avator='+that.data.avator+'&name='+app.globalData.hospitalName+'&eveName=护士：'+that.data.detail.type2NurseName,
+          })
+        }else if(that.data.detail.type1DoctorName){
+          wx.navigateTo({
+            url: '../canvasEve/canvasEve?img='+that.data.imglist[0]+'&avator='+that.data.avator+'&name='+app.globalData.hospitalName+'&eveName=医生：'+that.data.detail.type1DoctorName,
+          })
+        }
+      
     }else{
       wx.showToast({
         title: '维护中',

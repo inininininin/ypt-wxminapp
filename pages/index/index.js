@@ -434,10 +434,14 @@ Page({
   lookCodeShow(){
     var that=this
     if(that.data.imglist){
-        that.setData({
-          canvasShow:true
+        // that.setData({
+        //   canvasShow:true
+        // })
+        // that.lookCode()
+        console.log(that.data.hosDetail.name,that.data.imglist[0],that.data.testImg)
+        wx.navigateTo({
+          url: '../canvasHos/canvasHos?img='+that.data.imglist[0]+'&cover='+that.data.testImg+'&name='+that.data.hosDetail.name,
         })
-        that.lookCode()
     }else{
       wx.showToast({
         title: '维护中',

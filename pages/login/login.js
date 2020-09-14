@@ -479,21 +479,21 @@ Page({
    */
   onShow: function() {
     var that = this
-    // if (wx.getStorageSync('loginHospitalId') == '') {
-    //   wx.showToast({
-    //     title: '选择医院',
-    //     icon: 'none',
-    //     duration: 2000,
-    //     mask: true,
-    //     complete: function complete(res) {
-    //       setTimeout(function () {
-    //         wx.navigateTo({
-    //           url: '../hosList/hosList',
-    //         })
-    //       }, 500);
-    //     }
-    //   });
-    // }
+    if (wx.getStorageSync('loginHospitalId') == '') {
+      wx.showToast({
+        title: '选择医院',
+        icon: 'none',
+        duration: 2000,
+        mask: true,
+        complete: function complete(res) {
+          setTimeout(function () {
+            wx.navigateTo({
+              url: '../hosList/hosList',
+            })
+          }, 500);
+        }
+      });
+    }
     this.setData({
       loginHpitalName: wx.getStorageSync('loginHpitalName') || '' // app.globalData.loginHpitalName || ''
     })
