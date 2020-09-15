@@ -235,9 +235,18 @@ Page({
           confirmColor: '#72B9C3',
           success: function(res) {
             if (res.confirm) {
-              console.log('用户点击确定');
-              that.setData({
-                hidden: true
+              wx.request({
+                url: app.globalData.url + '/user/share',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  if (res.data.code == 0) {
+          
+                  }
+                }
               })
             }
           }

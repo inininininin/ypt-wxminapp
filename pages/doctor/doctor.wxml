@@ -12,8 +12,10 @@
     <image mode='aspectFill' lazy-load="true" wx:if='{{type==1}}' src="{{detail.cover||'../icon/yisheng.png'}}"></image>
     <image mode='aspectFill' lazy-load="true" wx:if='{{type==2}}' src="{{detail.cover||'../icon/yihu1.png'}}"></image>
     <view>
-      <text>{{detail.name||''}}</text><text class="tag lineOne">{{detail.tag||""}}</text>
-      <text class="lineThree">{{detail.intro||''}}</text>
+    <text  wx:if='{{detail.name}}' class="doctorItem1 lineOne">{{detail.name||''}}</text><text wx:if='{{detail.tag}}' class="tag lineOne doctorItem2">{{detail.tag||""}}</text>
+      <text wx:if='{{detail.intro}}' class="lineThree doctorItem3">{{detail.intro||''}}</text>
+      <!-- <text>{{detail.name||''}}</text><text class="tag lineOne">{{detail.tag||""}}</text>
+      <text class="lineThree">{{detail.intro||''}}</text> -->
     </view>
   </view>
   <view class="evaNow" bindtap="evaNow">立即评价</view>
