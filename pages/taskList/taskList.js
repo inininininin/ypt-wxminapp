@@ -160,19 +160,18 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-    // if (app.globalData.lastClient == 1) {
-    //   var path = '/pages/index/index'
-    // } else {
-    //   var path = '/pages/out/index/index'
-    // }
-    // return {
-    //   title: '欢迎使用共享医联体小程序', //分享内容
-    //   path: path, //分享地址
-    //   imageUrl: 'https://zaylt.njshangka.com/favicon.ico', //分享图片
-    //   success: function (res) {
-    //   },
-    //   fail: function (res) {
-    //   }
-    // }
+    wx.request({
+      url: app.globalData.url + '/user/share',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        if (res.data.code == 0) {
+        
+        }
+      }
+    })
   }
 })

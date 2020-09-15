@@ -639,7 +639,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -653,6 +653,18 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    wx.request({
+      url: app.globalData.url + '/user/share',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        if (res.data.code == 0) {
+        
+        }
+      }
+    })
   }
 })
