@@ -56,8 +56,8 @@
   <view class="doctorItem" wx:for='{{docList}}' data-id='{{item.doctorId}}' data-detail='{{item}}' bindtap="doctor">
     <image mode="aspectFill" lazy-load="true" src="{{item.cover||'../icon/yisheng.png'}}"></image>
     <view>
-      <text>{{item.name||''}}</text><text class="tag lineOne">{{item.tag||""}}</text>
-      <text class="lineThree">{{item.intro||''}}</text>
+      <text  wx:if='{{item.name}}' class="doctorItem1 lineOne">{{item.name||''}}</text><text wx:if='{{item.tag}}' class="tag lineOne doctorItem2">{{item.tag||""}}</text>
+      <text wx:if='{{item.intro}}' class="lineThree doctorItem3">{{item.intro||''}}</text>
     </view>
   </view>
 </view>

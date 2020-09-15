@@ -1,0 +1,15 @@
+<!--pages/canvasHos/canvasHos.wxml-->
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header" style="background:{{background}}">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <image mode="aspectFill" lazy-load="true" class="back" bindtap="backHistory" src="../icon/fanhui2.png"></image>
+      <text class="evahospital">{{navtitle}}</text>
+    </view>
+  </view>
+</view>
+<view class="canvasShow"   style="opacity:1" bindtap="closeCanvas">
+<canvas canvas-id='canvas'   style='width:{{windowW}}px;height:{{windowW}}px;margin-top:{{windowTop-statusBarHeight-titleBarHeight}}px;border:2rpx solid #e5e5e5;' catchlongtap="saveCanvas"></canvas>
+	<button type='primary' size='mini' bindtap='saveIs'>保存分享图</button>
+</view>
+
