@@ -22,7 +22,7 @@ Page({
     wx.setStorageSync('loginHpitalName', e.currentTarget.dataset.name)
     
     wx.navigateBack({
-      
+      delta: 1
     })
   },
   backHistory(e) {

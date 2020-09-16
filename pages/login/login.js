@@ -274,12 +274,26 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    let type = '', version = '', fromType = '', backUrl = ''
+    if (options.type) {
+      type = options.type
+    }
+    if (app.globalData.version) {
+      console.log( app.globalData.version.split('-')[0])
+      version = app.globalData.version.split('-')[0]||''
+    }
+    if (options.fromType) {
+      fromType =options.fromType
+    }
+    if (options.backUrl) {
+      backUrl = options.backUrl
+    }
     that.setData({
-      type: options.type,
-      href: app.globalData.url,
-      version: app.globalData.version.split('-')[0],
-      fromType: options.fromType,
-      backUrl: options.backUrl,
+      type: type,
+      href: app.globalData.url || '',
+      version:version,
+      fromType: fromType,
+      backUrl: backUrl
     })
     wx.request({
       url: app.globalData.url + '/oss/alive/user-protocol.html',
@@ -522,10 +536,11 @@ Page({
                 
                 if (that.data.fromType == 1) {
                   wx.setStorageSync('fromTab', 1)
+                  wx.setStorageSync('historyUrl', that.data.backUrl)
                   wx.switchTab({
                     url: '../index/index',
                   })
-                  wx.setStorageSync('historyUrl', that.data.backUrl)
+                  
                 } else {
                   wx.switchTab({
                     url: '../index/index',

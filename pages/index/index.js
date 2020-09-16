@@ -245,7 +245,9 @@ Page({
       }
     })
   },
-  onLoad: function (options) {   this.sys();},
+  onLoad: function (options) {  
+     this.sys();
+    },
   onShow: function (options) {
     this.setData({
       canvasShow:false
@@ -255,10 +257,10 @@ Page({
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
     if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 1) {
-      wx.setStorageSync('fromTab', '')
-      wx.reLaunch({
+      wx.switchTab({
         url: wx.getStorageSync('historyUrl'),
       })
+      wx.setStorageSync('fromTab', '')
     } else {
       wx.navigateTo({
         url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id'),
