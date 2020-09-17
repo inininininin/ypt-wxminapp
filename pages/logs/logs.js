@@ -269,8 +269,8 @@ Page({
       type = options.type
     }
     if (app.globalData.version) {
-      console.log( app.globalData.version.split('-')[0])
-      version = app.globalData.version.split('-')[0]||''
+      // console.log( app.globalData.version.split('-')[0])
+      version = app.globalData.version||''//.split('-')[0]||''
     }
     if (options.fromType) {
       fromType =options.fromType
