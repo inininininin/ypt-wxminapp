@@ -499,7 +499,7 @@ Page({
       canvasShow:false
     })
     this.setData({
-      version: app.globalData.version.split('-')[0],
+      version: app.globalData.version,//.split('-')[0],
       entityTel: app.globalData.entity.entityTel,
     })
     this.refresh()
