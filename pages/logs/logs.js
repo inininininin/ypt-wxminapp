@@ -21,9 +21,9 @@ Page({
     version: app.globalData.version,
     showPhone: true
   },
-  version(e){
+  version(e) {
     wx.showModal({
-      title: 'ver: '+app.globalData.version,
+      title: 'ver: ' + app.globalData.version,
       content: app.globalData.versionIntro ? app.globalData.versionIntro : "",
       showCancel: false,
       cancelText: "取消111",
@@ -32,14 +32,14 @@ Page({
       confirmColor: "#0f0",
       success: function (res) {
         if (res.confirm) {
-    
+
         }
       }
     })
   },
   loginByPhone(e) {
     wx.redirectTo({
-      url: '../login/login?fromType=' + this.data.fromType + '&backUrl=' + this.data.backUrl,
+      url: '../login/login?fromType=' + this.data.fromType + '&backUrl=' + this.data.backUrl+'&type='+this.data.type,
     })
   },
   selectIcon: function (e) {
@@ -69,13 +69,13 @@ Page({
     } else if (wx.getStorageSync('loginHospitalId') == '' || wx.getStorageSync('loginHospitalId') == null || wx.getStorageSync('loginHospitalId') == undefined) {
       wx.showModal({
         content: '请先选择一个医院',
-        showCancel:false,
-        success (res) {
+        showCancel: false,
+        success(res) {
           if (res.confirm) {
             wx.navigateTo({
               url: '../hosList/hosList',
             })
-          } 
+          }
         }
       })
     } else {
@@ -164,13 +164,13 @@ Page({
             if (wx.getStorageSync('loginHospitalId') == '') {
               wx.showModal({
                 content: '请先选择一个医院',
-                showCancel:false,
-                success (res) {
+                showCancel: false,
+                success(res) {
                   if (res.confirm) {
                     wx.navigateTo({
                       url: '../hosList/hosList',
                     })
-                  } 
+                  }
                 }
               })
             } else if (that.data.key == '' || that.data.code == '') {
@@ -264,12 +264,26 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    let type = '', version = '', fromType = '', backUrl = ''
+    if (options.type) {
+      type = options.type
+    }
+    if (app.globalData.version) {
+      console.log( app.globalData.version.split('-')[0])
+      version = app.globalData.version.split('-')[0]||''
+    }
+    if (options.fromType) {
+      fromType =options.fromType
+    }
+    if (options.backUrl) {
+      backUrl = options.backUrl
+    }
     that.setData({
-      type: options.type,
-      href: app.globalData.url,
-      version: app.globalData.version.split('-')[0],
-      fromType: options.fromType,
-      backUrl: options.backUrl
+      type: type,
+      href: app.globalData.url || '',
+      version:version,
+      fromType: fromType,
+      backUrl: backUrl
     })
     wx.request({
       url: app.globalData.url + '/oss/alive/user-protocol.html',
@@ -479,13 +493,13 @@ Page({
     if (wx.getStorageSync('loginHospitalId') == '') {
       wx.showModal({
         content: '请先选择一个医院',
-        showCancel:false,
-        success (res) {
+        showCancel: false,
+        success(res) {
           if (res.confirm) {
             wx.navigateTo({
               url: '../hosList/hosList',
             })
-          } 
+          }
         }
       })
     }
@@ -513,7 +527,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh()
   },
 
   /**
