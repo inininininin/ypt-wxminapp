@@ -14,7 +14,7 @@ Page({
     bgUrl1: app.globalData.url + '/wxminapp-resource/1.png',
     bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
-    canvasShow:false,
+    canvasShow: false,
   },
   // 搜索跳转
   searchkey(e) {
@@ -90,6 +90,12 @@ Page({
         hospitalId: wx.getStorageSync('loginHospitalId'), // app.globalData.loginHospitalId,
       },
       success: function (res) {
+        if (res.data.codeMsg) {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
         if (res.data.code == 0) {
           app.globalData.hospitalName = res.data.data.name
           app.globalData.hospitaiDetail = res.data.data
@@ -129,7 +135,7 @@ Page({
               console.log(res)
             }
           })
-        } else {
+        } else if (res.data.code == 1404) {
           wx.showModal({
             content: '请先选择一个医院',
             showCancel: false,
@@ -245,12 +251,16 @@ Page({
       }
     })
   },
-  onLoad: function (options) {  
-     this.sys();
-    },
+  onLoad: function (options) {
+    if (options && options.hospitalid) {
+      wx.setStorageSync('loginHospitalId', options.hospitalid)
+      wx.setStorageSync('loginHpitalName', options.hospitalname)
+    }
+    this.sys();
+  },
   onShow: function (options) {
     this.setData({
-      canvasShow:false
+      canvasShow: false
     })
     if (options && options.hospitalid) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
@@ -270,7 +280,7 @@ Page({
     this.hosDetail();
     this.departDetail();
     this.docList();
-   
+
     // console.log(app.globalData.hospitaiDetail)
 
   },
@@ -324,8 +334,8 @@ Page({
       success: function (res) {
         that.setData({
           windowW: res.windowWidth,
-          windowH:res.windowHeight,
-          windowTop:(res.windowHeight-res.windowWidth)/2
+          windowH: res.windowHeight,
+          windowTop: (res.windowHeight - res.windowWidth) / 2
         })
       },
     })
@@ -340,67 +350,67 @@ Page({
   //       that.setData({
   //         avatorShare: res.tempFilePath
   //       })
-        
+
   //     }
   //   })
   // },
   canvasdraw: function (canvas) {
     var that = this;
-   
+
     console.log(that.data.testImg)
     that.setData({
-      canvasShow:true
+      canvasShow: true
     })
     wx.downloadFile({
       url: that.data.testImg,//注意公众平台是否配置相应的域名
       success: function (res) {
-        console.log( res.tempFilePath)
+        console.log(res.tempFilePath)
         that.setData({
           avatorShare: res.tempFilePath
         })
-        var leftW=(that.data.windowW-220)/2
+        var leftW = (that.data.windowW - 220) / 2
         var windowW = that.data.windowW;
         var windowH = that.data.windowH;
-        console.log(windowW,windowH)
+        console.log(windowW, windowH)
         canvas.drawImage('../icon/fang.png', 0, 0, windowW, windowW);
-        canvas.drawImage(that.data.avatorShare||'../icon/Bitmap.png', 15, 30, 50, 50);
+        canvas.drawImage(that.data.avatorShare || '../icon/Bitmap.png', 15, 30, 50, 50);
         canvas.drawImage(that.data.imglist[0], leftW, 100, 220, 220);
         // canvas.setFontSize(50)
-        canvas.font="20px Georgia";
+        canvas.font = "20px Georgia";
         // if(that.data.detail.type2NurseName){
         //   canvas.fillText('护士：'+that.data.detail.type1DoctorName, 70, 50)
         // }else if(that.data.detail.type1DoctorName){
-          canvas.fillText(that.data.hosDetail.name, 70, 50)
+        canvas.fillText(that.data.hosDetail.name, 70, 50)
         // }
         // canvas.font="15px Georgia";
         // canvas.fillText( app.globalData.hospitalName, 70, 70)
-        canvas.draw(true,setTimeout(function(){
-          
+        canvas.draw(true, setTimeout(function () {
+
           that.saveCanvas()
-         
+
           // setTimeout(function(){
-            
+
           // },200)
-        },100));
+        }, 100));
       }
     })
-   
-    console.log(that.data.avatorShare,that.data.imglist[0])
-  
-   
-   
+
+    console.log(that.data.avatorShare, that.data.imglist[0])
+
+
+
     // canvas.draw();
   },
   saveCanvas: function () {
     console.log('a');
-  
+
     var that = this;
-   
+
     var windowW = that.data.windowW;
     var windowH = that.data.windowH;
-    console.log(windowW,windowH);
+    console.log(windowW, windowH);
     that.setData({
-      canvasShow:true
+      canvasShow: true
     })
     wx.canvasToTempFilePath({
       x: 0,
@@ -412,15 +422,15 @@ Page({
       canvasId: 'canvas',
       success: function (res) {
         console.log(res.tempFilePath)
-       
+
         that.setData({
-          urls:res.tempFilePath
+          urls: res.tempFilePath
         })
       },
-      error:function(res){
+      error: function (res) {
         console.log(res)
       },
-      fail:function(res){
+      fail: function (res) {
         console.log(res)
       }
     })
@@ -433,18 +443,18 @@ Page({
     //   canvasShow:true
     // })
   },
-  lookCodeShow(){
-    var that=this
-    if(that.data.imglist){
-        // that.setData({
-        //   canvasShow:true
-        // })
-        // that.lookCode()
-        console.log(that.data.hosDetail.name,that.data.imglist[0],that.data.testImg)
-        wx.navigateTo({
-          url: '../canvasHos/canvasHos?img='+that.data.imglist[0]+'&cover='+that.data.testImg+'&name='+that.data.hosDetail.name,
-        })
-    }else{
+  lookCodeShow() {
+    var that = this
+    if (that.data.imglist) {
+      // that.setData({
+      //   canvasShow:true
+      // })
+      // that.lookCode()
+      console.log(that.data.hosDetail.name, that.data.imglist[0], that.data.testImg)
+      wx.navigateTo({
+        url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + that.data.testImg + '&name=' + that.data.hosDetail.name,
+      })
+    } else {
       wx.showToast({
         title: '维护中',
       })
@@ -459,10 +469,10 @@ Page({
   closeCanvas: function () {
     var that = this;
     that.setData({
-      canvasShow:false
+      canvasShow: false
     })
   },
-  saveIs: function() {
+  saveIs: function () {
     var that = this
     //生产环境时 记得这里要加入获取相册授权的代码
     wx.saveImageToPhotosAlbum({
@@ -473,7 +483,7 @@ Page({
           showCancel: false,
           confirmText: '好哒',
           confirmColor: '#72B9C3',
-          success: function(res) {
+          success: function (res) {
             if (res.confirm) {
               console.log('用户点击确定');
               that.setData({
