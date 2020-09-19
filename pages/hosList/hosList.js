@@ -21,6 +21,12 @@ Page({
     wx.setStorageSync('loginHospitalId', e.currentTarget.dataset.id)
     wx.setStorageSync('loginHpitalName', e.currentTarget.dataset.name)
     
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];   //当前页面
+    var prevPage = pages[pages.length - 2];  //上一个页面
+    prevPage.setData({
+      change:1
+    });
     wx.navigateBack({
       delta: 1
     })

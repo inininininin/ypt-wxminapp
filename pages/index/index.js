@@ -15,6 +15,7 @@ Page({
     bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
     canvasShow: false,
+    change:0,
   },
   // 搜索跳转
   searchkey(e) {
@@ -135,7 +136,7 @@ Page({
               console.log(res)
             }
           })
-        } else if (res.data.code == 1404) {
+        } else if (res.data.code == 1404||res.data.code==1001) {
           wx.showModal({
             content: '请先选择一个医院',
             showCancel: false,
@@ -257,6 +258,7 @@ Page({
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
     this.sys();
+    this.hosDetail();
   },
   onShow: function (options) {
     this.setData({
@@ -277,7 +279,13 @@ Page({
       })
       wx.setStorageSync('historyUrl', '')
     }
-    this.hosDetail();
+    if(this.data.change==1){
+      this.setData({
+        change:0
+      })
+      this.hosDetail();
+    }
+   
     this.departDetail();
     this.docList();
 
@@ -451,9 +459,16 @@ Page({
       // })
       // that.lookCode()
       console.log(that.data.hosDetail.name, that.data.imglist[0], that.data.testImg)
-      wx.navigateTo({
-        url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + that.data.testImg + '&name=' + that.data.hosDetail.name,
-      })
+      if(that.data.imglist[0]&&that.data.hosDetail.name&&that.data.testImg){
+        wx.navigateTo({
+          url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + that.data.testImg + '&name=' + that.data.hosDetail.name,
+        })
+      }else{
+        wx.showToast({
+          title: '二维码生成中,请稍后重试',
+        })
+      }
+     
     } else {
       wx.showToast({
         title: '维护中',

@@ -20,9 +20,9 @@ Page({
     star: '',
     imglist: [],
     imgBlob: '',
-    star:'',
-    content:'',
-    placeholder:'请输入评价'
+    star: '',
+    content: '',
+    placeholder: '请输入评价'
     // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
   },
   select(e) {
@@ -33,7 +33,7 @@ Page({
         showIs3: '',
         select: e.currentTarget.dataset.select,
         star: 3,
-        placeholder:'满意'
+        placeholder: '满意'
       })
     } else if (e.currentTarget.dataset.select == 2) {
       this.setData({
@@ -42,7 +42,7 @@ Page({
         showIs3: '',
         select: e.currentTarget.dataset.select,
         star: 2,
-        placeholder:'一般'
+        placeholder: '一般'
       })
     } else {
       {
@@ -52,7 +52,7 @@ Page({
           showIs3: 'active',
           select: e.currentTarget.dataset.select,
           star: 1,
-          placeholder:'不满意'
+          placeholder: '不满意'
         })
       }
     }
@@ -109,10 +109,10 @@ Page({
                 duration: 2000,
                 mask: true,
                 complete: function complete(res) {
-                
+
                 }
               });
-             
+
             }
           })
         }
@@ -141,13 +141,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(options.hospitalid!=''&&options.hospitalid!=undefined&&options.hospitalid!=null){
+    if (options.hospitalid != '' && options.hospitalid != undefined && options.hospitalid != null) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
     var that = this
     // debugger
-    wx.setStorageSync('type', options.type) 
+    wx.setStorageSync('type', options.type)
     wx.setStorageSync('id', options.id)
     if (wx.getStorageSync('type') == 1) {
       wx.request({
@@ -157,13 +157,13 @@ Page({
           'cookie': wx.getStorageSync('cookie')
         },
         data: {
-          doctorId: wx.getStorageSync('id') ,
+          doctorId: wx.getStorageSync('id'),
         },
         method: 'get',
         success: function (res) {
           if (res.data.code == 0) {
             wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
-      wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+            wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
             that.setData({
               url: '/user/doctor-comment',
               type: options.type,
@@ -175,7 +175,7 @@ Page({
           }
         }
       });
-    } else if (wx.getStorageSync('type')  == 2) {
+    } else if (wx.getStorageSync('type') == 2) {
       wx.request({
         url: app.globalData.url + '/nurse',
         header: {
@@ -219,7 +219,7 @@ Page({
     wx.showToast({
       title: '操作中',
       icon: 'none',
-      duration:1000
+      duration: 1000
     })
     var that = this
     if (that.data.type == 1) {
@@ -229,25 +229,25 @@ Page({
     } else {
       var params = ''
     }
-    if (that.data.star == '' ) {
+    if (that.data.star == '') {
       wx.showToast({
         title: '请选择满意度',
         icon: 'none',
         duration: 1000
       });
     } else {
-      if(that.data.content == ''){
-        if(that.data.star == 1){
+      if (that.data.content == '') {
+        if (that.data.star == 1) {
           that.setData({
-            content:'不满意'
+            content: '不满意'
           })
-        }else if(that.data.star == 2){
+        } else if (that.data.star == 2) {
           that.setData({
-            content:'一般'
+            content: '一般'
           })
-        }else{
+        } else {
           that.setData({
-            content:'满意'
+            content: '满意'
           })
         }
       }
@@ -264,10 +264,10 @@ Page({
         },
         method: 'post',
         success: function (res) {
-          
+
           if (res.data.code == 0) {
             wx.hideToast({
-              complete: (res) => {},
+              complete: (res) => { },
             })
             that.setData({
               hidden: true
@@ -279,7 +279,7 @@ Page({
               duration: 2000,
               mask: true,
               complete: function complete(res) {
-              
+
               }
             });
           }
@@ -319,8 +319,16 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    var that=this
+  onShow: function (options) {
+    var that = this
+    let pages = getCurrentPages();
+    // 数组中索引最大的页面--当前页面
+    let currentPage = pages[pages.length - 1];
+    // 打印出当前页面中的 options
+    if (currentPage.options.hospitalid != '' && currentPage.options.hospitalid != undefined && currentPage.options.hospitalid != null) {
+      wx.setStorageSync('loginHospitalId', options.hospitalid)
+      wx.setStorageSync('loginHpitalName', options.hospitalname)
+    }
     wx.request({
       url: app.globalData.url + '/user/login-refresh',
       header: {
@@ -332,13 +340,13 @@ Page({
         wx.hideToast()
         if (res.data.code == 0) {
           app.globalData.userInfoDetail = res.data.data
-            wx.setStorageSync('withoutLogin', false)
-          if(wx.getStorageSync('type')  == 3){
+          wx.setStorageSync('withoutLogin', false)
+          if (wx.getStorageSync('type') == 3) {
             that.setData({
-              navtitle:res.data.data.hospitalName
+              navtitle: res.data.data.hospitalName
             })
           }
-         
+
         } else {
           wx.showToast({
             title: res.data.codeMsg,
@@ -347,7 +355,7 @@ Page({
             mask: true,
             complete: function complete(res) {
               setTimeout(function () {
-                wx.setStorageSync('historyUrl', app.historyUrl() )
+                wx.setStorageSync('historyUrl', app.historyUrl())
                 wx.navigateTo({
                   url: '../login/login?fromType=2',
                 })
@@ -378,7 +386,7 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh({
-      complete: (res) => {},
+      complete: (res) => { },
     })
   },
 
@@ -402,7 +410,7 @@ Page({
       method: 'post',
       success: function (res) {
         if (res.data.code == 0) {
-        
+
         }
       }
     })
