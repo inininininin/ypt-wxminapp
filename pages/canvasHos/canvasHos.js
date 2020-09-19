@@ -9,7 +9,7 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    navtitle: '医院二维码',
+    navtitle: '二维码',
     testImg: "../icon/Bitmap.png",
     imglist: [],
   },
