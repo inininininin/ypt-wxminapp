@@ -24,8 +24,8 @@ Page({
   },
   version(e){
     wx.showModal({
-      title: 'ver: '+app.globalData.version,
-      content: app.globalData.versionIntro ? app.globalData.versionIntro : "",
+      title: 'ver: '+app.version,
+      content: app.versionIntro ? app.versionIntro : "",
       showCancel: false,
       cancelText: "取消111",
       cancelColor: "#000",
@@ -499,7 +499,7 @@ Page({
       canvasShow:false
     })
     this.setData({
-      version: app.globalData.version,//.split('-')[0],
+      version: app.version,//.split('-')[0],
       entityTel: app.globalData.entity.entityTel,
     })
     this.refresh()
