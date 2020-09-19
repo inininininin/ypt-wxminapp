@@ -79,8 +79,11 @@ page {
 }
 .searchList>text{
   display: block;
-  height: 60rpx;
-  line-height: 60rpx;
+  height: 75rpx;
+  width: 100%;
+  line-height: 75rpx;
   font-size: 30rpx;
   text-align: left;
+  border-bottom: 0.5px solid #e5e5e5;
+
 }
