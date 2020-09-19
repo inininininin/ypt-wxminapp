@@ -101,7 +101,7 @@ Page({
     })
     console.log('n3')
     if (that.data.avator == '../icon/moren.png') {
-      console.loh(11)
+      console.log(11)
       that.setData({
         avatorShare: that.data.avator
       })
