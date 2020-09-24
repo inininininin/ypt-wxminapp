@@ -92,12 +92,12 @@ Page({
         hospitalId: wx.getStorageSync('loginHospitalId'), // app.globalData.loginHospitalId,
       },
       success: function (res) {
-        if (res.data.codeMsg) {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon: 'none'
-          })
-        }
+        // if (res.data.codeMsg) {
+        //   wx.showToast({
+        //     title: res.data.codeMsg,
+        //     icon: 'none'
+        //   })
+        // }
         if (res.data.code == 0) {
           app.globalData.hospitalName = res.data.data.name
           app.globalData.hospitaiDetail = res.data.data
@@ -138,17 +138,30 @@ Page({
             }
           })
         } else if (res.data.code == 1404||res.data.code==1001) {
-          wx.showModal({
-            content: '请先选择一个医院',
-            showCancel: false,
-            success(res) {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '../hosList/hosList',
-                })
-              }
-            }
+          wx.showToast({
+            title: '请选择一个医院',
+            icon:'none',
+            duration:2000,
+            success:function(res){
+              wx.navigateTo({
+                url: '../hosList/hosList',
+              })
+            },
+            complete:function(res){
+              console.log(res)
+            },
           })
+          // wx.showModal({
+          //   content: '请先选择一个医院',
+          //   showCancel: false,
+          //   success(res) {
+          //     if (res.confirm) {
+          //       wx.navigateTo({
+          //         url: '../hosList/hosList',
+          //       })
+          //     }
+          //   }
+          // })
 
 
         }
