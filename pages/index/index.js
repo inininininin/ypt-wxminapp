@@ -292,12 +292,20 @@ Page({
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
+    // wx.showToast({
+    //   title: wx.getStorageSync('historyUrl'),
+    //   icon:'none',
+    //   duration:3000
+    // })
+    console.log( wx.getStorageSync('historyUrl'))
     if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 1) {
       wx.switchTab({
         url: wx.getStorageSync('historyUrl'),
       })
       wx.setStorageSync('fromTab', '')
     } else {
+      console.log(wx.getStorageSync('historyUrl'))
+      console.log(wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'))
       wx.navigateTo({
         url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'),
       })
@@ -490,12 +498,14 @@ Page({
       }else{
         wx.showToast({
           title: '二维码生成中,请稍后重试',
+          icon:'none'
         })
       }
      
     } else {
       wx.showToast({
         title: '维护中',
+        icon:'none'
       })
     }
     // console.log(112121)

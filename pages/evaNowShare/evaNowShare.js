@@ -170,7 +170,7 @@ Page({
               // setTimeout(function () {
                 wx.setStorageSync('historyUrl', app.historyUrl())
                 wx.navigateTo({
-                  url: '../login/login?fromType=2',
+                  url: '../login/login?fromType=2&backUrl=../evaNowShare/evaNowShare',
                 })
                 return
               // }, 500);
