@@ -1,6 +1,6 @@
 //app.js
 App({
-  version: '1.0.3.2009241105',
+  version: '1.0.4.2009241504',
   versionIntro: '修复了部分BUG\n优化了部分体验',
   globalData: {
     loginHospitalId: '',
