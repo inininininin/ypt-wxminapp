@@ -1,41 +1,42 @@
-
 <view class="pageLoading" style="display:{{allHidden}}">
-  <image mode="aspectFill" lazy-load="true" src="../icon/loadingIs.gif"></image>
+	<image mode="aspectFill" lazy-load="true" src="../icon/loadingIs.gif"></image>
 </view>
 <view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
-  <view class="header">
-    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
-    <view class="title-bar" style="height:{{titleBarHeight}}px">
-      <!-- <image mode="aspectFill" class="scan" bindtap="scan" src="../icon/scan.png"></image> -->
-      <view bindtap="searchkey">
-        <image mode="aspectFill" lazy-load="true" class="searchIcon" src="../icon/sousuo.png"></image>
-        <input disabled="disabled" placeholder="搜索你需要的内容"></input>
-      </view>
-    </view>
-  </view>
+	<view class="header">
+		<view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+		<view class="title-bar" style="height:{{titleBarHeight}}px">
+			<!-- <image mode="aspectFill" class="scan" bindtap="scan" src="../icon/scan.png"></image> -->
+			<view bindtap="searchkey">
+				<image mode="aspectFill" lazy-load="true" class="searchIcon" src="../icon/sousuo.png"></image>
+				<input disabled="disabled" placeholder="搜索你需要的内容"></input>
+			</view>
+		</view>
+	</view>
 </view>
 <view class="topIndex">
-<!-- src="{{hosDetail.cover||'../icon/Bitmap.png'}}" -->
-  <image  mode="aspectFill" lazy-load="true" bindtap="lookBigPic"  data-src="{{testImg||'../icon/Bitmap.png'}}" src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
-  <view>
-  <!-- src="{{item}}" -->
-    <view class="lineOne">{{hosDetail.name}} <image mode="aspectFill" lazy-load="true" catchtap="lookCodeShow" wx:for='{{imglist}}' data-src="{{item}}"  class="tcode" src="../icon/tcode.png"></image></view>
+	<!-- src="{{hosDetail.cover||'../icon/Bitmap.png'}}" -->
+	<image mode="aspectFill" lazy-load="true" bindtap="lookBigPic" data-src="{{testImg||'../icon/Bitmap.png'}}" src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
+	<view>
+		<!-- src="{{item}}" -->
+		<view class="lineOne">{{hosDetail.name}}
+			<image mode="aspectFill" lazy-load="true" catchtap="lookCodeShow" wx:for='{{imglist}}' data-src="{{item}}" class="tcode" src="../icon/tcode.png"></image>
+		</view>
 
-    <view class="lineOne">{{departDetail}}</view>
-    <view class="lineOne">
-      <text wx:for='{{hosDetail.tag}}'>{{item}}</text>
-    </view>
-  </view>
+		<view class="lineOne">{{departDetail}}</view>
+		<view class="lineOne">
+			<text wx:for='{{hosDetail.tag}}'>{{item}}</text>
+		</view>
+	</view>
 </view>
-<view class="intro"   data-detail='{{hospitalDetail}}' bindtap="lookMoreDetail">
-  <view class="introTitle">
-    <view>
-      <text></text>
-      <text>医院简介</text>
-    </view>
-    <text>查看详情</text>
-  </view>
-  <text class="lineSix">{{hosDetail.intro}}</text>
+<view class="intro" data-detail='{{hospitalDetail}}' bindtap="lookMoreDetail">
+	<view class="introTitle">
+		<view>
+			<text></text>
+			<text>医院简介</text>
+		</view>
+		<text>查看详情</text>
+	</view>
+	<text class="lineSix">{{hosDetail.intro}}</text>
 </view>
 <!-- <view class="doctorDetail">
   <image lazy-load="true" src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
@@ -46,27 +47,29 @@
   </view>
 </view> -->
 <view class="doctorList">
-  <view class="introTitle" wx:if='{{docList!=""&&docList!=null&&docList!=undefined}}'>
-    <view>
-      <text></text>
-      <text>医生团队</text>
-    </view>
-    <text data-type='1' bindtap="evaList">查看更多</text>
-  </view>
-  <view class="doctorItem" wx:for='{{docList}}' data-id='{{item.doctorId}}' data-detail='{{item}}' bindtap="doctor">
-    <image mode="aspectFill" lazy-load="true" src="{{item.cover||'../icon/yisheng.png'}}"></image>
-    <view>
-      <text  wx:if='{{item.name}}' class="doctorItem1 lineOne">{{item.name||''}}</text><text wx:if='{{item.tag}}' class="tag lineOne doctorItem2">{{item.tag||""}}</text>
-      <text wx:if='{{item.intro}}' class="lineThree doctorItem3">{{item.intro||''}}</text>
-    </view>
-  </view>
+	<view class="introTitle" wx:if='{{docList!=""&&docList!=null&&docList!=undefined}}'>
+		<view>
+			<text></text>
+			<text>医生团队</text>
+		</view>
+		<text data-type='1' bindtap="evaList">查看更多</text>
+	</view>
+	<view class="doctorItem" wx:for='{{docList}}' data-id='{{item.doctorId}}' data-detail='{{item}}' bindtap="doctor">
+		<image mode="aspectFill" lazy-load="true" src="{{item.cover||'../icon/yisheng.png'}}"></image>
+		<view>
+			<text  wx:if='{{item.name}}' class="doctorItem1 lineOne">{{item.name||''}}</text><text wx:if='{{item.tag}}' class="tag lineOne doctorItem2">{{item.tag||""}}</text>
+			<text wx:if='{{item.intro}}' class="lineThree doctorItem3">{{item.intro||''}}</text>
+		</view>
+	</view>
 </view>
 
 
-<view class="canvasShow" wx-if='{{canvasShow}}'   style="opacity:1" bindtap="closeCanvas">
-<canvas canvas-id='canvas'   style='width:{{windowW}}px;height:{{windowW}}px;margin-top:{{windowTop}}px;border:2rpx solid #e5e5e5;' catchlongtap="saveCanvas"></canvas>
+<view class="canvasShow" wx-if='{{canvasShow}}' style="opacity:1" bindtap="closeCanvas">
+	<canvas canvas-id='canvas' style='width:{{windowW}}px;height:{{windowW}}px;margin-top:{{windowTop}}px;border:2rpx solid #e5e5e5;' catchlongtap="saveCanvas"></canvas>
 	<button type='primary' size='mini' bindtap='saveIs'>保存分享图</button>
 </view>
 
 
 
+<text class="versionEve" bindtap="version" style="width:100%;display:block;font-size: 26rpx;color: #999;text-align: center;">ver : {{version}}-{{ids}}</text>
+<!-- <text wx:if='{{ids}}' style="color:#333;width:100%;text-align:center">{{ver:ids}}</text> -->

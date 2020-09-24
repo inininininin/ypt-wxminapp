@@ -23,9 +23,23 @@ Page({
   },
 
   loginByPhone(e) {
-    wx.redirectTo({
-      url: '../logs/logs',
+    wx.navigateTo({
+      url: '../logs/logs?fromType='+this.data.fromType+'&backUrl=' + this.data.backUrl+'&type='+this.data.type,
     })
+    // if(this.data.fromType==2){
+    //   wx.navigateTo({
+    //     url: '../logs/logs?fromType=2&backUrl=' + this.data.backUrl+'&type='+this.data.type,
+    //   })
+    // }else if(this.data.fromType==1){
+    //   wx.navigateTo({
+    //     url: '../logs/logs?fromType=1&backUrl=' + this.data.backUrl+'&type='+this.data.type,
+    //   })
+    // }else {
+    //   wx.navigateTo({
+    //     url: '../logs/logs',
+    //   })
+    // }
+    
     // this.setData({
     //   showPhone: !this.data.showPhone
     // })
@@ -213,12 +227,12 @@ Page({
                             mask: true,
                             complete: function complete(res) {
                               setTimeout(function () {
+                                wx.setStorageSync('historyUrl', that.data.backUrl)
                                 if (that.data.fromType == 1) {
                                   wx.setStorageSync('fromTab', 1)
                                   wx.switchTab({
                                     url: '../index/index',
                                   })
-                                  wx.setStorageSync('historyUrl', that.data.backUrl)
                                 } else {
                                   wx.switchTab({
                                     url: '../index/index',
@@ -435,13 +449,13 @@ Page({
                       duration: 2000,
                       mask: true,
                       complete: function complete(res) {
-                        setTimeout(function () {                          
+                        setTimeout(function () {            
+                          wx.setStorageSync('historyUrl', that.data.backUrl)              
                           if (that.data.fromType == 1) {
                             wx.setStorageSync('fromTab', 1)
                             wx.switchTab({
                               url: '../index/index',
                             })
-                            wx.setStorageSync('historyUrl', that.data.backUrl)
                           } else {
                             wx.switchTab({
                               url: '../index/index',
@@ -533,10 +547,9 @@ Page({
             mask: true,
             complete: function complete(res) {
               setTimeout(function () {
-                
+                wx.setStorageSync('historyUrl', that.data.backUrl)
                 if (that.data.fromType == 1) {
                   wx.setStorageSync('fromTab', 1)
-                  wx.setStorageSync('historyUrl', that.data.backUrl)
                   wx.switchTab({
                     url: '../index/index',
                   })
@@ -595,13 +608,12 @@ Page({
                               mask: true,
                               complete: function complete(res) {
                                 setTimeout(function () {
-                                  
+                                  wx.setStorageSync('historyUrl', that.data.backUrl)
                                   if (that.data.fromType == 1) {
                                     wx.setStorageSync('fromTab', 1)
                                     wx.switchTab({
                                       url: '../index/index',
                                     })
-                                    wx.setStorageSync('historyUrl', that.data.backUrl)
                                   } else {
                                     wx.switchTab({
                                       url: '../index/index',

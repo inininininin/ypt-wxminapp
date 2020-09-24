@@ -85,5 +85,4 @@ page {
   font-size: 30rpx;
   text-align: left;
   border-bottom: 0.5px solid #e5e5e5;
-
 }

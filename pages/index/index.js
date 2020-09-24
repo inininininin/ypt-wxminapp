@@ -16,6 +16,7 @@ Page({
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
     canvasShow: false,
     change:0,
+    ids:''
   },
   // 搜索跳转
   searchkey(e) {
@@ -253,12 +254,22 @@ Page({
     })
   },
   onLoad: function (options) {
+    this.setData({
+      version: app.version,//.split('-')[0],
+      entityTel: app.globalData.entity.entityTel,
+    })
     if (options && options.hospitalid) {
+      this.setData({
+        ids:options.hospitalid
+      })
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
+      this.hosDetail();
+    }else{
+      this.hosDetail();
     }
     this.sys();
-    this.hosDetail();
+   
   },
   onShow: function (options) {
     this.setData({
@@ -275,7 +286,7 @@ Page({
       wx.setStorageSync('fromTab', '')
     } else {
       wx.navigateTo({
-        url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id'),
+        url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'),
       })
       wx.setStorageSync('historyUrl', '')
     }

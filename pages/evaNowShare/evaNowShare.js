@@ -141,78 +141,122 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this
+    console.log(app.historyUrl())
+    wx.request({
+      url: app.globalData.url + '/user/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          app.globalData.userInfoDetail = res.data.data
+          wx.setStorageSync('withoutLogin', false)
+          if (wx.getStorageSync('type') == 3) {
+            that.setData({
+              navtitle: res.data.data.hospitalName
+            })
+          }
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+            complete: function complete(res) {
+              // setTimeout(function () {
+                wx.setStorageSync('historyUrl', app.historyUrl())
+                wx.navigateTo({
+                  url: '../login/login?fromType=2',
+                })
+                return
+              // }, 500);
+            }
+          });
+        }
+      }
+    })
     if (options.hospitalid != '' && options.hospitalid != undefined && options.hospitalid != null) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
-    }
-    var that = this
-    // debugger
-    wx.setStorageSync('type', options.type)
-    wx.setStorageSync('id', options.id)
-    if (wx.getStorageSync('type') == 1) {
-      wx.request({
-        url: app.globalData.url + '/doctor',
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          'cookie': wx.getStorageSync('cookie')
-        },
-        data: {
-          doctorId: wx.getStorageSync('id'),
-        },
-        method: 'get',
-        success: function (res) {
-          if (res.data.code == 0) {
-            wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
-            wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
-            that.setData({
-              url: '/user/doctor-comment',
-              type: options.type,
-              id: res.data.data.doctorId,
-              navtitle: res.data.data.name,
-              title1: '您对本次的服务体验：',
-              title2: '请填写您对该医生的评价：',
-            })
+      wx.setStorageSync('type', options.type)
+      wx.setStorageSync('id', options.id)
+      if (wx.getStorageSync('type') == 1) {
+        wx.request({
+          url: app.globalData.url + '/doctor',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          data: {
+            doctorId: wx.getStorageSync('id'),
+          },
+          method: 'get',
+          success: function (res) {
+            if (res.data.code == 0) {
+              wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+              wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+              that.setData({
+                url: '/user/doctor-comment',
+                type: options.type,
+                id: res.data.data.doctorId,
+                navtitle: res.data.data.name,
+                title1: '您对本次的服务体验：',
+                title2: '请填写您对该医生的评价：',
+              })
+            }
           }
-        }
-      });
-    } else if (wx.getStorageSync('type') == 2) {
-      wx.request({
-        url: app.globalData.url + '/nurse',
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          'cookie': wx.getStorageSync('cookie')
-        },
-        data: {
-          nurseId: wx.getStorageSync('id'),
-        },
-        method: 'get',
-        success: function (res) {
-          if (res.data.code == 0) {
-            // app.globalData.loginHospitalId = res.data.data.hospitalId
-            // app.globalData.loginHpitalName = res.data.data.hospitalName
-            wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
-            wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
-            that.setData({
-              url: '/user/nurse-comment',
-              type: options.type,
-              id: res.data.data.nurseId,
-              navtitle: res.data.data.name,
-              title1: '您对本次的服务体验：',
-              title2: '请填写您对该医护人员的评价：',
-            })
+        });
+      } else if (wx.getStorageSync('type') == 2) {
+        wx.request({
+          url: app.globalData.url + '/nurse',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          data: {
+            nurseId: wx.getStorageSync('id'),
+          },
+          method: 'get',
+          success: function (res) {
+            if (res.data.code == 0) {
+              // app.globalData.loginHospitalId = res.data.data.hospitalId
+              // app.globalData.loginHpitalName = res.data.data.hospitalName
+              wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+              wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+              that.setData({
+                url: '/user/nurse-comment',
+                type: options.type,
+                id: res.data.data.nurseId,
+                navtitle: res.data.data.name,
+                title1: '您对本次的服务体验：',
+                title2: '请填写您对该医护人员的评价：',
+              })
+            }
           }
-        }
-      });
+        });
+      } else {
+        that.setData({
+          url: '/user/hospital-comment',
+          type: wx.getStorageSync('type'),
+          id: wx.getStorageSync('id'),
+          navtitle: options.name,
+          title1: '您对本次的服务体验：',
+          title2: '请填写您对该医院的具体评价及建议：',
+        })
+      }
     } else {
-      that.setData({
-        url: '/user/hospital-comment',
-        type: wx.getStorageSync('type'),
-        id: wx.getStorageSync('id'),
-        navtitle: options.name,
-        title1: '您对本次的服务体验：',
-        title2: '请填写您对该医院的具体评价及建议：',
+      wx.showToast({
+        title: '当前二维码无效',
+        icon: 'none'
       })
     }
+
+    // debugger
+
 
   },
   evaNow(e) {
@@ -320,51 +364,51 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function (options) {
-    var that = this
-    let pages = getCurrentPages();
-    // 数组中索引最大的页面--当前页面
-    let currentPage = pages[pages.length - 1];
-    // 打印出当前页面中的 options
-    if (currentPage.options.hospitalid != '' && currentPage.options.hospitalid != undefined && currentPage.options.hospitalid != null) {
-      wx.setStorageSync('loginHospitalId', options.hospitalid)
-      wx.setStorageSync('loginHpitalName', options.hospitalname)
-    }
-    wx.request({
-      url: app.globalData.url + '/user/login-refresh',
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        'cookie': wx.getStorageSync('cookie')
-      },
-      method: 'post',
-      success: function (res) {
-        wx.hideToast()
-        if (res.data.code == 0) {
-          app.globalData.userInfoDetail = res.data.data
-          wx.setStorageSync('withoutLogin', false)
-          if (wx.getStorageSync('type') == 3) {
-            that.setData({
-              navtitle: res.data.data.hospitalName
-            })
-          }
-
-        } else {
-          wx.showToast({
-            title: res.data.codeMsg,
-            icon: 'none',
-            duration: 2000,
-            mask: true,
-            complete: function complete(res) {
-              setTimeout(function () {
-                wx.setStorageSync('historyUrl', app.historyUrl())
-                wx.navigateTo({
-                  url: '../login/login?fromType=2',
-                })
-              }, 500);
-            }
-          });
-        }
-      }
-    })
+    
+    // var that = this
+    // let pages = getCurrentPages();
+    // // 数组中索引最大的页面--当前页面
+    // let currentPage = pages[pages.length - 1];
+    // // 打印出当前页面中的 options
+    // if (currentPage.options.hospitalid != '' && currentPage.options.hospitalid != undefined && currentPage.options.hospitalid != null) {
+    //   wx.setStorageSync('loginHospitalId', options.hospitalid)
+    //   wx.setStorageSync('loginHpitalName', options.hospitalname)
+    // }
+    // wx.request({
+    //   url: app.globalData.url + '/user/login-refresh',
+    //   header: {
+    //     "Content-Type": "application/x-www-form-urlencoded",
+    //     'cookie': wx.getStorageSync('cookie')
+    //   },
+    //   method: 'post',
+    //   success: function (res) {
+    //     wx.hideToast()
+    //     if (res.data.code == 0) {
+    //       app.globalData.userInfoDetail = res.data.data
+    //       wx.setStorageSync('withoutLogin', false)
+    //       if (wx.getStorageSync('type') == 3) {
+    //         that.setData({
+    //           navtitle: res.data.data.hospitalName
+    //         })
+    //       }
+    //     } else {
+    //       wx.showToast({
+    //         title: res.data.codeMsg,
+    //         icon: 'none',
+    //         duration: 2000,
+    //         mask: true,
+    //         complete: function complete(res) {
+    //           setTimeout(function () {
+    //             wx.setStorageSync('historyUrl', app.historyUrl())
+    //             wx.navigateTo({
+    //               url: '../login/login?fromType=2',
+    //             })
+    //           }, 500);
+    //         }
+    //       });
+    //     }
+    //   }
+    // })
   },
 
   /**
