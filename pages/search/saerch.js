@@ -141,7 +141,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -161,7 +161,7 @@ Page({
     var that = this
     pn++
     wx.request({
-      url: app.globalData.url + '/user/doctors',
+      url: app.globalData.url + '/ypt/user/doctors',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -197,7 +197,7 @@ Page({
     var that = this
     pn++
     wx.request({
-      url: app.globalData.url + '/user/nurses',
+      url: app.globalData.url + '/ypt/user/nurses',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -232,7 +232,7 @@ Page({
     var that = this
     pn++
     wx.request({
-      url: app.globalData.url + '/user/offices',
+      url: app.globalData.url + '/ypt/user/offices',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -266,7 +266,7 @@ Page({
   departDetail() {
     var that = this
     wx.request({
-      url: app.globalData.url + '/user/offices',
+      url: app.globalData.url + '/ypt/user/offices',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

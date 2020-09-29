@@ -178,7 +178,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -197,7 +197,7 @@ Page({
   hotSearch(){
     var that=this
     wx.request({
-      url: app.globalData.url + '/hot-searches',
+      url: app.globalData.url + '/ypt/hot-searches',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

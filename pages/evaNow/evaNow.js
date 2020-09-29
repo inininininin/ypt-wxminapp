@@ -82,7 +82,7 @@ Page({
         var picBlob = that.data.picBlob
         for (var i in tempFilePaths) {
           wx.uploadFile({
-            url: app.globalData.url + '/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
+            url: app.globalData.url + '/ypt/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
             filePath: tempFilePaths[i],
             name: 'file',
             success: function (res) {
@@ -152,7 +152,7 @@ Page({
     wx.setStorageSync('id', options.id)
     if (wx.getStorageSync('type') == 1) {
       wx.request({
-        url: app.globalData.url + '/doctor',
+        url: app.globalData.url + '/ypt/doctor',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
           'cookie': wx.getStorageSync('cookie')
@@ -166,7 +166,7 @@ Page({
             wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
       wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
             that.setData({
-              url: '/user/doctor-comment',
+              url: '/ypt/user/doctor-comment',
               type: options.type,
               id: res.data.data.doctorId,
               navtitle: res.data.data.name,
@@ -178,7 +178,7 @@ Page({
       });
     } else if (wx.getStorageSync('type')  == 2) {
       wx.request({
-        url: app.globalData.url + '/nurse',
+        url: app.globalData.url + '/ypt/nurse',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
           'cookie': wx.getStorageSync('cookie')
@@ -194,7 +194,7 @@ Page({
             wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
             wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
             that.setData({
-              url: '/user/nurse-comment',
+              url: '/ypt/user/nurse-comment',
               type: options.type,
               id: res.data.data.nurseId,
               navtitle: res.data.data.name,
@@ -206,7 +206,7 @@ Page({
       });
     } else {
       that.setData({
-        url: '/user/hospital-comment',
+        url: '/ypt/user/hospital-comment',
         type: wx.getStorageSync('type'),
         id: wx.getStorageSync('id'),
         navtitle: options.name,
@@ -321,7 +321,7 @@ Page({
   onShow: function () {
     var that=this
     wx.request({
-      url: app.globalData.url + '/user/login-refresh',
+      url: app.globalData.url + '/ypt/user/login-refresh',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -392,7 +392,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

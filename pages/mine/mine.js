@@ -77,7 +77,7 @@ Page({
   makesure(e) {
     var that = this
     wx.request({
-      url: app.globalData.url + '/user/alter-my-info',
+      url: app.globalData.url + '/ypt/user/alter-my-info',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -125,7 +125,7 @@ Page({
                //点击确定
                
                wx.request({
-                 url: app.globalData.url + '/user/logout',
+                 url: app.globalData.url + '/ypt/user/logout',
                  header: {
                    "Content-Type": "application/x-www-form-urlencoded",
                    'cookie': wx.getStorageSync('cookie')
@@ -171,7 +171,7 @@ Page({
         const src = res.tempFilePaths[0]
         var avatar = res.tempFilePaths[0]
         wx.uploadFile({
-          url: app.globalData.url + '/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
+          url: app.globalData.url + '/ypt/upload-static-file?cover&duration', //仅为示例，非真实的接口地址
           filePath: avatar,
           method: 'post',
           name: 'file',
@@ -185,7 +185,7 @@ Page({
                 duration: 2000
               })
               wx.request({
-                url: app.globalData.url + '/user/alter-my-info', //仅为示例，非真实的接口地址
+                url: app.globalData.url + '/ypt/user/alter-my-info', //仅为示例，非真实的接口地址
                 method: 'post',
                 data: {
                   cover: url,
@@ -431,7 +431,7 @@ Page({
   refresh(){
     var that =this
     wx.request({
-      url: app.globalData.url + '/user/login-refresh',
+      url: app.globalData.url + '/ypt/user/login-refresh',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -460,7 +460,7 @@ Page({
           // Share
           var param = encodeURIComponent('pages/evaNowShare/evaNowShare?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId)+'&hospitalid='+(wx.getStorageSync('loginHospitalId')||''))
           wx.getImageInfo({
-            src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=200',
+            src: app.globalData.url + '/ypt/wxminqrcode?path=' + param + '&width=200',
             method: 'get',
             header: {
               "Content-Type": "application/x-www-form-urlencoded",
@@ -540,7 +540,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

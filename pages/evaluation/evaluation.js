@@ -119,18 +119,18 @@ Page({
    */
   onLoad: function (options) {
     if (app.globalData.userInfoDetail.type == 0) {
-      this.lastPage(0, '/user/my-doctor-comments', 'doctorList')
-      this.lastPage(0, '/user/my-nurse-comments', 'nurseList')
-      this.lastPage(0, '/user/my-hospital-comments', 'hospitalList')
-      this.numList( '/user/my-doctor-comments-sum', 'doctorList')
-      this.numList( '/user/my-nurse-comments-sum', 'nurseList')
-      this.numList( '/user/my-hospital-comments-sum', 'hospitalList')
+      this.lastPage(0, '/ypt/user/my-doctor-comments', 'doctorList')
+      this.lastPage(0, '/ypt/user/my-nurse-comments', 'nurseList')
+      this.lastPage(0, '/ypt/user/my-hospital-comments', 'hospitalList')
+      this.numList( '/ypt/user/my-doctor-comments-sum', 'doctorList')
+      this.numList( '/ypt/user/my-nurse-comments-sum', 'nurseList')
+      this.numList( '/ypt/user/my-hospital-comments-sum', 'hospitalList')
     } else if (app.globalData.userInfoDetail.type == 1) {
-      this.lastPageSelf(0, '/user/to-me-doctor-comments')
-      this.numList( '/user/to-me-doctor-comments-sum', 'list1')
+      this.lastPageSelf(0, '/ypt/user/to-me-doctor-comments')
+      this.numList( '/ypt/user/to-me-doctor-comments-sum', 'list1')
     } else if (app.globalData.userInfoDetail.type == 2) {
-      this.lastPageSelf(0, '/user/to-me-nurse-comments')
-      this.numList( '/user/to-me-nurse-comments-sum', 'list2')
+      this.lastPageSelf(0, '/ypt/user/to-me-nurse-comments')
+      this.numList( '/ypt/user/to-me-nurse-comments-sum', 'list2')
     }
 
     if (this.data.doctorNum == 0 && this.data.nurseNum == 0 && this.data.hospitalNum == 0) {
@@ -142,7 +142,7 @@ Page({
   numList: function ( url, list) {
     var that = this
     wx.request({
-      url: app.globalData.url + url, // '/user/my-messages',
+      url: app.globalData.url + url, // '/ypt/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -193,7 +193,7 @@ Page({
     var that = this
     toPageNo++
     wx.request({
-      url: app.globalData.url + url, // '/user/my-messages',
+      url: app.globalData.url + url, // '/ypt/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -253,7 +253,7 @@ Page({
     var that = this
     toPageNo++
     wx.request({
-      url: app.globalData.url + url, // '/user/my-messages',
+      url: app.globalData.url + url, // '/ypt/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -332,7 +332,7 @@ Page({
       })
     } else {
       wx.request({
-        url: app.globalData.url + '/user/login-refresh',
+        url: app.globalData.url + '/ypt/user/login-refresh',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
           'cookie': wx.getStorageSync('cookie')
@@ -350,22 +350,22 @@ Page({
             if (app.globalData.userInfoDetail.type == 0) {
               console.log(that.data.doctorList)
               if (that.data.doctorList && that.data.doctorList.length == 0 && that.data.nurseList.length == 0 && that.data.hospitalList.length == 0) {
-                that.lastPage(0, '/user/my-doctor-comments', 'doctorList')
-                that.lastPage(0, '/user/my-nurse-comments', 'nurseList')
-                that.lastPage(0, '/user/my-hospital-comments', 'hospitalList')
-                that.numList('/user/my-doctor-comments-sum', 'doctorList')
-                that.numList( '/user/my-nurse-comments-sum', 'nurseList')
-                that.numList( '/user/my-hospital-comments-sum', 'hospitalList')
+                that.lastPage(0, '/ypt/user/my-doctor-comments', 'doctorList')
+                that.lastPage(0, '/ypt/user/my-nurse-comments', 'nurseList')
+                that.lastPage(0, '/ypt/user/my-hospital-comments', 'hospitalList')
+                that.numList('/ypt/user/my-doctor-comments-sum', 'doctorList')
+                that.numList( '/ypt/user/my-nurse-comments-sum', 'nurseList')
+                that.numList( '/ypt/user/my-hospital-comments-sum', 'hospitalList')
               }
             } else if (app.globalData.userInfoDetail.type == 1) {
               if (that.data.list1 && that.data.list1.length == 0) {
-                that.lastPageSelf(0, '/user/to-me-doctor-comments', 'list1')
-                that.numList('/user/to-me-doctor-comments-sum', 'list1')
+                that.lastPageSelf(0, '/ypt/user/to-me-doctor-comments', 'list1')
+                that.numList('/ypt/user/to-me-doctor-comments-sum', 'list1')
               }
             } else if (app.globalData.userInfoDetail.type == 2) {
               if (that.data.list2 && that.data.list2.length == 0) {
-                that.lastPageSelf(0, '/user/to-me-nurse-comments', 'list2')
-                that.numList( '/user/to-me-nurse-comments-sum', 'list2')
+                that.lastPageSelf(0, '/ypt/user/to-me-nurse-comments', 'list2')
+                that.numList( '/ypt/user/to-me-nurse-comments-sum', 'list2')
               }
             }
           } else {
@@ -407,18 +407,18 @@ Page({
       list2: []
     })
     if (app.globalData.userInfoDetail.type == 0) {
-      this.lastPage(0, '/user/my-doctor-comments', 'doctorList')
-      this.lastPage(0, '/user/my-nurse-comments', 'nurseList')
-      this.lastPage(0, '/user/my-hospital-comments', 'hospitalList')
-      this.numList( '/user/my-doctor-comments-sum', 'doctorList')
-      this.numList( '/user/my-nurse-comments-sum', 'nurseList')
-      this.numList( '/user/my-hospital-comments-sum', 'hospitalList')
+      this.lastPage(0, '/ypt/user/my-doctor-comments', 'doctorList')
+      this.lastPage(0, '/ypt/user/my-nurse-comments', 'nurseList')
+      this.lastPage(0, '/ypt/user/my-hospital-comments', 'hospitalList')
+      this.numList( '/ypt/user/my-doctor-comments-sum', 'doctorList')
+      this.numList( '/ypt/user/my-nurse-comments-sum', 'nurseList')
+      this.numList( '/ypt/user/my-hospital-comments-sum', 'hospitalList')
     } else if (app.globalData.userInfoDetail.type == 1) {
-      this.lastPageSelf(0, '/user/to-me-doctor-comments','list1')
-      this.numList( '/user/to-me-doctor-comments-sum','list1')
+      this.lastPageSelf(0, '/ypt/user/to-me-doctor-comments','list1')
+      this.numList( '/ypt/user/to-me-doctor-comments-sum','list1')
     } else if (app.globalData.userInfoDetail.type == 2) {
-      this.lastPageSelf(0, '/user/to-me-nurse-comments','list2')
-      this.numList( '/user/to-me-nurse-comments-sum', 'list2')
+      this.lastPageSelf(0, '/ypt/user/to-me-nurse-comments','list2')
+      this.numList( '/ypt/user/to-me-nurse-comments-sum', 'list2')
     }
     wx.stopPullDownRefresh()
   },
@@ -429,11 +429,11 @@ Page({
   onReachBottom: function () {
     var toPageNo = this.data.toPageNo
     if (app.globalData.userInfoDetail.type == 1) {
-      this.lastPageSelf(toPageNo, '/user/to-me-doctor-comments','list1')
-      this.numList( '/user/to-me-doctor-comments-sum','list1')
+      this.lastPageSelf(toPageNo, '/ypt/user/to-me-doctor-comments','list1')
+      this.numList( '/ypt/user/to-me-doctor-comments-sum','list1')
     } else if (app.globalData.userInfoDetail.type == 2) {
-      this.lastPageSelf(toPageNo, '/user/to-me-nurse-comments','list2')
-      this.numList( '/user/to-me-nurse-comments-sum', 'list2')
+      this.lastPageSelf(toPageNo, '/ypt/user/to-me-nurse-comments','list2')
+      this.numList( '/ypt/user/to-me-nurse-comments-sum', 'list2')
     }
   },
 
@@ -442,7 +442,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
