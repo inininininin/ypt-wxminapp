@@ -104,8 +104,12 @@ Page({
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
-            for (var i in res.data.data.tag.split(',')) {
-              tag.push(res.data.data.tag.split(',')[i])
+            if(res.data.data.tag.split(',')){
+              for (var i in res.data.data.tag.split(',')) {
+                tag.push(res.data.data.tag.split(',')[i])
+              }
+            }else{
+              tag.push(res.data.data.tag)
             }
           }
           res.data.data.tag = tag
@@ -189,11 +193,12 @@ Page({
               departDetail = departDetail + "/" + res.data.data.rows[i].name
             }
             departDetail = departDetail.slice(1, departDetail.length)
+            that.setData({
+              departDetail: departDetail,
+              depart: res.data.data.rows
+            })
           }
-          that.setData({
-            departDetail: departDetail,
-            depart: res.data.data.rows
-          })
+        
         }
         // else {
         //   wx.showToast({
