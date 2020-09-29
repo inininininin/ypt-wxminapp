@@ -101,8 +101,6 @@ Page({
         if (res.data.code == 0) {
           app.globalData.hospitalName = res.data.data.name
           app.globalData.hospitaiDetail = res.data.data
-          console.log(app.globalData.hospitaiDetail)
-
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
