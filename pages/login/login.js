@@ -131,7 +131,7 @@ Page({
         time: 60
       })
       wx.request({
-        url: app.globalData.url + '/sendsmsvcode',
+        url: app.globalData.url + '/ypt/sendsmsvcode',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
@@ -187,7 +187,7 @@ Page({
               })
             } else {
               wx.request({
-                url: app.globalData.url + '/user/login-by-wxminapp',
+                url: app.globalData.url + '/ypt/user/login-by-wxminapp',
                 header: {
                   "Content-Type": "application/x-www-form-urlencoded",
                 },
@@ -205,7 +205,7 @@ Page({
                     wx.setStorageSync('cookie', res.header['Set-Cookie'])
                     // wx.getStorageSync('cookie') =wx.getStorageSync('cookie')
                     wx.request({
-                      url: app.globalData.url + '/user/login-refresh',
+                      url: app.globalData.url + '/ypt/user/login-refresh',
                       header: {
                         "Content-Type": "application/x-www-form-urlencoded",
                         'cookie': wx.getStorageSync('cookie')
@@ -325,7 +325,7 @@ Page({
     //         code: code
     //       })
     //       wx.request({
-    //         url: app.globalData.url + '/user/login-by-wxminapp',
+    //         url: app.globalData.url + '/ypt/user/login-by-wxminapp',
     //         header: {
     //           "Content-Type": "application/x-www-form-urlencoded",
     //         },
@@ -345,7 +345,7 @@ Page({
     //             })
     //             wx.getStorageSync('cookie') = res.header['Set-Cookie']
     //             wx.request({
-    //               url: app.globalData.url + '/user/login-refresh',
+    //               url: app.globalData.url + '/ypt/user/login-refresh',
     //               header: {
     //                 "Content-Type": "application/x-www-form-urlencoded",
     //                 'cookie': wx.getStorageSync('cookie')
@@ -412,7 +412,7 @@ Page({
       success(res) {
         var code = res.code
         wx.request({
-          url: app.globalData.url + '/user/login-by-wxminapp',
+          url: app.globalData.url + '/ypt/user/login-by-wxminapp',
           header: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -429,7 +429,7 @@ Page({
 
               wx.setStorageSync('cookie', res.header['Set-Cookie'])
               wx.request({
-                url: app.globalData.url + '/user/login-refresh',
+                url: app.globalData.url + '/ypt/user/login-refresh',
                 header: {
                   "Content-Type": "application/x-www-form-urlencoded",
                   'cookie': wx.getStorageSync('cookie')
@@ -526,7 +526,7 @@ Page({
       loginHpitalName: wx.getStorageSync('loginHpitalName') || '' // app.globalData.loginHpitalName || ''
     })
     wx.request({
-      url: app.globalData.url + '/user/login-refresh',
+      url: app.globalData.url + '/ypt/user/login-refresh',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -572,7 +572,7 @@ Page({
               success(res) {
                 var code = res.code
                 wx.request({
-                  url: app.globalData.url + '/user/login-by-wxminapp',
+                  url: app.globalData.url + '/ypt/user/login-by-wxminapp',
                   header: {
                     "Content-Type": "application/x-www-form-urlencoded",
                   },
@@ -587,7 +587,7 @@ Page({
 
                       wx.setStorageSync('cookie', res.header['Set-Cookie'])
                       wx.request({
-                        url: app.globalData.url + '/user/login-refresh',
+                        url: app.globalData.url + '/ypt/user/login-refresh',
                         header: {
                           "Content-Type": "application/x-www-form-urlencoded",
                           'cookie': wx.getStorageSync('cookie')
@@ -681,7 +681,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

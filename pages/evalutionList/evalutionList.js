@@ -71,13 +71,13 @@ Page({
     var type='',url=''
     if(options.type==1){
       type='医生评价列表';
-      url='/user/my-doctor-comments';
+      url='/ypt/user/my-doctor-comments';
     }else  if(options.type==2){
       type='医护评价列表';
-      url='/user/my-nurse-comments'
+      url='/ypt/user/my-nurse-comments'
     }else{
       type='医院评价列表';
-      url='/user/my-hospital-comments';  
+      url='/ypt/user/my-hospital-comments';  
     }
     this.setData({
       navtitle:type,
@@ -101,7 +101,7 @@ Page({
     // toPageNo++
     var toPageNo = parseInt(toPageNo) + 1
     wx.request({
-      url: app.globalData.url + url, // '/user/my-messages',
+      url: app.globalData.url + url, // '/ypt/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -203,7 +203,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

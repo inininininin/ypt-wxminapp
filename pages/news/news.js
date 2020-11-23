@@ -37,7 +37,7 @@ Page({
   lookAll(e) {
     var that = this
     wx.request({
-      url: app.globalData.url + '/user/look-all-my-message',
+      url: app.globalData.url + '/ypt/user/look-all-my-message',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -64,7 +64,7 @@ Page({
   look(e) {
     var that = this
     wx.request({
-      url: app.globalData.url + '/user/my-message',
+      url: app.globalData.url + '/ypt/user/my-message',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -100,7 +100,7 @@ Page({
     var that = this
     toPageNo++
     wx.request({
-      url: app.globalData.url + '/user/my-messages',
+      url: app.globalData.url + '/ypt/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -174,7 +174,7 @@ Page({
 
     var that = this
     wx.request({
-      url: app.globalData.url + '/user/my-messages',
+      url: app.globalData.url + '/ypt/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -231,7 +231,7 @@ Page({
   // newPage(){
   //   var that=this
   //   wx.request({
-  //     url: app.globalData.url + '/user/my-messages',
+  //     url: app.globalData.url + '/ypt/user/my-messages',
   //     header: {
   //       "Content-Type": "application/x-www-form-urlencoded",
   //       'cookie': wx.getStorageSync('cookie')
@@ -288,7 +288,7 @@ Page({
     // })
     // that.lastPage(0)
     wx.request({
-      url: app.globalData.url + '/user/my-messages',
+      url: app.globalData.url + '/ypt/user/my-messages',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -329,7 +329,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

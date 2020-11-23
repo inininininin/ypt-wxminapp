@@ -58,7 +58,7 @@ Page({
     selectDatas=selectDatas.concat(JSON.parse(options.detail))
     var urls=''
     if(options.type==1){
-      urls='/user/doctors'
+      urls='/ypt/user/doctors'
       that .setData({
         navtitle:'医生列表',
         type:options.type,
@@ -66,7 +66,7 @@ Page({
         selectDatas:selectDatas
       })
     }else if(options.type==2){
-      urls='/user/nurses'
+      urls='/ypt/user/nurses'
       that .setData({
         navtitle:'医护列表',
         type:options.type,
@@ -187,7 +187,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

@@ -34,6 +34,7 @@ Page({
   // },
   lookBigPic(e) {
     wx.previewImage({
+      current:e.currentTarget.dataset.src,
       urls: [e.currentTarget.dataset.src]
     })
   },
@@ -82,7 +83,7 @@ Page({
     //   title:  wx.getStorageSync('loginHospitalId'),
     // })
     wx.request({
-      url: app.globalData.url + '/user/hospital',
+      url: app.globalData.url + '/ypt/user/hospital',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -101,13 +102,15 @@ Page({
         if (res.data.code == 0) {
           app.globalData.hospitalName = res.data.data.name
           app.globalData.hospitaiDetail = res.data.data
-          console.log(app.globalData.hospitaiDetail)
-
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
-            for (var i in res.data.data.tag.split(',')) {
-              tag.push(res.data.data.tag.split(',')[i])
+            if(res.data.data.tag.split(',')){
+              for (var i in res.data.data.tag.split(',')) {
+                tag.push(res.data.data.tag.split(',')[i])
+              }
+            }else{
+              tag.push(res.data.data.tag)
             }
           }
           res.data.data.tag = tag
@@ -117,7 +120,7 @@ Page({
           })
           var param = encodeURIComponent('pages/index/index?hospitalid=' + app.globalData.hospitaiDetail.hospitalId + '&hospitalname=' + app.globalData.hospitaiDetail.name)
           wx.getImageInfo({
-            src: app.globalData.url + '/wxminqrcode?path=' + param + '&width=2',
+            src: app.globalData.url + '/ypt/wxminqrcode?path=' + param + '&width=2',
             method: 'get',
             header: {
               "Content-Type": "application/x-www-form-urlencoded",
@@ -171,7 +174,7 @@ Page({
   departDetail() {
     var that = this
     wx.request({
-      url: app.globalData.url + '/user/offices',
+      url: app.globalData.url + '/ypt/user/offices',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -191,11 +194,12 @@ Page({
               departDetail = departDetail + "/" + res.data.data.rows[i].name
             }
             departDetail = departDetail.slice(1, departDetail.length)
+            that.setData({
+              departDetail: departDetail,
+              depart: res.data.data.rows
+            })
           }
-          that.setData({
-            departDetail: departDetail,
-            depart: res.data.data.rows
-          })
+        
         }
         // else {
         //   wx.showToast({
@@ -219,7 +223,7 @@ Page({
   docList() {
     var that = this
     wx.request({
-      url: app.globalData.url + '/user/doctors',
+      url: app.globalData.url + '/ypt/user/doctors',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -353,7 +357,7 @@ Page({
   // 分享
   onShareAppMessage: function (res) {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')

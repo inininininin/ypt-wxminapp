@@ -24,7 +24,7 @@ Page({
   hosDetail() {
     var that=this
     wx.request({
-      url: app.globalData.url + '/user/hospital',
+      url: app.globalData.url + '/ypt/user/hospital',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -125,7 +125,7 @@ Page({
    */
   onShareAppMessage: function () {
     wx.request({
-      url: app.globalData.url + '/user/share',
+      url: app.globalData.url + '/ypt/user/share',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
