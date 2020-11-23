@@ -35,7 +35,7 @@
 			</view>
 		</view>
 	</view>
-	<view class="nurseList" wx:if='{{numlist2Show}}'>
+	<!-- <view class="nurseList" wx:if='{{numlist2Show}}'>
 		<view class="doctorTitle">
 			<image mode="aspectFill" src="../icon/zhuanjia.png"></image><text>护士</text>
 		</view>
@@ -50,7 +50,7 @@
 				<text  class="lineOne">更多</text>
 			</view>
 		</view>
-	</view>
+	</view> -->
 	<!-- 科室列表 -->
 	<view class="departList" wx:if='{{numlist3Show}}'>
 		<view class="titleMore">

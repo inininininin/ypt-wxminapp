@@ -44,7 +44,7 @@
 		</view>
 
 	</view>
-	<view class="introTitle" wx:if='{{nurseNum!=0}}'>
+	<!-- <view class="introTitle" wx:if='{{nurseNum!=0}}'>
 		<view>
 			<text style="background:#FD687D"></text>
 			<text>医护评价</text>
@@ -75,7 +75,7 @@
 				<image wx:for='{{item.imgList}}' data-imglist='{{item.imgList}}' catchtap="previewImage" data-src="{{items}}" wx:for-item='items' mode="aspectFit" style="background-color: #eeeeee;"  lazy-load="true" src="{{items}}"></image>
 			</view>
 		</view>
-	</view>
+	</view> -->
 	<view class="introTitle" wx:if='{{hospitalNum!=0}}'>
 		<view>
 			<text style="background:#FF932E"></text>
