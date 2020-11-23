@@ -22,7 +22,8 @@ Page({
     imgBlob: '',
     star:'',
     content:'',
-    placeholder:'请输入评价'
+    placeholder:'请输入评价',
+    evaNowShwo:true,
     // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
   },
   select(e) {
@@ -223,6 +224,9 @@ Page({
       duration:1000
     })
     var that = this
+    that.setData({
+      evaNowShwo:false,
+    })
     if (that.data.type == 1) {
       var params = '?doctorId=' + that.data.id
     } else if (that.data.type == 2) {
@@ -236,6 +240,9 @@ Page({
         icon: 'none',
         duration: 1000
       });
+      that.setData({
+        evaNowShwo:true,
+      })
     } else {
       if(that.data.content == ''){
         if(that.data.star == 1){
@@ -271,8 +278,10 @@ Page({
               complete: (res) => {},
             })
             that.setData({
-              hidden: true
+              hidden: true,
+              evaNowShwo:true,
             })
+            
           } else {
             wx.showToast({
               title: res.data.codeMsg,
@@ -280,7 +289,9 @@ Page({
               duration: 2000,
               mask: true,
               complete: function complete(res) {
-              
+                that.setData({
+                  evaNowShwo:true,
+                })
               }
             });
           }

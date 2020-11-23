@@ -34,6 +34,7 @@ Page({
   // },
   lookBigPic(e) {
     wx.previewImage({
+      current: e.currentTarget.dataset.src,
       urls: [e.currentTarget.dataset.src]
     })
   },
@@ -303,7 +304,7 @@ Page({
         url: wx.getStorageSync('historyUrl'),
       })
       wx.setStorageSync('fromTab', '')
-    } else {
+    } else  if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 0){
       console.log(wx.getStorageSync('historyUrl'))
       console.log(wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'))
       wx.navigateTo({

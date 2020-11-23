@@ -18,7 +18,7 @@ Page({
     detail:'',
     imglist: [],
     version: '',
-    bgUrl: app.globalData.url + '/wxminapp-resource/bj.jpg',
+    bgUrl: app.globalData.url + '/ypt/wxminapp-resource/bj.jpg',
     withoutLogin: true,
     canvasShow:false
   },

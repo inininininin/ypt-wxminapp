@@ -149,7 +149,7 @@ page {
   font-family: PingFangSC;
   font-weight: 500;
   color: rgba(245, 245, 245, 1);
-  line-height: 28rpx;
+  line-height: 29rpx;
   letter-spacing: 0px;
   margin-top: 18rpx;
   margin-bottom: 22rpx;
