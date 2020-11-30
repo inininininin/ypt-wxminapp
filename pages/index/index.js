@@ -102,13 +102,15 @@ Page({
         if (res.data.code == 0) {
           app.globalData.hospitalName = res.data.data.name
           app.globalData.hospitaiDetail = res.data.data
-          console.log(app.globalData.hospitaiDetail)
-
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
-            for (var i in res.data.data.tag.split(',')) {
-              tag.push(res.data.data.tag.split(',')[i])
+            if(res.data.data.tag.split(',')){
+              for (var i in res.data.data.tag.split(',')) {
+                tag.push(res.data.data.tag.split(',')[i])
+              }
+            }else{
+              tag.push(res.data.data.tag)
             }
           }
           res.data.data.tag = tag
@@ -192,11 +194,12 @@ Page({
               departDetail = departDetail + "/" + res.data.data.rows[i].name
             }
             departDetail = departDetail.slice(1, departDetail.length)
+            that.setData({
+              departDetail: departDetail,
+              depart: res.data.data.rows
+            })
           }
-          that.setData({
-            departDetail: departDetail,
-            depart: res.data.data.rows
-          })
+        
         }
         // else {
         //   wx.showToast({

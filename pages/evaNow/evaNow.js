@@ -23,7 +23,7 @@ Page({
     star:'',
     content:'',
     placeholder:'请输入评价',
-    evaNowShwo:true,
+    evaNowShow:true,
     // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
   },
   select(e) {
@@ -225,7 +225,7 @@ Page({
     })
     var that = this
     that.setData({
-      evaNowShwo:false,
+      evaNowShow:false
     })
     if (that.data.type == 1) {
       var params = '?doctorId=' + that.data.id
@@ -241,7 +241,7 @@ Page({
         duration: 1000
       });
       that.setData({
-        evaNowShwo:true,
+        evaNowShow:true
       })
     } else {
       if(that.data.content == ''){
@@ -279,7 +279,7 @@ Page({
             })
             that.setData({
               hidden: true,
-              evaNowShwo:true,
+              evaNowShow:true
             })
             
           } else {
@@ -290,7 +290,7 @@ Page({
               mask: true,
               complete: function complete(res) {
                 that.setData({
-                  evaNowShwo:true,
+                  evaNowShow:true
                 })
               }
             });
