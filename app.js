@@ -8,7 +8,7 @@ App({
     userInfo: null,
     userInfoDetail: [],
     entity: [],
-    url: 'https://ypt.njshangka.com',
+    url: 'https://njshangka.com',
     cookie: '',
     withoutLogin:'',
     hospitaiDetail:[],
