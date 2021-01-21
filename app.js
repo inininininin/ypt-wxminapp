@@ -1,6 +1,6 @@
 //app.js
 App({
-  version: '1.0.5.2009291720',
+  version: '1.1.0',
   versionIntro: '修复了部分BUG\n优化了部分体验',
   globalData: {
     loginHospitalId: '',
@@ -8,7 +8,7 @@ App({
     userInfo: null,
     userInfoDetail: [],
     entity: [],
-    url: 'https://ypt.njshangka.com',
+    url: 'https://njshangka.com',
     cookie: '',
     withoutLogin:'',
     hospitaiDetail:[],
