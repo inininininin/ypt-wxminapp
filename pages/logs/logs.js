@@ -127,7 +127,7 @@ Page({
         time: 60
       })
       wx.request({
-        url: app.globalData.url + '/sendsmsvcode',
+        url: app.globalData.url + '/ypt/sendsmsvcode',
         header: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
