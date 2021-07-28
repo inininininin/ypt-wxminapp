@@ -45,7 +45,7 @@ Page({
   toLogin(e) {
     var backUrl = '../mine/mine';
     wx.redirectTo({
-      url: '../logs/logs?fromType=1&backUrl=' + backUrl,
+      url: '../login/login?fromType=1&backUrl=' + backUrl,
     })
   },
   tel(e) {
@@ -145,6 +145,10 @@ Page({
                              phone: '',
                              avator: '../icon/moren.png',
                              withoutLogin: true,
+                           })
+                           var backUrl = '../mine/mine';
+                           wx.redirectTo({
+                             url: '../logs/logs?fromType=1&backUrl=' + backUrl,
                            })
                    } else {
                      wx.showToast({

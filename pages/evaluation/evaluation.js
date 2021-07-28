@@ -29,7 +29,7 @@ Page({
   toLogin(e) {
     var backUrl = '../evaluation/evaluation';
     wx.navigateTo({
-      url: '../logs/logs?fromType=1&backUrl=' + backUrl,
+      url: '../login/login?fromType=1&backUrl=' + backUrl,
     })
   },
   lookDetail(e) {

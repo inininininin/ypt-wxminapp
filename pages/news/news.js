@@ -25,7 +25,7 @@ Page({
   toLogin(e) {
     var backUrl = '../news/news';
     wx.redirectTo({
-      url: '../logs/logs?fromType=1&backUrl=' + backUrl,
+      url: '../login/login?fromType=1&backUrl=' + backUrl,
     })
   },
   /**

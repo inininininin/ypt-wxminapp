@@ -82,6 +82,14 @@ Page({
     // wx.showToast({
     //   title:  wx.getStorageSync('loginHospitalId'),
     // })
+    if(!wx.getStorageSync('loginHospitalId')){
+      wx.showToast({
+        title: '请扫码登录',
+        icon:'none',
+        duration:3000
+      })
+      return
+    }
     wx.request({
       url: app.globalData.url + '/ypt/user/hospital',
       header: {
@@ -271,6 +279,7 @@ Page({
     })
   },
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       version: app.version,//.split('-')[0],
       entityTel: app.globalData.entity.entityTel,
