@@ -20,7 +20,73 @@ Page({
     version: '',
     bgUrl: app.globalData.url + '/ypt/wxminapp-resource/bj.jpg',
     withoutLogin: true,
-    canvasShow:false
+    canvasShow:false,
+    ttFormEditShow:false,
+  },
+  evaluation(){
+    wx.navigateTo({
+      url: '../pacie/pacie',
+    })
+  },
+  evaluationOwn(){
+      var that = this
+      wx.request({
+        url: app.globalData.url + '/ypt/questionnaire/questionnaire-rows',
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'cookie': wx.getStorageSync('cookie')
+        },
+        method: 'post',
+        success: function (res) {
+          wx.hideToast()
+          if (res.data.code == 0) {
+            let questionnaireNo=res.data.data.rows[0].no||""
+            wx.request({
+              url: app.globalData.url + '/ypt/questionnaire-do/my-rows',
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                'cookie': wx.getStorageSync('cookie')
+              },
+              data:{
+                questionnaireNo:questionnaireNo,
+                rstart:1,
+                rcount:50
+              },
+              method: 'post',
+              success: function (res) {
+                wx.hideToast()
+                if (res.data.code == 0) {
+                  if(res.data.data.rows&&res.data.data.rows==0){
+  wx.navigateTo({
+    url: '../addPatient/addPatient?no='+questionnaireNo,//+"&patientId="+id,
+  })
+                  }else{
+ wx.navigateTo({
+                    url: '../assessmentScaleShare/assessmentScaleShare?no='+questionnaireNo+'&doNo='+res.data.data.rows[0].doNo,
+                  })
+                  }
+                 
+                 
+                  // wx.navigateTo({
+                  //   url: '../assessmentScaleShare/assessmentScaleShare?no='+res.data.data.rows[0].,
+                  // })
+                } else {
+                  wx.showModal({
+                    showCancel: false,
+                    title: res.data.codeMsg
+                  })
+                }
+              }
+            });
+          } else {
+            wx.showModal({
+              showCancel: false,
+              title: res.data.codeMsg
+            })
+          }
+        }
+      });
+    
   },
   version(e){
     wx.showModal({
@@ -148,7 +214,7 @@ Page({
                            })
                            var backUrl = '../mine/mine';
                            wx.redirectTo({
-                             url: '../logs/logs?fromType=1&backUrl=' + backUrl,
+                             url: '../login/login?fromType=1&backUrl=' + backUrl,
                            })
                    } else {
                      wx.showToast({
@@ -444,7 +510,11 @@ Page({
       success: function (res) {
         // wx.hideToast()
         if (res.data.code == 0) {
-          
+          if(res.data.data.maintainIs==1||res.data.data.type==1||res.data.data.hospitalMaintainIs==1){
+            that.setData({
+              ttFormEditShow:true
+            })
+          }
           wx.setStorageSync('withoutLogin', false)
           app.globalData.userInfoDetail = res.data.data
           if (app.globalData.userInfoDetail.cover == '' || app.globalData.userInfoDetail.cover == null || app.globalData.userInfoDetail.cover == undefined) {
@@ -499,6 +569,11 @@ Page({
    */
   onShow: function () {
     // var that = this
+    if(app.globalData.userInfoDetail.maintainIs==1||app.globalData.userInfoDetail.type==1||res.data.data.hospitalMaintainIs==1){
+      this.setData({
+        ttFormEditShow:true
+      })
+    }
     this.setData({
       canvasShow:false
     })

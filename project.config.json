@@ -35,7 +35,7 @@
     "packNpmRelationList": []
   },
   "compileType": "miniprogram",
-  "libVersion": "2.10.0",
+  "libVersion": "2.18.1",
   "appid": "wxe403283f3b493453",
   "projectname": "ypt-wxminapp",
   "debugOptions": {

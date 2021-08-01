@@ -1,0 +1,112 @@
+/* pages/addPatient/addPatient.wxss */
+.content{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 60rpx;
+  box-sizing: border-box;
+}
+.title{
+  font-size: 48rpx;
+font-family: PingFangSC, PingFangSC-Medium;
+font-weight: 500;
+text-align: left;
+color: #333333;
+}
+.point{
+  margin-top: 12rpx;
+  margin-bottom: 95rpx;
+  font-size: 28rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #666666;
+}
+.lineItem{
+  height: 92rpx;
+  width: 100%;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #333333;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+}
+.lineTitle{
+  width: calc(100% - 522rpx);
+}
+.lineItem input{
+  width: 522rpx;
+}
+.addressItem{
+  height: 185rpx;
+  width: 100%;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #333333;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: flex-start;
+line-height: 92rpx;
+}
+.selectBox{
+  width: 522rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pickerLess{
+  width: 100%;
+}
+.orderSelcet{
+  width: 100%;
+  height: 92rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #333333;
+}
+.inputItem{
+  height: 92rpx;
+}
+.createForm{
+  width: 610rpx;
+height: 90rpx;
+line-height: 90rpx;
+opacity: 1;
+background: #2b77ef;
+border-radius: 45rpx;
+position: fixed;
+bottom: 120rpx;
+left: 70rpx;
+font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Medium;
+font-weight: 500;
+text-align: center;
+color: #ffffff;
+}
+.radioChange{
+  width: 522rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+radio .wx-radio-input {
+  border-radius: 50%;
+  /* 圆角 */
+  transform: scale(0.7);
+}

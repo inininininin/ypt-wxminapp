@@ -1,0 +1,25 @@
+<!--pages/pacie/pacie.wxml-->
+<view class="noSj" wx:if="{{formIs}}">
+  <text class="noform">暂无任何表单</text>
+  <text class="goNew" bindtap="goNew">去新建</text>
+</view>
+<view wx:else class="assessment">
+  <image wx:for="{{list}}" src="{{formImg}}" data-no='{{item.no}}' bindtap="painForm"></image>
+
+  <view class="addNew" bindtap="addNew">添加病患</view>
+  <view class="patientList">
+    <view class="patientItem" wx:for="{{patientList}}"  data-id="{{item.doNo}}" bindtap="lookForm">
+      <view class="itemDetail">
+        <view>
+          <image src="../icon/personal.png"></image>
+          <text>{{item.realname}}</text>
+        </view>
+        <text>{{item.phone}}</text>
+      </view>
+      <view class="itemDate">
+        <text>{{item.createTime}}</text>
+        <image catchtap='deleteThis'  data-realname='{{item.realname}}' data-id="{{item.doNo}}" src="../icon/deleteT.png"></image>
+      </view>
+    </view>
+  </view>
+</view>

@@ -82,14 +82,14 @@ Page({
     // wx.showToast({
     //   title:  wx.getStorageSync('loginHospitalId'),
     // })
-    if(!wx.getStorageSync('loginHospitalId')){
-      wx.showToast({
-        title: '请扫码登录',
-        icon:'none',
-        duration:3000
-      })
-      return
-    }
+    // if(!wx.getStorageSync('loginHospitalId')){
+    //   wx.showToast({
+    //     title: '请扫码登录',
+    //     icon:'none',
+    //     duration:3000
+    //   })
+    //   return
+    // }
     wx.request({
       url: app.globalData.url + '/ypt/user/hospital',
       header: {
@@ -279,22 +279,23 @@ Page({
     })
   },
   onLoad: function (options) {
+    let that=this
     console.log(options)
-    this.setData({
+    that.setData({
       version: app.version,//.split('-')[0],
       entityTel: app.globalData.entity.entityTel,
     })
     if (options && options.hospitalid) {
-      this.setData({
+      that.setData({
         ids:options.hospitalid
       })
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
-      this.hosDetail();
+      that.hosDetail();
     }else{
-      this.hosDetail();
+      that.hosDetail();
     }
-    this.sys();
+    that.sys();
    
   },
   onShow: function (options) {
@@ -305,11 +306,6 @@ Page({
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
-    // wx.showToast({
-    //   title: wx.getStorageSync('historyUrl'),
-    //   icon:'none',
-    //   duration:3000
-    // })
     console.log( wx.getStorageSync('historyUrl'))
     if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 1) {
       wx.switchTab({

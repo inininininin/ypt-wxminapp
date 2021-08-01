@@ -1,5 +1,19 @@
 {
   "pages": [
+    "pages/logBf/logBf",
+    "pages/pacie/pacie",
+   
+
+
+   
+    "pages/assessmentScaleShare/assessmentScaleShare",
+    "pages/assessmentScale/assessmentScale",
+    "pages/addPatient/addPatient",
+    "pages/addQueItem/addQueItem",
+    "pages/addQue/addQue",
+    "pages/painForm/painForm",
+    
+    
     "pages/index/index",
     "pages/search/saerch",
     "pages/searchPage/searchPage",
@@ -23,6 +37,7 @@
     "pages/evaNowShare/evaNowShare",
     "pages/canvasHos/canvasHos",
     "pages/canvasEve/canvasEve"
+    
   ],
   "window": {
     "backgroundTextStyle": "dark",

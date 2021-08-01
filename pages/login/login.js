@@ -412,14 +412,15 @@ Page({
       success(res) {
         var code = res.code
         wx.request({
-          url: app.globalData.url + '/ypt/user/login-by-wxminapp',
+          url: app.globalData.url + '/ypt/user/bind-phone',
           header: {
             "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
           },
           method: 'post',
           data: {
             wsJsCode: code,
-            loginHospitalId: wx.getStorageSync('loginHospitalId'),
+            // loginHospitalId: wx.getStorageSync('loginHospitalId'),
             wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
             wxMinappIv: e.detail.iv || '',
           },
@@ -427,7 +428,7 @@ Page({
             wx.hideToast()
             if (res.data.code == 0) {
 
-              wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              // wx.setStorageSync('cookie', res.header['Set-Cookie'])
               wx.request({
                 url: app.globalData.url + '/ypt/user/login-refresh',
                 header: {
@@ -596,6 +597,9 @@ Page({
                         success: function (res) {
                           wx.hideToast()
                           if (res.data.code == 0) {
+                            if(!res.data.data.phone){
+                              return
+                            }
                             app.globalData.userInfoDetail = res.data.data
                             wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
                             wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)

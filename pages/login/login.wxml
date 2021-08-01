@@ -41,10 +41,10 @@
 		<image mode="aspectFill" lazy-load="true" src="../icon/weixin.png"></image>
 		微信登录
 	</view>
-	<view class="loginChange" style="margin-top:30rpx;width:596rpx">
+	<!-- <view class="loginChange" style="margin-top:30rpx;width:596rpx">
 		<text class="loginWx" bindtap="loginByPhone">手机号登录</text>
 		<text class="changeHos" bindtap="changeHos">更换登录医院</text>
-	</view>
+	</view> -->
 
 </view>
 <!-- <view class="userZc"><navigator url="../webview/webview?href={{href}}/oss/alive/user-protocol.html">用户协议与隐私政策</navigator></view> -->

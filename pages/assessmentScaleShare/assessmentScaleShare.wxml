@@ -1,0 +1,66 @@
+<view class="personalDetail">
+  <view class="perItem">
+    <text>姓名：</text>
+    <text>{{patientDetail.realname}}</text>
+  </view>
+  <view class="perItem">
+    <text>性别：</text>
+    <text>{{patientDetail.sex==1?'男':'女'}}</text>
+  </view>
+  <view class="perItem">
+    <text>年龄：</text>
+    <text>{{patientDetail.age}}</text>
+  </view>
+  <view class="perItem">
+    <text>电话：</text>
+    <text>{{patientDetail.phone}}</text>
+  </view>
+  <view class="address"> <text>住址：</text>
+    <text>{{patientDetail.areaL1Name}}{{patientDetail.areaL2Name}}{{patientDetail.areaL3Name}}{{patientDetail.address}}</text>
+  </view>
+  
+ 
+</view>
+<view class="treatmentFix fixed">
+  <view class="treatment">
+    <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}' wx:for="{{patientDetail.doChunks}}">
+      {{item.name}}</view>
+  </view>
+ </view>
+<!-- <view class="fixed">你好</view> -->
+<view class="formBox ">
+  <view class="form" wx:for="{{patientDetail.doChunks}}" wx:if="{{chunkNo==item.doChunkNo}}">
+    <text class="classifyTitle">{{item.name}}</text>
+    <view class="formItem" wx:for="{{item.doTopics}}" wx:for-item="childItem">
+      <view class="title"><text>{{index+1}}</text> <text>{{childItem.name}}</text></view>
+      <view class="image" wx:if="{{childItem.img}}"><image  bindtap="showImg" data-src='{{imgUrl}}{{childItem.img}}' mode="aspectFit" src="{{imgUrl}}{{childItem.img}}"></image></view>
+      <view class="answer" wx:if="{{childItem.type==3}}">{{childItem.elseanswer||''}}</view>
+      <view class="answer" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem" wx:if="{{answerItem.selected==1}}">{{answerItem.name}}</view>
+      <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
+        <text>其他：</text>
+        <text>{{childItem.elseanswer||''}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- <view class="form">
+    <text class="classifyTitle">诊疗后</text>
+    <view class="formItem">
+      <view class="title"><text>1.</text> <text>您的疼痛是怎么样的？</text></view>
+      <view class="image">
+        <image mode="aspectFit" src="../icon/pinggu.png"></image>
+      </view>
+      <view class="answer">酸胀痛</view>
+    </view>
+  </view> -->
+</view>
+
+<view class="funBtn">
+  <view class="edit"  wx:if="{{!funBtn}}" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷</view>
+  <view class="edit" wx:if="{{funBtn}}" bindtap="edit">修改</view>
+  <view class="share">
+  	<button open-type='share'>分享微信</button>
+  </view>
+</view>
+<!-- <view class="funBtn"  wx:if="{{!funBtn}}">
+  <view class="edit" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷</view>
+</view> -->
