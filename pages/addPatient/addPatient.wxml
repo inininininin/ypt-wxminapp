@@ -1,15 +1,17 @@
 <!--pages/addPatient/addPatient.wxml-->
 <view class="content">
-  <text class="title">添加病患</text>
-  <text class="point">填写病患基本信息，创建他的疼痛评估单</text>
+  <text wx:if="{{options.type!='modify'}}" class="title">创建问卷</text>
+  <text wx:if="{{options.type!='modify'}}"  class="point">填写问卷基本信息，创建他的疼痛评估单</text>
+  <text wx:if="{{options.type=='modify'}}" class="title">修改问卷</text>
+  <text wx:if="{{options.type=='modify'}}"  class="point">填写问卷基本信息，修改疼痛评估单</text>
   <view class="lineItem">
     <text class="lineTitle">姓名：</text><input value="{{patientDetail.realname}}" type="text" bindinput="realname" placeholder-style="color: #cccccc;" placeholder="请输入姓名" />
   </view>
   <view class="lineItem">
     <text class="lineTitle">性别：</text>
     <radio-group class="radioChange" bindchange="radioChange">
-          <view class="answerItem" wx:for="{{items}}" wx:key="{{item.value}}">
-            <radio value="{{item.value}}" checked="{{item.checked}}" /><text>{{item.name}}</text></view>
+          <label class="answerItem" wx:for="{{items}}" wx:key="{{item.value}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" /><text>{{item.name}}</text></label>
         </radio-group>
     <!-- <input type="text" placeholder-style="color: #cccccc;" placeholder="请输入性别" /> -->
   </view>
@@ -41,5 +43,5 @@
   </view>
 </view>
 <!-- 创建疼痛评估表 -->
-<view class="createForm" bindtap="createPatient" wx:if="{{options.type!='modify'}}">创建病患</view>
-<view class="createForm" bindtap="modifyPatient" wx:if="{{options.type=='modify'}}">修改病患</view>
+<view class="createForm" bindtap="createPatient" wx:if="{{options.type!='modify'}}">创建问卷</view>
+<view class="createForm" bindtap="modifyPatient" wx:if="{{options.type=='modify'}}">确认</view>

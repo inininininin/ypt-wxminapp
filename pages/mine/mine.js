@@ -58,7 +58,7 @@ Page({
                 if (res.data.code == 0) {
                   if(res.data.data.rows&&res.data.data.rows==0){
   wx.navigateTo({
-    url: '../addPatient/addPatient?no='+questionnaireNo,//+"&patientId="+id,
+    url: '../addPatientMine/addPatientMine?no='+questionnaireNo+"&type=myself",//+"&patientId="+id,
   })
                   }else{
  wx.navigateTo({
@@ -569,7 +569,7 @@ Page({
    */
   onShow: function () {
     // var that = this
-    if(app.globalData.userInfoDetail.maintainIs==1||app.globalData.userInfoDetail.type==1||res.data.data.hospitalMaintainIs==1){
+    if(app.globalData.userInfoDetail.maintainIs==1||app.globalData.userInfoDetail.type==1||app.globalData.userInfoDetail.hospitalMaintainIs==1){
       this.setData({
         ttFormEditShow:true
       })

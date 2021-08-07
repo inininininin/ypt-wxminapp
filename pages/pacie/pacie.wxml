@@ -3,11 +3,11 @@
   <text class="noform">暂无任何表单</text>
   <text class="goNew" bindtap="goNew">去新建</text>
 </view>
-<view wx:else class="assessment">
+<view  wx:if="{{!formIs}}" class="assessment">
   <image wx:for="{{list}}" src="{{formImg}}" data-no='{{item.no}}' bindtap="painForm"></image>
 
-  <view class="addNew" bindtap="addNew">添加病患</view>
-  <view class="patientList">
+  <view class="addNew" bindtap="addNew"  wx:if="{{showIs}}">添加受访者</view>
+  <view class="patientList"  wx:if="{{showIs}}">
     <view class="patientItem" wx:for="{{patientList}}"  data-id="{{item.doNo}}" bindtap="lookForm">
       <view class="itemDetail">
         <view>

@@ -1,6 +1,26 @@
 <!--pages/painForm/painForm.wxml-->
-<view class="addLabel labelItem" bindtap="addChunk"><text>添加标签</text><image src="../icon/right.png"></image></view>
-<view class=" labelItem" wx:for="{{list}}" bindtap="addChunkDetail" data-name='{{item.name}}' data-no='{{item.no}}'><text>{{item.name}}</text><image src="../icon/right.png"></image></view>
+<view class="addLabel labelItem" bindtap="addChunk"><text>添加标签</text>
+  <image src="../icon/right.png"></image>
+</view>
+<view class=" labelItem" wx:for="{{list}}" bindtap="addChunkDetail" bindlongpress="modifyChunk" data-name='{{item.name}}' data-no='{{item.no}}'>
+  <text>{{item.name}}</text>
+  <image src="../icon/right.png"></image>
+
+  <view class="showBg" wx:if="{{item.active}}" catchtap='show'>
+          <view class="uOrederItemHoverItem" data-name="{{item.name}}" data-no='{{item.no}}' catchtap="uModify">
+						<image src="../icon/xiugai1.png" mode=""></image>
+						<text>修改</text>
+					</view>
+					<view class="uOrederItemHoverItem" data-no='{{item.no}}'  catchtap="uClose">
+						<image src="../icon/guanbi1.png" mode=""></image>
+						<text>关闭</text>
+					</view>
+					<view class="uOrederItemHoverItem" data-name="{{item.name}}" data-no='{{item.no}}'  catchtap="uDelete">
+						<image src="../icon/delete1.png" mode=""></image>
+						<text>删除</text>
+					</view>
+  </view>
+</view>
 <!--  bindtap="addChunk" -->
 <!-- <view class=" labelItem"><text>诊疗后</text><image src="../icon/right.png"></image></view> -->
 
@@ -8,7 +28,8 @@
   <view class="popWinBox">
     <view class="title">
       <view class="labelTitle">标签名称</view>
-      <input type="text" class="labelName" bindinput="labelName" value="{{labelName}}" placeholder="请输入" placeholder-style="color:#999999"/>
+      <input type="text" class="labelName" bindinput="labelName" value="{{labelName}}" placeholder="请输入"
+        placeholder-style="color:#999999" />
     </view>
     <view class="boxBtn">
       <view class="refuse" bindtap="addChunk">取消</view>

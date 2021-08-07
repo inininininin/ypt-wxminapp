@@ -105,6 +105,9 @@ color: #ffffff;
   justify-content: flex-start;
   align-items: center;
 }
+.answerItem{
+  margin-right: 20rpx;
+}
 radio .wx-radio-input {
   border-radius: 50%;
   /* 圆角 */

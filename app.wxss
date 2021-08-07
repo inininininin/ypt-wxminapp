@@ -84,12 +84,14 @@ button::after{
 }
 /* 版本号 */
 .version {
-  position: absolute;
+  display: block;
+  /* position: absolute; */
   width: 100%;
-  bottom: 20rpx;
+  /* bottom: 20rpx; */
   font-size: 26rpx;
   color: #999;
   text-align: center;
   line-height: 30rpx;
-  left: 0;
+  /* left: 0; */
+  margin: 40rpx auto;
 }

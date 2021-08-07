@@ -1,44 +1,78 @@
 <view class="personalDetail">
-  <view class="perItem">
+  <view class="perItem" wx:if="{{patientDetail.realname}}">
     <text>姓名：</text>
     <text>{{patientDetail.realname}}</text>
   </view>
-  <view class="perItem">
+  <view class="perItem" wx:if="{{patientDetail.sex}}">
     <text>性别：</text>
-    <text>{{patientDetail.sex==1?'男':'女'}}</text>
+    <text wx:if="{{patientDetail.sex}}">{{patientDetail.sex==1?'男':'女'}}</text>
+    <text wx:if="{{!patientDetail.sex}}"></text>
   </view>
-  <view class="perItem">
+  <view class="perItem" wx:if="{{patientDetail.age}}">
     <text>年龄：</text>
     <text>{{patientDetail.age}}</text>
   </view>
-  <view class="perItem">
+  <view class="perItem" wx:if="{{patientDetail.phone}}">
     <text>电话：</text>
     <text>{{patientDetail.phone}}</text>
   </view>
-  <view class="address"> <text>住址：</text>
+  <view class="address" wx:if="{{patientDetail.areaL1Name}}"> <text>住址：</text>
     <text>{{patientDetail.areaL1Name}}{{patientDetail.areaL2Name}}{{patientDetail.areaL3Name}}{{patientDetail.address}}</text>
   </view>
-  
- 
+
+
 </view>
-<view class="treatmentFix fixed">
+<view class="treatmentFix fixed" wx:if="{{patientDetail.doChunks.length!=1}}">
   <view class="treatment">
-    <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}' wx:for="{{patientDetail.doChunks}}">
+    <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}'
+      wx:for="{{patientDetail.doChunks}}">
       {{item.name}}</view>
   </view>
- </view>
+</view>
 <!-- <view class="fixed">你好</view> -->
 <view class="formBox ">
   <view class="form" wx:for="{{patientDetail.doChunks}}" wx:if="{{chunkNo==item.doChunkNo}}">
-    <text class="classifyTitle">{{item.name}}</text>
+    <!-- <text class="classifyTitle">{{item.name}}</text> -->
     <view class="formItem" wx:for="{{item.doTopics}}" wx:for-item="childItem">
       <view class="title"><text>{{index+1}}</text> <text>{{childItem.name}}</text></view>
-      <view class="image" wx:if="{{childItem.img}}"><image  bindtap="showImg" data-src='{{imgUrl}}{{childItem.img}}' mode="aspectFit" src="{{imgUrl}}{{childItem.img}}"></image></view>
-      <view class="answer" wx:if="{{childItem.type==3}}">{{childItem.elseanswer||''}}</view>
-      <view class="answer" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem" wx:if="{{answerItem.selected==1}}">{{answerItem.name}}</view>
-      <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
+      <view class="image" wx:if="{{childItem.img}}">
+        <image bindtap="showImg" data-src='{{imgUrl}}{{childItem.img}}' mode="aspectFit"
+          src="{{imgUrl}}{{childItem.img}}"></image>
+      </view>
+      <view class="answer" wx:if="{{childItem.type==3}}" style="color:#2b77ef;font-weight:bold">
+        {{childItem.elseanswer||''}}
+      </view>
+
+      <view class="answer" wx:if="{{childItem.type==1}}"  wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
+
+        <view wx:if="{{answerItem.selected==1}}" style="color:#2b77ef;font-weight:bold">
+          <image class="radioItem" src="../icon/radio1.png"></image>
+          <text>{{answerItem.name}}</text>
+        </view>
+        <view wx:if="{{answerItem.selected!=1}}" style="color:#999999;">
+          <image class="radioItem" src="../icon/radio.png"></image>
+          <text>{{answerItem.name}}</text>
+        </view>
+      </view>
+      <view class="elseOther" wx:if="{{childItem.elseanswerIs==1}}">
         <text>其他：</text>
-        <text>{{childItem.elseanswer||''}}</text>
+        <text style="color:#2b77ef;font-weight:bold">{{childItem.elseanswer||''}}</text>
+      </view>
+
+      <view class="answer" wx:if="{{childItem.type==2}}" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
+
+        <view wx:if="{{answerItem.selected==1}}" style="color:#2b77ef;font-weight:bold">
+          <image class="radioItem" src="../icon/checkbox1.png"></image>
+          <text>{{answerItem.name}}</text>
+        </view>
+        <view wx:if="{{answerItem.selected!=1}}" style="color:#999999;">
+          <image class="radioItem" src="../icon/checkbox.png"></image>
+          <text>{{answerItem.name}}</text>
+        </view>
+      </view>
+      <view class="elseOther" wx:if="{{childItem.elseanswerIs==1}}">
+        <text>其他：</text>
+        <text style="color:#2b77ef;font-weight:bold">{{childItem.elseanswer||''}}</text>
       </view>
     </view>
   </view>
@@ -55,12 +89,29 @@
 </view>
 
 <view class="funBtn">
-  <view class="edit"  wx:if="{{!funBtn}}" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷</view>
-  <view class="edit" wx:if="{{funBtn}}" bindtap="edit">修改</view>
-  <view class="share">
-  	<button open-type='share'>分享微信</button>
+  <view class="edit" wx:if="{{!funBtn}}" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷
   </view>
+  <view class="edit" wx:if="{{funBtn}}" bindtap="edit">去填写</view>
+  <!-- <view class="share">
+  	<button open-type='share'>分享微信</button>
+  </view> -->
 </view>
 <!-- <view class="funBtn"  wx:if="{{!funBtn}}">
   <view class="edit" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷</view>
 </view> -->
+
+<view class="popWindow" wx:if='{{showIs}}'>
+  <view>
+    <!-- <text>微信授权登录</text> -->
+    <view>
+      <import src="../../wxParse/wxParse.wxml" />
+      <view class="wxParse">
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+      </view>
+    </view>
+    <view>
+      <button class="refuse" bindtap="refuse">不同意</button>
+      <button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+    </view>
+  </view>
+</view>

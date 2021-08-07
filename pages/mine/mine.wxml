@@ -26,11 +26,11 @@
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin&&ttFormEditShow}}' bindtap="evaluation">
-		<text>疼痛评估量表管理</text>
+		<text>疼痛评估表管理</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="evaluationOwn">
-		<text>疼痛评估量表</text>
+		<text>疼痛评估表</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="loginout">

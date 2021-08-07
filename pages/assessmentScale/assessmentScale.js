@@ -8,17 +8,17 @@ Page({
   data: {
     imgUrl: app.globalData.url,
     items: [{
-        value: 'USA',
-        name: '酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛'
+        value: '',
+        name: ''
       },
       {
-        value: 'CHN',
-        name: '绞痛',
-        checked: 'true'
+        value: '',
+        name: '',
+        checked: ''
       },
       {
-        value: 'BRA',
-        name: '针刺痛'
+        value: '',
+        name: ''
       }
     ],
     patientDetail: {},
@@ -133,6 +133,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     this.setData({
       options: options
     })
@@ -165,7 +166,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+console.log(this.data.patientDetail)
   },
 
   /**
@@ -186,7 +187,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -200,15 +201,34 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+
+    var path = 'pages/assessmentScaleShare/assessmentScaleShare?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId
+    // var path = 'pages/out/articleDetail/articleDetail?id=' + this.data.id+"&ids=1"
+    let realname = this.data.patientDetail.realname
+    if (realname.length > 1) {
+      realname = realname.slice(0, realname.length - 1) + '*'
+    }
+    console.log(realname)
+    return {
+      title: '姓名： ' + realname +`(${app.globalData.userInfoDetail.hospitalName})`, //分享内容
+      path: path, //分享地址
+      imageUrl: app.globalData.url + '/ypt/wxminapp-resource/questionnaire-logo1.png', //分享图片
+      success: function (res) {},
+      fail: function (res) {}
+    }
 
   },
-  showImg(e){
-    console.log(e)
-    wx.previewImage({
-      current: e.currentTarget.dataset.src, // 当前显示图片的http链接
-      urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
-    })
-  },
+  // showImg(e){
+  //   console.log(e)
+  //   wx.previewImage({
+  //     current: e.currentTarget.dataset.src, // 当前显示图片的http链接
+  //     urls: [e.currentTarget.dataset.src] // 需要预览的图片http链接列表
+  //   })
+  // },
   patientRow() {
     var that = this
     wx.request({
@@ -241,9 +261,9 @@ Page({
             chunkNo: chunkNo
           })
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -276,9 +296,9 @@ Page({
             topicRows: that.data.topicRows
           })
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -290,16 +310,16 @@ Page({
     var that = this
    
     wx.request({
-      url: app.globalData.url +  '/ypt/questionnaire/do-topic',
+      url: app.globalData.url +  '/ypt/questionnaire-do/do-topic',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
       },
       data: {
         doNo: that.data.options.doNo,
-        doTopicNo: doTopicNo,
-        elseanswer: elseanswer,
-        doAnswerNo: doAnswerNo,
+        doTopicNo: doTopicNo||"",
+        elseanswer: elseanswer||"",
+        doAnswerNo: doAnswerNo||"",
       },
       method: 'post',
       success: function (res) {
@@ -309,13 +329,13 @@ Page({
             title: '提交成功',
             icon: "none",
             success: function (res) {
-              console.log(2112121)
+             
             }
           })
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -323,49 +343,62 @@ Page({
   },
   // 提交答案
   supply() {
-    console.log(this.data.patientDetail)
-    let doChunks = this.data.patientDetail.doChunks
-    let that = this
-    let doTopics = []
-    for (var i in doChunks) {
-      if (doChunks[i].doChunkNo == that.data.chunkNo) {
-        doTopics = doChunks[i].doTopics
-        for (var i in doTopics) {
-          if (doTopics[i].type == 3) {
-            console.log(3)
-            that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
-          } else if (doTopics[i].type == 1) {
-            console.log(1)
-            for (var m in doTopics[i].doAnswers) {
-              
-              if (doTopics[i].doAnswers[m].selected == 1) {
-                that.doTopic(doTopics[i].doTopicNo,'', doTopics[i].doAnswers[m].doAnswerNo)
-              }else{
-                that.undoTopic(doTopics[i].doTopicNo, doTopics[i].doAnswers[m].doAnswerNo)
-              }
-              
-            }
-            if (doTopics[i].elseanswer) {
+    setTimeout(()=>{
+      console.log(this.data.patientDetail)
+      let doChunks = this.data.patientDetail.doChunks
+      let that = this
+      let doTopics = []
+      for (var i in doChunks) {
+        if (doChunks[i].doChunkNo == that.data.chunkNo) {
+          doTopics = doChunks[i].doTopics
+          for (var i in doTopics) {
+            if (doTopics[i].type == 3) {
+              console.log(3)
               that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
-            }
-    
-          } else if (doTopics[i].type == 2) {
-            console.log(2)
-            for (var m in doTopics[i].doAnswers) {
-              if (doTopics[i].doAnswers[m].selected == 1) {
-                that.doTopic(doTopics[i].doTopicNo, '', doTopics[i].doAnswers[m].doAnswerNo)
-              }else{
-                that.undoTopic(doTopics[i].doTopicNo, doTopics[i].doAnswers[m].doAnswerNo)
+            } else if (doTopics[i].type == 1) {
+              console.log(1)
+              for (var m in doTopics[i].doAnswers) {
+                
+                if (doTopics[i].doAnswers[m].selected == 1) {
+                  that.doTopic(doTopics[i].doTopicNo,'', doTopics[i].doAnswers[m].doAnswerNo)
+                }else{
+                  that.undoTopic(doTopics[i].doTopicNo, doTopics[i].doAnswers[m].doAnswerNo)
+                }
+                
+              }
+              if (doTopics[i].elseanswer) {
+                that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
+              }
+      
+            } else if (doTopics[i].type == 2) {
+              console.log(2)
+              for (var m in doTopics[i].doAnswers) {
+                if (doTopics[i].doAnswers[m].selected == 1) {
+                  that.doTopic(doTopics[i].doTopicNo, '', doTopics[i].doAnswers[m].doAnswerNo)
+                }else{
+                  that.undoTopic(doTopics[i].doTopicNo, doTopics[i].doAnswers[m].doAnswerNo)
+                }
+              }
+              if (doTopics[i].elseanswer) {
+                that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
               }
             }
-            if (doTopics[i].elseanswer) {
-              that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
-            }
+          }
+          // wx.redirectTo({
+          //   url: '../assessmentScaleShare/assessmentScaleShare?no='+that.data.options.no+'&doNo='+that.data.options.doNo,
+          // })
+          if(that.data.options.share==2){
+            wx.navigateBack()
+          }else{
+            wx.showToast({
+              title: '修改已完成',
+              icon:'none'
+            })
           }
         }
       }
-    }
-    console.log(doTopics)
+    },500)
+  
    
 
   },
@@ -373,7 +406,7 @@ Page({
   undoTopic(doTopicNo, doAnswerNo) {
     var that = this
     wx.request({
-      url: app.globalData.url + '/undo-selected-answer',
+      url: app.globalData.url + '/ypt/questionnaire-do/undo-selected-answer',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
@@ -387,17 +420,17 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          wx.showToast({
-            title: '提交成功',
-            icon: "none",
-            success: function (res) {
-              console.log(2112121)
-            }
-          })
+          // wx.showToast({
+          //   title: '提交成功',
+          //   icon: "none",
+          //   success: function (res) {
+          //     console.log(2112121)
+          //   }
+          // })
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }

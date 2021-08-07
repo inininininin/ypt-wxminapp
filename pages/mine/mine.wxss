@@ -201,7 +201,7 @@ page {
   border-radius: 50%;
 }
 
-.version {
+/* .version {
   position: absolute;
   width: 100%;
   bottom: 20rpx;
@@ -210,7 +210,7 @@ page {
   text-align: center;
   line-height: 30rpx;
   left: 0;
-}
+} */
 
 .toLogin {
   display: block;

@@ -1,0 +1,15 @@
+<!--packageA/pages/rows/rows.wxml-->
+<view class="list">
+  <view wx:for="{{rows}}" class="userRowsItem" bindtap="userRowsItem" data-no='{{item.doNo}}'>
+    <view class="top"> 
+      <text style="color:#999999"> {{item.createTime}}</text>
+      <view>
+        <text class="error" wx:if="{{exception==1}}">异常</text>
+        <text class="success" wx:if="{{exception!=1}}">正常</text>
+      </view>
+    </view>
+    <!-- <view class="bottom">
+      {{item.createTime}}
+    </view> -->
+  </view>
+</view>

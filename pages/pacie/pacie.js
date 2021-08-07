@@ -10,7 +10,8 @@ Page({
     formIs:true,
     list:[],
     patientList:[],
-    formImg:app.globalData.url+'/ypt/wxminapp-resource/questionnaire-logo.png'
+    formImg:app.globalData.url+'/ypt/wxminapp-resource/questionnaire-logo.png',
+    showIs:false
   },
   deleteThis(e){
     let that=this
@@ -59,9 +60,9 @@ wx.request({
                   patientList: that.data.patientList
                 })
               } else {
-                wx.showModal({
-                  showCancel: false,
-                  title: res.data.codeMsg
+                wx.showToast({
+                  title: res.data.codeMsg,
+                  icon:'none'
                 })
               }
             }
@@ -90,7 +91,7 @@ wx.request({
   },
   lookForm(e){
     wx.navigateTo({
-      url: '../assessmentScaleShare/assessmentScaleShare?no='+this.data.list[0].no+'&doNo='+e.currentTarget.dataset.id,
+      url: '../assessmentScaleShare/assessmentScaleShare?no='+this.data.list[0].no+'&doNo='+e.currentTarget.dataset.id+"&share=2",
     })
   },
   // 新增病人
@@ -133,15 +134,18 @@ wx.request({
             list: res.data.data.rows
           })
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
     });
   },
   patientRows(e) {
+    if(app.globalData.userInfoDetail.type!=1){
+      return
+    }
     var that = this
     wx.request({
       url: app.globalData.url + '/ypt/questionnaire-do/rows',
@@ -174,9 +178,9 @@ wx.request({
           })
           console.log(that.data.patientList)
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -186,6 +190,11 @@ wx.request({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(app.globalData.userInfoDetail.type==1){
+      this.setData({
+        showIs:true
+      })
+    }
     console.log(options)
     this.questionnaireRows()
     this.patientRows()
@@ -223,7 +232,7 @@ wx.request({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -237,6 +246,19 @@ wx.request({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+    var path = 'pages/addPatientMine/addPatientMine?no=' + this.data.list[0].no + "&loginHospitalId="+wx.getStorageSync('loginHospitalId')+"&type=myself"+'&fromUserId='+app.globalData.userInfoDetail.userId
+    return {
+      title: ' ', //分享内容
+      path: path, //分享地址
+      imageUrl: app.globalData.url+'/ypt/wxminapp-resource/questionnaire-logo1.png', //分享图片
+      success: function (res) {
+      },
+      fail: function (res) {
+      }
+    }
   }
 })

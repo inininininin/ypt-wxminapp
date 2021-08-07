@@ -47,7 +47,7 @@ font-size: 30rpx;
 font-family: PingFangSC, PingFangSC-Regular;
 font-weight: 400;
 text-align: left;
-color: #999999;
+color: #333333;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
@@ -91,8 +91,8 @@ padding: 30rpx 0;
 box-sizing: border-box;
 /* transition: transform 1s; */
 opacity: 0;
-transition: .8s; 
-z-index: 0;
+transition: .1s; 
+z-index: -1;
 }
 .selectQueType>.active{
 opacity: 1;
@@ -112,6 +112,9 @@ z-index: 20;
   transform: rotate(90deg);
 }
 .selectTaps>.active{
+  transform: rotate(270deg);
+}
+.activeIcon{
   transform: rotate(270deg);
 }
 .inputItem{
@@ -219,7 +222,7 @@ opacity: 1;
 background: #2b77ef;
 border-radius: 45rpx;
 position: fixed;
-bottom: 120rpx;
+bottom: 60rpx;
 left: 70rpx;
 font-size: 32rpx;
 font-family: PingFangSC, PingFangSC-Medium;
@@ -229,7 +232,24 @@ color: #ffffff;
 line-height: 90rpx;
 text-align: center;
 }
-
+.deleteTopic{
+  width: 610rpx;
+height: 90rpx;
+opacity: 1;
+border: 1rpx solid #ed2828;
+font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Medium;
+font-weight: 500;
+text-align: left;
+color: #ffffff;
+line-height: 90rpx;
+text-align: center;
+color: #ed2828;
+border-radius: 45rpx;
+position: fixed;
+bottom: 60rpx;
+left: 70rpx;
+}
 
 .ifImg{
   width: 100%;
@@ -246,4 +266,10 @@ text-align: center;
   height: 200rpx;
   margin-right: 20rpx;
   margin-bottom: 20rpx;
+}
+
+.selectQueType picker{
+width: 626rpx;
+height: 100%;
+line-height: 90rpx;
 }

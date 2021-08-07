@@ -6,7 +6,8 @@
   </view>
   <view class="perItem">
     <text>性别：</text>
-    <text>{{patientDetail.sex==1?'男':'女'}}</text>
+    <text wx:if="{{patientDetail.sex}}">{{patientDetail.sex==1?'男':'女'}}</text>
+    <text wx:if="{{!patientDetail.sex}}"></text>
   </view>
   <view class="perItem">
     <text>年龄：</text>
@@ -26,7 +27,7 @@
      {{item.name}}</view>
   </view> -->
 </view>
-<view class="treatmentFix fixed">
+<view class="treatmentFix fixed" wx:if="{{patientDetail.doChunks.length!=1}}">
   <view class="treatment">
     <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}' wx:for="{{patientDetail.doChunks}}">
       {{item.name}}</view>
@@ -57,8 +58,10 @@
       </view>
       <view class="answerList">
         <radio-group bindchange="radioChange"  data-tno='{{childItem.doTopicNo}}'>
-          <view class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
-            <radio value="{{answerItem.doAnswerNo}}" checked="{{answerItem.selected==1?true:false}}" /><text>{{answerItem.name}}</text></view>
+          <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
+            <radio value="{{answerItem.doAnswerNo}}" checked="{{answerItem.selected==1?true:false}}" />
+            <text>{{answerItem.name}}</text>
+          </label>
         </radio-group>
        
       </view>
@@ -75,10 +78,10 @@
       </view>
       <view class="answerList">
         <checkbox-group bindchange="checkboxChange"  data-tno='{{childItem.doTopicNo}}'>
-          <view class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
+          <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
             <checkbox value="{{answerItem.doAnswerNo}}"  checked="{{answerItem.selected==1?true:false}}" />
             <text>{{answerItem.name}}</text>
-          </view>
+          </label>
         </checkbox-group>
       </view>
       <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">

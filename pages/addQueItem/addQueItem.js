@@ -6,8 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    array: ['美国', '中国', '巴西', '日本'],
-    index:0,
+    arrayOption:['下一题'],
+    indexOption:0,
+    activeIcon:false,
     show:true,
     queList:[{name:'单选题',type:1,selectThis:false},{name:'多选题',type:2,selectThis:false},{name:'填空题',type:3,selectThis:false}],
     answerList:[],
@@ -22,7 +23,25 @@ Page({
       type:null,
       elseanswerIs:null,
       img:null
-    }
+    },
+    topicRows:[]
+  },
+  bindPickerClick(e){
+    this.setData({
+      activeIcon:'activeIcon'
+    })
+  },
+  bindcancel(e){
+    this.setData({
+      activeIcon:false
+    })
+  },
+  bindPickerChange: function(e) {
+    console.log(e.detail.value)
+    this.setData({
+      indexOption: e.detail.value,
+      activeIcon:false
+    })
   },
   addAnswer(){
     console.log(this.data.answerList)
@@ -149,6 +168,32 @@ Page({
   },
   addTopic(){
     var that = this
+    // if(that.data.indexOption)
+    let orderNum=''
+    if(that.data.indexOption==0){
+      orderNum=''
+    }else{
+      orderNum=(that.data.topicRows[that.data.indexOption-1].orderNum+that.data.topicRows[that.data.indexOption].orderNum)/2
+    }
+   
+// console.log(orderNum,orderNum/2)
+    // return
+    if(!that.data.que.name){
+      wx.showToast({
+        title: '请添写题目',
+        icon:'none'
+      })
+      return
+    }
+    if(that.data.que.type!=3){
+      if(that.data.answerList&&that.data.answerList.length==0){
+        wx.showToast({
+          title: '请添加答案',
+          icon:'none'
+        })
+        return
+      }
+    }
     wx.request({
       url: app.globalData.url + '/ypt/questionnaire/create-topic',
       header: {
@@ -160,7 +205,8 @@ Page({
         name:that.data.que.name||'',
         type:that.data.que.type||'',
         elseanswerIs:that.data.que.elseanswerIs?1:0,
-        img:that.data.que.img||''
+        img:that.data.que.img||'',
+        orderNum:orderNum
       },
       method: 'post',
       success: function (res) {
@@ -168,16 +214,26 @@ Page({
         if (res.data.code == 0) {
           let no=res.data.data.no
           if(that.data.que.type!=3){
+            if(that.data.answerList&&that.data.answerList.length==0){
+              wx.showToast({
+                title: '请添加答案',
+                icon:'none'
+              })
+              return
+            }
             for(var i in that.data.answerList){
               that.addAnswerEve(no,that.data.answerList[i].name,i)
             }
             return
           }
+          // for(var i in that.data.answerList){
+          //   that.addAnswerEve(no,that.data.answerList[i].name,i)
+          // }
           wx.navigateBack()
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -204,9 +260,9 @@ Page({
             wx.navigateBack()
           }
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -218,11 +274,21 @@ Page({
   onLoad: function (options) {
     console.log(options)
     this.data.que.chunkNo=options.no
+    this.topicRows()
+    let arrayOption=this.data.arrayOption
+    for(var i =0;i<options.quelength;i++){
+      console.log(options.quelength,i)
+      arrayOption.push(Number(i)+1)
+    }
     this.setData({
-      que:this.data.que
+      que:this.data.que,
+      options:options,
+      arrayOption:arrayOption
     })
-  },
 
+    
+  },
+ 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -255,7 +321,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -270,5 +336,33 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  topicRows(){
+    var that = this
+    wx.request({
+      url: app.globalData.url + '/ypt/questionnaire/topic-rows',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      data:{
+        chunkNo:that.data.que.chunkNo,
+      },
+      method: 'post',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          let topicRows=[{orderNum:0}]
+          that.setData({
+            topicRows:topicRows.concat(res.data.data.rows)// that.data.topicRows
+          })
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
+          })
+        }
+      }
+    });
+  },
 })

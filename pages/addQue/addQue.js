@@ -6,16 +6,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items:[{value: 'USA', name: '酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛酸胀痛'},
-    {value: 'CHN', name: '绞痛', checked: 'true'},
-    {value: 'BRA', name: '针刺痛'}],
+    items:[],
     topicRows:[],
     rstart:1,
-    rcount:15
+    rcount:100,
+    chunkNo:null
+  },
+  edit(e){
+    wx.navigateTo({
+      url: '../modifyQueItem/modifyQueItem?no='+e.currentTarget.dataset.no+'&chunkNo='+this.data.chunkNo,
+    })
   },
   addQue(e){
     wx.navigateTo({
-      url: '../addQueItem/addQueItem?no='+this.data.chunkNo,
+      url: '../addQueItem/addQueItem?no='+this.data.chunkNo+'&quelength='+this.data.topicRows.length,
     })
   },
   showImg(e){
@@ -45,19 +49,18 @@ Page({
          
           for(var i in res.data.data.rows){
             that.answerRows(res.data.data.rows[i].no)
-            console.log(res.data.data.rows[i].img.slice(0,1))
             if(res.data.data.rows[i].img&&res.data.data.rows[i].img.slice(0,1)!='h'){
               res.data.data.rows[i].img=app.globalData.url+res.data.data.rows[i].img
             }
           }
           that.data.topicRows=that.data.topicRows.concat(res.data.data.rows)
           that.setData({
-            topicRows: that.data.topicRows
+            topicRows:res.data.data.rows// that.data.topicRows
           })
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -86,24 +89,14 @@ Page({
               console.log(that.data.topicRows[r].rows)
             }
           }
-          // that.data.topicRows=that.data.topicRows.concat(res.data.data.rows)
-          // for(var i in res.data.data.rows){
-          //   res.data.data.rows[i].checked=false
-          //   for(var r in that.data.topicRows){
-          //     if(that.data.topicRows[r].no==res.data.data.rows[i].no){
-          //       that.data.topicRows[r].rows=res.data.data.rows[i]
-          //       console.log(that.data.topicRows[r].rows)
-          //     }
-          //   }
-          // }
           that.setData({
             topicRows: that.data.topicRows
           })
           console.log(that.data.topicRows)
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -162,7 +155,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh()
   },
 
   /**

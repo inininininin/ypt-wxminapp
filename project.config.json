@@ -35,7 +35,7 @@
     "packNpmRelationList": []
   },
   "compileType": "miniprogram",
-  "libVersion": "2.18.1",
+  "libVersion": "2.19.0",
   "appid": "wxe403283f3b493453",
   "projectname": "ypt-wxminapp",
   "debugOptions": {
@@ -53,13 +53,29 @@
       "current": -1,
       "list": []
     },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
     "game": {
       "currentL": -1,
       "list": []
     },
-    "miniprogram": {
+    "gamePlugin": {
       "current": -1,
       "list": []
+    },
+    "miniprogram": {
+      "current": -1,
+      "list": [
+        {
+          "id": 0,
+          "name": "packageA/pages/index/index",
+          "pathName": "packageA/pages/index/index",
+          "query": "",
+          "scene": null
+        }
+      ]
     }
   }
 }

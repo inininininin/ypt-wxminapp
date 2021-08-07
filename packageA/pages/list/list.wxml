@@ -1,0 +1,11 @@
+<!--packageA/pages/list/list.wxml-->
+<view class="list">
+  <view wx:for="{{userRows}}"  bindlongpress="modifyName" data-realname='{{item.realname||""}}' class="userRowsItem" bindtap="userRowsItem" data-no='{{item.no}}'>
+    <text>{{item.realname||''}}</text>
+    <view wx:if="{{item.todayClockin}}">
+      <text class="error" wx:if="{{item.todayClockin.exception==1}}">异常</text>
+      <text class="success" wx:if="{{item.todayClockin.exception!=1}}">正常</text>
+    </view>
+    <view wx:if="{{!item.todayClockin}}"></view>
+  </view>
+</view>

@@ -217,7 +217,7 @@ Page({
                             icon: 'none',
                             duration: 2000,
                             mask: true,
-                            complete: function complete(res) {
+                            complete: function (res) {
                               setTimeout(function () {
                                 wx.setStorageSync('historyUrl', that.data.backUrl)
                                 if (that.data.fromType == 1) {
@@ -387,7 +387,7 @@ Page({
       success(res) {
         var code = res.code
         wx.request({
-          url: app.globalData.url + '/ypt/user/login-by-wxminapp',
+          url: app.globalData.url + '/ypt/user/login-by-wxminapp-jscode',
           header: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
@@ -423,7 +423,7 @@ Page({
                       icon: 'none',
                       duration: 2000,
                       mask: true,
-                      complete: function complete(res) {
+                      complete: function (res) {
                         setTimeout(function () {
                           wx.setStorageSync('historyUrl', that.data.backUrl)
                           if (that.data.fromType == 1) {

@@ -26,7 +26,8 @@ Page({
         'address': '',
       },
     },
-    createPatientUrl:'/ypt/questionnaire-do/create'
+    createPatientUrl:'/ypt/questionnaire-do/create',
+    myself:false
   },
   realname(e){
     this.data.patientDetail.realname=e.detail.value
@@ -95,10 +96,13 @@ Page({
           prevPage.data.patientDetail.age=that.data.patientDetail.age
           prevPage.data.patientDetail.phone=that.data.patientDetail.phone
           prevPage.data.patientDetail.sex=that.data.patientDetail.sex
-          prevPage.data.patientDetail.areaL1Name=that.data.patientDetail.area1Name
-          prevPage.data.patientDetail.areaL2Name=that.data.patientDetail.area2Name
-          prevPage.data.patientDetail.areaL3Name=that.data.patientDetail.area3Name
-          prevPage.data.patientDetail.address=that.data.patientDetail.address
+          prevPage.data.patientDetail.areaL1Name=that.data.patientDetail.addressList.area1Name
+          prevPage.data.patientDetail.areaL2Name=that.data.patientDetail.addressList.area2Name
+          prevPage.data.patientDetail.areaL3Name=that.data.patientDetail.addressList.area3Name
+          prevPage.data.patientDetail.areaL1No=that.data.patientDetail.addressList.area1Id
+          prevPage.data.patientDetail.areaL2No=that.data.patientDetail.addressList.area2Id
+          prevPage.data.patientDetail.areaL3No=that.data.patientDetail.addressList.area3Id
+          prevPage.data.patientDetail.address=that.data.patientDetail.addressList.address
           // prevPage.data.patientList.unshift({doNo: res.data.data.doNo,
           // createTime:utils.formatTime( Date.parse(new Date()) / 1000, 'Y-M-D h:m') ,
           // userId: '',
@@ -112,10 +116,11 @@ Page({
           console.log(prevPage.data.patientDetail)
           wx.navigateBack();
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
+         
         }
       }
     });
@@ -171,9 +176,9 @@ Page({
           }
           
         } else {
-          wx.showModal({
-            showCancel: false,
-            title: res.data.codeMsg
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
           })
         }
       }
@@ -200,6 +205,59 @@ Page({
   onLoad: function (options) {
     console.log(options)
     let that=this
+    wx.getLocation({
+      type: 'wgs84',
+      success (res) {
+        const latitude = res.latitude
+        const longitude = res.longitude
+        const speed = res.speed
+        const accuracy = res.accuracy
+        console.log(latitude,longitude,speed,accuracy)
+        wx.request({
+          url: app.globalData.url + '/ypt/baidu/map/reverse-geocoding',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          data:{
+            longitude :longitude,
+            latitude :latitude,
+          },
+          method: 'post',
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+             console.log(res.data.data)
+             if(that.data.picker||that.data.patientDetail.addressList.area1Name==''||that.data.patientDetail.addressList.area1Name==null||that.data.patientDetail.addressList.area1Name==undefined){
+               console.log(res.data.data.result.addressComponent.adcode,typeof(res.data.data.result.addressComponent.adcode))
+                that.data.patientDetail.addressList.area1Name=res.data.data.result.addressComponent.province
+                that.data.patientDetail.addressList.area2Name=res.data.data.result.addressComponent.city
+                that.data.patientDetail.addressList.area3Name=res.data.data.result.addressComponent.district
+                that.data.patientDetail.addressList.area1Id=res.data.data.result.addressComponent.adcode.slice(0,2)
+                that.data.patientDetail.addressList.area2Id=res.data.data.result.addressComponent.adcode.slice(0,4)
+                that.data.patientDetail.addressList.area3Id=res.data.data.result.addressComponent.adcode.slice(0,6)
+                console.log(that.data.patientDetail)
+               setTimeout(()=>{
+                that.setData({
+                  patientDetail: that.data.patientDetail,
+                  region:[that.data.patientDetail.addressList.areaL1Name,that.data.patientDetail.addressList.areaL2Name,that.data.patientDetail.addressList.areaL3Name],
+                  picker:false
+                 })
+               },500)
+             }
+             
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon:'none'
+              })
+            }
+          }
+        });
+      }
+     })
+     
+
     that.data.patientDetail.questionnaireNo=options.no
     that.setData({
       patientDetail:that.data.patientDetail,
@@ -208,7 +266,8 @@ Page({
     if(options&&options.type=='myself'){
       // /create-my-do
       that.setData({
-        createPatientUrl:'/ypt/questionnaire-do/create-my-do'
+        createPatientUrl:'/ypt/questionnaire-do/create-my-do',
+        myself:true
       })
     }
     if(options&&options.type=='modify'){
@@ -228,10 +287,12 @@ Page({
     //         region: ['请选择发货地址：省-市-区'],
             let patientDetail={},addressList={},data=res.data.data.row,items=[],region=[]
             if(data.sex==1){
-               items=[{name:'男',value:1,checked:true},{name:'女',value:2,checked:false}]
-            }else{
-               items=[{name:'男',value:1,checked:false},{name:'女',value:2,checked:true}]
-            }
+              items=[{name:'男',value:1,checked:true},{name:'女',value:2,checked:false}]
+           }else if(data.sex==2){
+              items=[{name:'男',value:1,checked:false},{name:'女',value:2,checked:true}]
+           }else{
+             items=[{name:'男',value:1,checked:false},{name:'女',value:2,checked:false}]
+           }
             ["北京市", "北京市", "东城区"]
             patientDetail.questionnaireNo=data.doNo
             patientDetail.realname=data.realname
@@ -254,9 +315,9 @@ Page({
             })
             console.log(that.data.patientDetail)
           } else {
-            wx.showModal({
-              showCancel: false,
-              title: res.data.codeMsg
+            wx.showToast({
+              title: res.data.codeMsg,
+              icon:'none'
             })
           }
         }
@@ -296,7 +357,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    wx.stopPullDownRefresh()
   },
 
   /**

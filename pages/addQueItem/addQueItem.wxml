@@ -4,6 +4,16 @@
   <view class="title">
     <image src="../icon/bitian.png"></image><text>题目</text>
   </view>
+  <view class="selectQueType" catchtap='selectOption'>
+    <picker bindchange="bindPickerChange" bindcancel='bindcancel' bindtap='bindPickerClick' value="{{index}}"
+      range="{{arrayOption}}">
+      <view class="picker">
+        {{arrayOption[indexOption]}}
+      </view>
+    </picker>
+    <image class="rightIcon {{activeIcon}}" src="../icon/right.png"></image>
+  </view>
+  
   <view class="selectQueType {{active}}">
     <view class="selectTaps" catchtap='selectTaps'>
       <text wx:if="{{!queType}}">请选择题目类型</text>

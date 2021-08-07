@@ -1,0 +1,240 @@
+/* packageA/pages/login/login.wxss */
+.topHeaderTitle{
+  width: 100%;
+  text-align: center;
+}
+
+
+/* pages/addPatient/addPatient.wxss */
+.content{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 60rpx;
+  box-sizing: border-box;
+  margin-top: 100rpx;
+}
+.title{
+  font-size: 48rpx;
+font-family: PingFangSC, PingFangSC-Medium;
+font-weight: 500;
+text-align: left;
+color: #333333;
+}
+.point{
+  margin-top: 12rpx;
+  margin-bottom: 95rpx;
+  font-size: 28rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #666666;
+}
+.lineItem{
+  height: 92rpx;
+  width: 100%;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #333333;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+}
+.lineTitle{
+  width: calc(100% - 522rpx);
+}
+.lineItem input{
+  width: 522rpx;
+}
+.addressItem{
+  height: 185rpx;
+  width: 100%;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #333333;
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: flex-start;
+line-height: 92rpx;
+}
+.selectBox{
+  width: 522rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pickerLess{
+  width: 100%;
+}
+.orderSelcet{
+  width: 100%;
+  height: 92rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Regular;
+font-weight: 400;
+text-align: left;
+color: #333333;
+}
+.inputItem{
+  height: 92rpx;
+  line-height: 92rpx;
+}
+.createForm{
+  width: 610rpx;
+height: 90rpx;
+line-height: 90rpx;
+opacity: 1;
+background: #2b77ef;
+border-radius: 45rpx;
+position: fixed;
+bottom: 120rpx;
+left: 70rpx;
+font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Medium;
+font-weight: 500;
+text-align: center;
+color: #ffffff;
+}
+.radioChange{
+  width: 522rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.answerItem{
+  margin-right: 20rpx;
+}
+radio .wx-radio-input {
+  border-radius: 50%;
+  /* 圆角 */
+  transform: scale(0.7);
+}
+
+.popWindow {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.2);
+  top: 0;
+  left: 0;
+}
+
+.popWindow>view {
+  width: 640rpx;
+  height: 800rpx;
+  margin: 300rpx 55rpx;
+  border-radius: 8rpx;
+  background: #fff;
+}
+
+/* .popWindow>view>text{
+  display: block;
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 34rpx;
+  color: rgba(51, 51, 51, 1);
+} */
+.popWindow>view>view:nth-child(1) {
+  width: 600rpx;
+  height: 640rpx;
+  overflow-y: scroll;
+  margin: 0;
+  padding: 10rpx 20rpx;
+  color: rgba(115, 115, 115, 1);
+  font-size: 30rpx;
+  line-height: 38rpx;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.popWindow>view>view:nth-child(2) {
+  width: 100%;
+}
+
+.popWindow button {
+  /* width: 250rpx; */
+  border-radius: 50rpx;
+  /* height: 62rpx !important;
+  line-height: 62rpx !important; */
+  background: #fff;
+  display: inline-block;
+  border: 1rpx solid #cc3d49;
+  text-align: center;
+  font-size: 32rpx;
+  line-height: 40rpx;
+  color: #cc3d49;
+  font-weight: 400;
+  margin: 39rpx 60rpx;
+}
+
+.popWindow .agree {
+  background: #cc3d49;
+  border: 1rpx solid #fff;
+  color: #fff;
+}
+.lineItemEve{
+  min-height: 52rpx;
+  line-height: 52rpx;
+  padding: 20rpx 0 ;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+}
+.inputItemEve{
+  width: 522rpx;
+  line-height: 60rpx;
+  display: flex;
+  flex-direction: row;
+}
+.makesure{
+  width: 610rpx;
+height: 90rpx;
+opacity: 1;
+background: #2b77ef;
+border-radius: 45rpx;
+position: fixed;
+bottom: 60rpx;
+left: 70rpx;
+font-size: 32rpx;
+font-family: PingFangSC, PingFangSC-Medium;
+font-weight: 500;
+text-align: left;
+color: #ffffff;
+line-height: 90rpx;
+text-align: center;
+}
+
+button {
+  background: #fff;
+  display: inline-block;
+  text-align: center;
+  font-size: 32rpx;
+  /* padding:0 15rpx; */
+  border-radius:30rpx;
+  border:1rpx solid #e5e5e5;
+  color:#cccccc;
+  /* height:66rpx !important;
+  line-height: 66rpx; */
+  box-sizing:border-box;
+  /* width:158rpx; */
+  margin:0;
+}

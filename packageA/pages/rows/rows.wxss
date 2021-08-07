@@ -1,0 +1,32 @@
+/* packageA/pages/rows/rows.wxss */
+.userRowsItem{
+  margin: 0 auto;
+  width: calc(100% - 72rpx);
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between;
+  align-items: center; */
+  /* padding: 0 36rpx; */
+  box-sizing: border-box;
+  line-height: 100rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  min-height: 100rpx;
+}
+.top{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  line-height: 100rpx;
+}
+.bottom{
+  color: #999999;
+  line-height: 66rpx;
+}
+ .success{
+  color: #10da3c;
+}
+ .error{
+  color: #e40606;
+}

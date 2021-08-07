@@ -111,7 +111,7 @@ Page({
                 icon: 'none',
                 duration: 2000,
                 mask: true,
-                complete: function complete(res) {
+                complete: function (res) {
                 
                 }
               });
@@ -310,7 +310,7 @@ Page({
               icon: 'none',
               duration: 2000,
               mask: true,
-              complete: function complete(res) {
+              complete: function (res) {
                 that.setData({
                   evaNowShow:true
                 })
@@ -376,7 +376,7 @@ Page({
             icon: 'none',
             duration: 2000,
             mask: true,
-            complete: function complete(res) {
+            complete: function (res) {
               setTimeout(function () {
                 wx.setStorageSync('historyUrl', app.historyUrl() )
                 wx.navigateTo({
@@ -486,7 +486,7 @@ let that=this
                       icon: 'none',
                       duration: 2000,
                       mask: true,
-                      complete: function complete(res) {
+                      complete: function (res) {
                         setTimeout(function () {    
                           that.setData({
                             showIsPhone: false
