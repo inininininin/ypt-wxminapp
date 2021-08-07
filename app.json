@@ -1,20 +1,9 @@
 {
-  "subpackages": [
-    {
-      "root": "packageA",
-      "pages": [
-        "pages/login/login",
-        "pages/index/index",
-        "pages/list/list",
-        "pages/rows/rows",
-        "pages/maIndex/maIndex"
-      ]
-    }
-  ],
   "pages": [
+    "pages/logBf/logBf",
     "pages/mine/mine",
     "pages/modifyQueItem/modifyQueItem",
-    "pages/logBf/logBf",
+   
     "pages/pacie/pacie",
     "pages/assessmentScaleShare/assessmentScaleShare",
     "pages/assessmentScale/assessmentScale",
@@ -45,6 +34,18 @@
     "pages/canvasHos/canvasHos",
     "pages/canvasEve/canvasEve",
     "pages/addPatientMine/addPatientMine"
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "pages": [
+        "pages/login/login",
+        "pages/index/index",
+        "pages/list/list",
+        "pages/rows/rows",
+        "pages/maIndex/maIndex"
+      ]
+    }
   ],
   "window": {
     "backgroundTextStyle": "dark",

@@ -298,7 +298,7 @@ Page({
           for (var i in res.data.data.row.doChunks[0].doTopics) {
             let doTopics = res.data.data.row.doChunks[0].doTopics[i]
             res.data.data.row.doChunks[0].doTopics[i].do = 0
-            if (doTopics.type == 3) {
+            if (doTopics.type == 3||doTopics.type == 4) {
               if (doTopics.elseanswer == '' || doTopics.elseanswer == null || doTopics.elseanswer == undefined) {
                 res.data.data.row.doChunks[0].doTopics[i].do = 0
               } else {
@@ -361,7 +361,7 @@ Page({
 
     setTimeout(() => {
       for (var i in doTopics) {
-        if (doTopics[i].type == 3) {
+        if (doTopics[i].type == 3||doTopics[i].type == 4) {
           console.log(3)
           that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
         } else if (doTopics[i].type == 1) {

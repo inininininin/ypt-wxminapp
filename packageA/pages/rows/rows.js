@@ -106,8 +106,14 @@ Page({
           for(var i in res.data.data.rows){
             res.data.data.rows[i].createTime=res.data.data.rows[i].createTime.split('T')[0]+'  '+res.data.data.rows[i].createTime.split('T')[1]
           }
+          let realname
+          if(res.data.data.rows[0].realname){
+            realname=`(${res.data.data.rows[0].realname})`
+          }else{
+            realname=''
+          }
           wx.setNavigationBarTitle({
-            title: `打卡记录(${res.data.data.rows[0].realname})`,
+            title: `打卡记录${realname}`,
           })
           that.setData({
             rows:res.data.data.rows

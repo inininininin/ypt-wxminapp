@@ -20,18 +20,16 @@
     <!-- <text>{{item.name}}</text> -->
     <view class="questionItem" wx:for="{{item.doTopics}}" wx:for-item="childItem">
       <!-- 填空题 -->
-      <view class="blanks" wx:if="{{childItem.type==3}}">
+      <view class="blanks" wx:if="{{childItem.type==3||childItem.type==4}}">
         <view class="title">{{index+1}}.{{childItem.name}}</view>
         <view class="imageQue" wx:if="{{childItem.img}}">
           <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}"
             mode="aspectFit"></image>
         </view>
-        <input class="inputItem" disabled='{{disabled}}' type="text" data-tno='{{childItem.doTopicNo}}'
+        <input wx:if="{{childItem.type==3}}" class="inputItem" disabled='{{disabled}}' type="text" data-tno='{{childItem.doTopicNo}}'
           value='{{childItem.elseanswer}}' bindblur="bindTextBlur" placeholder="输入答案内容" />
-        <!-- <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
-        <text>其他：</text>
-        <textarea  class="textItem" data-tno='{{childItem.doTopicNo}}'  value="{{childItem.elseanswer||''}}" cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
-      </view> -->
+          <input  wx:if="{{childItem.type==4}}" class="inputItem" disabled='{{disabled}}' type="digit" data-tno='{{childItem.doTopicNo}}'
+          value='{{childItem.elseanswer}}' bindblur="bindTextBlur" placeholder="输入答案内容" />
       </view>
       <!-- 单选题 -->
       <view class="singleChoice" wx:if="{{childItem.type==1}}">

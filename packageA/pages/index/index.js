@@ -45,8 +45,12 @@ Page({
     for (var r in topicList) {
       if (e.currentTarget.dataset.tno == topicList[r].doTopicNo) {
         topicList[r].elseanswer = answerVal
-        topicList[r].do = 1
         console.log(topicList[r].elseanswer)
+        if(e.detail.value==''||e.detail.value==null||e.detail.value==undefined){
+          topicList[r].do = 0
+        }else{
+          topicList[r].do = 1
+        }
       }
     }
     this.setData({
@@ -378,7 +382,7 @@ Page({
           for (var i in res.data.data.row.doChunks[0].doTopics) {
             let doTopics = res.data.data.row.doChunks[0].doTopics[i]
             res.data.data.row.doChunks[0].doTopics[i].do = 0
-            if (doTopics.type == 3) {
+            if (doTopics.type == 3||doTopics.type == 4) {
               if (doTopics.elseanswer == '' || doTopics.elseanswer == null || doTopics.elseanswer == undefined) {
                 res.data.data.row.doChunks[0].doTopics[i].do = 0
               } else {
@@ -427,6 +431,7 @@ Page({
     let doTopics = doChunks[0].doTopics
     console.log(doTopics)
     for (var i in doTopics) {
+      console.log(doTopics[i].do )
       if (doTopics[i].must) {
         if (doTopics[i].do == 0) {
           wx.showToast({
@@ -441,7 +446,7 @@ Page({
 
     setTimeout(() => {
       for (var i in doTopics) {
-        if (doTopics[i].type == 3) {
+        if (doTopics[i].type == 3||doTopics[i].type == 4) {
           console.log(3)
           that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
         } else if (doTopics[i].type == 1) {
