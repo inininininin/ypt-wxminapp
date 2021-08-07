@@ -22,7 +22,8 @@ Page({
     topicList: [],
     disabled: false,
     showMaintainIs:false,
-    loading:true
+    loading:true,
+    exception:'默认'
   },
   showMaintainIs(){
     wx.navigateTo({
@@ -369,7 +370,10 @@ Page({
               })
             }
           }
-
+          that.setData({
+            commit:res.data.data.row.commit,
+            exception:res.data.data.row.exception
+          })
           console.log(res.data.data.row.doChunks[0].doTopics)
           for (var i in res.data.data.row.doChunks[0].doTopics) {
             let doTopics = res.data.data.row.doChunks[0].doTopics[i]
@@ -546,7 +550,7 @@ Page({
       }
     });
   },
-  //  取消题目
+  //  提交题目
   commit() {
     var that = this
     wx.request({
@@ -565,7 +569,30 @@ Page({
             title: '提交成功',
             icon: "none",
             success: function (res) {
-
+              wx.request({
+                url: app.globalData.dkUrl + '/vfc-clockin/questionnaire/row',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('dkcookie')
+                },
+                data: {
+                  doNo: that.data.doNo,
+                },
+                method: 'post',
+                success: function (res) {
+                  if (res.data.code == 0) {
+                    that.setData({
+                      commit:res.data.data.row.commit,
+                      exception:res.data.data.row.exception
+                    })
+                  } else {
+                    wx.showToast({
+                      title: res.data.msg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              });
             }
           })
         } else {

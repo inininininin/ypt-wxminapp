@@ -1,4 +1,10 @@
 /* packageA/pages/index/index.wxss */
+.topHeader{
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 1000;
+}
 .topHeaderTitle{
   width: 100%;
   text-align: center;
@@ -15,6 +21,10 @@
 }
 .topHeaderTitle .title{
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 /* pages/assessmentScale/assessmentScale.wxss */
 page {
@@ -359,4 +369,11 @@ color: #ffffff;
   right: 0;
   z-index: 999;
   background-color: #ffffff;
+}
+
+.success{
+  color: #10da3c;
+}
+ .error{
+  color: #e40606;
 }
