@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/logBf/logBf",
+    
     "pages/mine/mine",
     "pages/modifyQueItem/modifyQueItem",
-   
+    "pages/logBf/logBf",
     "pages/pacie/pacie",
     "pages/assessmentScaleShare/assessmentScaleShare",
     "pages/assessmentScale/assessmentScale",

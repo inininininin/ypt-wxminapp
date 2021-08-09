@@ -90,8 +90,11 @@ wx.request({
     })
   },
   lookForm(e){
+    // wx.navigateTo({
+    //   url: '../assessmentScaleShare/assessmentScaleShare?no='+this.data.list[0].no+'&doNo='+e.currentTarget.dataset.id+"&share=2",
+    // })
     wx.navigateTo({
-      url: '../assessmentScaleShare/assessmentScaleShare?no='+this.data.list[0].no+'&doNo='+e.currentTarget.dataset.id+"&share=2",
+      url: '../assessmentScale/assessmentScale?no='+this.data.list[0].no+'&doNo='+e.currentTarget.dataset.id+"&share=2&dis=true",
     })
   },
   // 新增病人

@@ -404,7 +404,9 @@ Page({
       menus: ['shareAppMessage', 'shareTimeline']
     })
 
-    var path = 'pages/assessmentScaleShare/assessmentScaleShare?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId
+    // var path = 'pages/assessmentScaleShare/assessmentScaleShare?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId
+    var path = 'pages/assessmentScale/assessmentScale?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId+"&dis=true"
+    
     // var path = 'pages/out/articleDetail/articleDetail?id=' + this.data.id+"&ids=1"
     let realname = this.data.patientDetail.realname
     if (realname.length > 1) {
@@ -542,10 +544,13 @@ Page({
                       complete: function (res) {
                         setTimeout(function () {
                           that.data.patientDetail.phone = app.globalData.userInfoDetail.phone
+                          // wx.redirectTo({
+                          //   url: '../assessmentScaleShare/assessmentScaleShare?no=' + that.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + "&doNo=" + that.data.options.doNo
+                          // })
                           wx.redirectTo({
-                            url: '../assessmentScaleShare/assessmentScaleShare?no=' + that.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + "&doNo=" + that.data.options.doNo
+                            url: '../assessmentScale/assessmentScale?no=' + that.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + "&doNo=" + that.data.options.doNo+"&dis=true"
                           })
-
+                          
                           that.setData({
                             showIs: false,
                             patientDetail: that.data.patientDetail

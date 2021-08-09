@@ -20,7 +20,7 @@
   <view class="address"> <text>住址：</text>
     <text>{{patientDetail.areaL1Name}}{{patientDetail.areaL2Name}}{{patientDetail.areaL3Name}}{{patientDetail.address}}</text>
   </view>
-  <view class="modifyPersonal" bindtap="modifyPersonal"> <image src="../icon/xiugai.png"></image><text>修改个人信息</text></view>
+  <view class="modifyPersonal" bindtap="modifyPersonal"> <image src="../icon/editWhite.png"></image></view>
   <!-- <view class="treatment">
     <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}'
       wx:for="{{patientDetail.doChunks}}">
@@ -44,7 +44,7 @@
       <view class="imageQue" wx:if="{{childItem.img}}">
         <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}" mode="aspectFit"></image>
       </view>
-      <input class="inputItem" type="text" data-tno='{{childItem.doTopicNo}}' value='{{childItem.elseanswer}}' bindblur="bindTextBlur"  placeholder="输入答案内容" />
+      <input disabled="{{dis}}" class="inputItem" type="text" data-tno='{{childItem.doTopicNo}}' value='{{childItem.elseanswer}}' bindblur="bindTextBlur"  placeholder="输入答案内容" />
       <!-- <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
         <text>其他：</text>
         <textarea  class="textItem" data-tno='{{childItem.doTopicNo}}'  value="{{childItem.elseanswer||''}}" cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
@@ -59,7 +59,7 @@
       <view class="answerList">
         <radio-group bindchange="radioChange"  data-tno='{{childItem.doTopicNo}}'>
           <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
-            <radio value="{{answerItem.doAnswerNo}}" checked="{{answerItem.selected==1?true:false}}" />
+            <radio  disabled="{{dis}}"  value="{{answerItem.doAnswerNo}}" checked="{{answerItem.selected==1?true:false}}" />
             <text>{{answerItem.name}}</text>
           </label>
         </radio-group>
@@ -67,7 +67,7 @@
       </view>
       <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
         <text>其他：</text>
-        <textarea  class="textItem"  value='{{childItem.elseanswer}}'  data-tno='{{childItem.doTopicNo}}'  cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
+        <textarea  disabled="{{dis}}"  class="textItem"  value='{{childItem.elseanswer}}'  data-tno='{{childItem.doTopicNo}}'  cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
       </view>
     </view>
     <!-- 多选题 -->
@@ -79,18 +79,46 @@
       <view class="answerList">
         <checkbox-group bindchange="checkboxChange"  data-tno='{{childItem.doTopicNo}}'>
           <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
-            <checkbox value="{{answerItem.doAnswerNo}}"  checked="{{answerItem.selected==1?true:false}}" />
+            <checkbox  disabled="{{dis}}"  value="{{answerItem.doAnswerNo}}"  checked="{{answerItem.selected==1?true:false}}" />
             <text>{{answerItem.name}}</text>
           </label>
         </checkbox-group>
       </view>
       <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
         <text>其他：</text>
-        <textarea  value='{{childItem.elseanswer}}' data-tno='{{childItem.doTopicNo}}'    class="textItem" cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
+        <textarea  disabled="{{dis}}"  value='{{childItem.elseanswer}}' data-tno='{{childItem.doTopicNo}}'    class="textItem" cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
       </view>
     </view>
 
   </view>
   </view>
-  <view class="supply" bindtap="supply">提交</view>
+  <view class="supply" bindtap="supply" wx:if="{{!dis}}">提交</view>
+</view>
+
+<view class="funBtn" wx:if="{{!isMine}}">
+  <view class="edit" wx:if="{{!funBtn}}" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷
+  </view>
+  <view class="edit"  wx:if="{{funBtn}}"  bindtap="goOwnTopic" style="border-right:0;width:100%;height:100%">前往自己问卷
+  </view>
+  <!-- <view class="edit" wx:if="{{funBtn}}" bindtap="edit">去填写</view> -->
+  <!-- <view class="share">
+  	<button open-type='share'>分享微信</button>
+  </view> -->
+</view>
+
+
+<view class="popWindow" wx:if='{{showIs}}'>
+  <view>
+    <!-- <text>微信授权登录</text> -->
+    <view>
+      <import src="../../wxParse/wxParse.wxml" />
+      <view class="wxParse">
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+      </view>
+    </view>
+    <view>
+      <button class="refuse" bindtap="refuse">不同意</button>
+      <button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+    </view>
+  </view>
 </view>

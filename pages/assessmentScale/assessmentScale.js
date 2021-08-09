@@ -24,7 +24,13 @@ Page({
     patientDetail: {},
     chunkNo: null,
     answerList: [],
-    doMyself: true
+    doMyself: true,
+    dis:true,
+    isMine:false,
+    mydoNo:''
+  },
+  newOwnTopic(){
+    this.myQue()
   },
   bindTextBlur(e) {
     // this.data.answerList
@@ -134,10 +140,18 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
+   
+    
+    if(options&&options.dis){
+      this.setData({
+        dis:options.dis
+      })
+    }
     this.setData({
       options: options
     })
-    this.patientRow()
+    this.wxLogin() 
+    // this.patientRow()
   },
   selectChunk(e) {
     let chunkNo = ''
@@ -206,8 +220,10 @@ console.log(this.data.patientDetail)
       menus: ['shareAppMessage', 'shareTimeline']
     })
 
-    var path = 'pages/assessmentScaleShare/assessmentScaleShare?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId
+    // var path = 'pages/assessmentScaleShare/assessmentScaleShare?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId
     // var path = 'pages/out/articleDetail/articleDetail?id=' + this.data.id+"&ids=1"
+    var path = 'pages/assessmentScale/assessmentScale?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId +"&dis=true"
+   
     let realname = this.data.patientDetail.realname
     if (realname.length > 1) {
       realname = realname.slice(0, realname.length - 1) + '*'
@@ -244,6 +260,17 @@ console.log(this.data.patientDetail)
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
+          if(res.data.data.row.userId==app.globalData.userInfoDetail.userId){
+            that.setData({
+              dis:false,
+              isMine:true
+            })
+          }else{
+            that.setData({
+              dis:false,
+              isMine:false
+            })
+          }
           let chunkNo = ''
           for (var i in res.data.data.row.doChunks) {
             if (i == 0) {
@@ -436,4 +463,116 @@ console.log(this.data.patientDetail)
       }
     });
   },
+  wxLogin() {
+    let that = this
+    wx.login({
+      success(res) {
+        var code = res.code
+        wx.request({
+          url: app.globalData.url + '/ypt/user/login-by-wxminapp-jscode',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: 'post',
+          data: {
+            wsJsCode: code,
+            loginHospitalId: wx.getStorageSync('loginHospitalId'),
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+              console.log('wxLogin')
+              wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              wx.request({
+                url: app.globalData.url + '/ypt/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  wx.hideToast()
+                  if (res.data.code == 0) {
+                    if (!res.data.data.phone) {
+                      that.setData({
+                        showIs: true
+                      })
+                    }
+                    if(res.data.data.type==1){
+                      that.setData({
+                        dis: false
+                      })
+                    }
+                    that.myQue()
+                    that.patientRow()
+                    app.globalData.userInfoDetail = res.data.data
+                    wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                    wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+                    wx.setStorageSync('codeType', that.data.type)
+                    wx.setStorageSync('withoutLogin', false)
+
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              })
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+      }
+    })
+  },
+  myQue(){
+    let that=this
+    wx.request({
+      url: app.globalData.url + '/ypt/questionnaire-do/get-my-questionnaire-do',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      data:{
+        questionnaireNo :that.data.options.no,
+      },
+      method: 'post',
+      success: function (res) {
+        if (res.data.code == 0) {
+          if(res.data.data.doNo!=''&&res.data.data.doNo!=null&&res.data.data.doNo!=undefined){
+            that.setData({
+              funBtn:true,
+              mydoNo:res.data.data.doNo
+            })
+           
+          }else{
+            that.setData({
+              funBtn:false
+            })
+           
+          }
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon:'none'
+          })
+        }
+      }
+    });
+  },
+  newOwnTopic(){
+    wx.navigateTo({
+      url: '../addPatientMine/addPatientMine?no=' + this.data.options.no + "&type=myself",
+    })
+  },
+  goOwnTopic(){
+    wx.navigateTo({
+      url: '../assessmentScale/assessmentScale?no='+this.data.options.no+'&doNo='+this.data.mydoNo,
+    })
+  }
 })

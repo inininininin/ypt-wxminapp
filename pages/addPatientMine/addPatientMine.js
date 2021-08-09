@@ -173,8 +173,12 @@ Page({
           }else{
             // wx.navigateBack();
             // ?no='+this.data.list[0].no+'&doNo='+e.currentTarget.dataset.id,
+            // wx.redirectTo({
+            //   url: '../assessmentScaleShare/assessmentScaleShare?no='+wx.getStorageSync('no')+'&doNo='+res.data.data.doNo,
+            // })
+
             wx.redirectTo({
-              url: '../assessmentScaleShare/assessmentScaleShare?no='+wx.getStorageSync('no')+'&doNo='+res.data.data.doNo,
+              url: '../assessmentScale/assessmentScale?no='+that.data.options.no+'&doNo='+res.data.data.doNo+"&dis=true",
             })
           }
           
@@ -233,16 +237,16 @@ Page({
             if (res.data.code == 0) {
               console.log(12312312)
              console.log(res.data.data.doNo)
-             wx.showToast({
-              title: res.data.data.doNo,
-              icon:'none'
-            })
+            //  wx.showToast({
+            //   title: res.data.data.doNo,
+            //   icon:'none'
+            // })
               if(res.data.data.doNo!=''&&res.data.data.doNo!=null&&res.data.data.doNo!=undefined){
                 console.log('12312='+options.no)
-                wx.showToast({
-                  title: res.data.data.doNo,
-                  icon:'none'
-                })
+                // wx.showToast({
+                //   title: res.data.data.doNo,
+                //   icon:'none'
+                // })
                 wx.redirectTo({
                   url: '../assessmentScale/assessmentScale?no='+options.no+'&doNo='+res.data.data.doNo,
                 })
