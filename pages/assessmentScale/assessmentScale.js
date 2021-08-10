@@ -27,7 +27,8 @@ Page({
     doMyself: true,
     dis:true,
     isMine:false,
-    mydoNo:''
+    mydoNo:'',
+    type:null,
   },
   newOwnTopic(){
     this.myQue()
@@ -268,10 +269,18 @@ console.log(this.data.patientDetail)
               isMine:true
             })
           }else{
-            that.setData({
-              dis:true,
-              isMine:false
-            })
+            if(that.data.type==1){
+              that.setData({
+                dis:false,
+                isMine:false
+              })
+            }else{
+              that.setData({
+                dis:true,
+                isMine:false
+              })
+            }
+           
           }
           console.log(that.data.dis)
           let chunkNo = ''
@@ -503,7 +512,8 @@ console.log(this.data.patientDetail)
                     }
                     if(res.data.data.type==1){
                       that.setData({
-                        dis: false
+                        dis: false,
+                        type:res.data.data.type
                       })
                     }
                     that.myQue()
