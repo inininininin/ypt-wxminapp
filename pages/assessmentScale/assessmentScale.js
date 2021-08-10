@@ -260,6 +260,8 @@ console.log(this.data.patientDetail)
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
+          console.log(that.data.dis)
+          console.log(res.data.data.row.userId,app.globalData.userInfoDetail.userId)
           if(res.data.data.row.userId==app.globalData.userInfoDetail.userId){
             that.setData({
               dis:false,
@@ -267,10 +269,11 @@ console.log(this.data.patientDetail)
             })
           }else{
             that.setData({
-              dis:false,
+              dis:true,
               isMine:false
             })
           }
+          console.log(that.data.dis)
           let chunkNo = ''
           for (var i in res.data.data.row.doChunks) {
             if (i == 0) {
@@ -556,6 +559,7 @@ console.log(this.data.patientDetail)
             })
            
           }
+          console.log(that.data.dis)
         } else {
           wx.showToast({
             title: res.data.codeMsg,

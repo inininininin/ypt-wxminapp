@@ -92,19 +92,18 @@
 
   </view>
   </view>
-  <view class="supply" bindtap="supply" wx:if="{{!dis}}">提交</view>
+ 
 </view>
-
-<view class="funBtn" wx:if="{{!isMine}}">
+<view   wx:if="{{isMine}}" class="posBtm">
+    <view class="supply" bindtap="supply" wx:if="{{!dis}}">提交</view>
+    <view class="funBtn" wx:if="{{!isMine}}">
   <view class="edit" wx:if="{{!funBtn}}" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷
   </view>
   <view class="edit"  wx:if="{{funBtn}}"  bindtap="goOwnTopic" style="border-right:0;width:100%;height:100%">前往自己问卷
   </view>
-  <!-- <view class="edit" wx:if="{{funBtn}}" bindtap="edit">去填写</view> -->
-  <!-- <view class="share">
-  	<button open-type='share'>分享微信</button>
-  </view> -->
 </view>
+  </view>
+
 
 
 <view class="popWindow" wx:if='{{showIs}}'>
