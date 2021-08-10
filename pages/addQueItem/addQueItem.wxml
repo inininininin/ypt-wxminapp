@@ -1,0 +1,62 @@
+<!--pages/addQueItem/addQueItem.wxml-->
+<view class="line"></view>
+<view class="queItem">
+  <view class="title">
+    <image src="../icon/bitian.png"></image><text>题目</text>
+  </view>
+  <view class="selectQueType" catchtap='selectOption'>
+    <picker bindchange="bindPickerChange" bindcancel='bindcancel' bindtap='bindPickerClick' value="{{index}}"
+      range="{{arrayOption}}">
+      <view class="picker">
+        {{arrayOption[indexOption]}}
+      </view>
+    </picker>
+    <image class="rightIcon {{activeIcon}}" src="../icon/right.png"></image>
+  </view>
+  
+  <view class="selectQueType {{active}}">
+    <view class="selectTaps" catchtap='selectTaps'>
+      <text wx:if="{{!queType}}">请选择题目类型</text>
+      <text wx:if="{{queType}}" style="color:#333333;">{{queTypeName}}</text>
+      <image class="rightIcon {{active}}" src="../icon/right.png"></image>
+    </view>
+
+    <view class="options {{active}}">
+      <text wx:for="{{queList}}" catchtap='selectThis' data-type='{{item.type}}'
+        class="{{item.selectThis?'selectThis':''}}" wx:if="{{selectThis}}">{{item.name}}</text>
+    </view>
+  </view>
+
+
+
+  <input class="inputItem" value="{{que.name}}" bindinput="queName" placeholder-style="color:#999999" type="text"
+    bindblur="bindTextAreaBlur" placeholder="输入题目内容" />
+  <!-- 上传照片 -->
+  <view class="addPhoto">
+    <view bindtap="addPhoto">
+      <image src="../icon/photo.png"></image>
+    </view>
+    <text>上传照片</text>
+  </view>
+  <view class="ifImg" wx:if="{{imgShow}}">
+    <image mode="aspectFit" src="{{imgShow}}"></image>
+  </view>
+
+  <view class='topLine' wx:if='{{show}}'>
+    <text>用户可否自主填写</text>
+    <view class="body-view">
+      <switch color="#2B77EF" checked='{{skinSwitch}}' bindchange="switchChange" />
+    </view>
+  </view>
+
+  <view wx:if="{{queType==1||queType==2}}">
+    <view class="title">
+      <image style="width:30rpx" src="../icon/xuantian.png"></image><text>答案</text>
+    </view>
+    <input wx:for="{{answerList}}" class="inputItem" data-name='{{item.name}}' value="{{item.name}}" data-key='{{index}}' bindinput="inputItem" placeholder-style="color:#999999" type="text" bindblur="bindTextAreaBlur"
+      placeholder="输入答案内容"/>
+
+    <view class="addAnswer" bindtap="addAnswer">增加答案</view>
+  </view>
+</view>
+<view class="makesure" bindtap="addTopic">确定</view>

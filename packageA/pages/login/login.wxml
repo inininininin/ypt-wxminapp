@@ -1,0 +1,34 @@
+<view class="topHeader" style="height:{{navBarHeight}}px">
+  <view style="width:100%;height:{{navBarHeight-menuHeight-menuBotton}}px"></view>
+  <view class="topHeaderTitle" style="height:{{menuHeight+menuBotton}}px;line-height:{{menuHeight+menuBotton}}px;">
+    {{title}}
+  </view>
+</view>
+
+<view class="content">
+  <view class="lineItem">
+    <text class="lineTitle">姓名：</text><input value="{{realname}}" type="text" bindinput="realname"
+      placeholder-style="color: #cccccc;" placeholder="请输入姓名" />
+  </view>
+  <view class="lineItem">
+    <text class="lineTitle">电话：</text>
+    <!-- <input style="width:300rpx" wx:if="{{!patientDetail.phone}}" value="{{patientDetail.phone}}"  bindinput="phone" type="number" placeholder-style="color: #cccccc;" placeholder="请输入电话" /> -->
+    <view wx:if="{{phone}}">{{phone}}</view>
+
+    <button class="agree" wx:if="{{!phone}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">点击获取</button>
+    <!-- <view wx:if="{{!patientDetail.phone}}" bindtap="popWindowGet"
+      style="padding:10rpx 15rpx;border-radius:30rpx;border:1rpx solid #e5e5e5;color:#cccccc">点击获取</view> -->
+  </view>
+  <view class="lineItemEve" hidden>
+    <text class="lineTitle">住址：</text>
+    <view class="inputItemEve">
+
+      <view wx:if="{{!address}}"
+        style="padding:0 15rpx;border-radius:30rpx;border:1rpx solid #e5e5e5;color:#cccccc;height:66rpx !important;box-sizing:border-box;width:158rpx">
+        获取定位</view>
+      <view wx:if="{{address}}">{{address}}</view>
+    </view>
+  </view>
+
+</view>
+<view class="makesure" bindtap="addTopic">确定</view>

@@ -15,16 +15,85 @@ Page({
     name: '',
     avator: '../icon/moren.png',
     tcode: '',
-    detail:'',
+    detail: '',
     imglist: [],
     version: '',
     bgUrl: app.globalData.url + '/ypt/wxminapp-resource/bj.jpg',
     withoutLogin: true,
-    canvasShow:false
+    canvasShow: false,
+    ttFormEditShow: false,
   },
-  version(e){
+  evaluation() {
+    wx.navigateTo({
+      url: '../pacie/pacie',
+    })
+  },
+  evaluationOwn() {
+    var that = this
+    wx.request({
+      url: app.globalData.url + '/ypt/questionnaire/questionnaire-rows',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          let questionnaireNo = res.data.data.rows[0].no || ""
+          wx.request({
+            url: app.globalData.url + '/ypt/questionnaire-do/my-rows',
+            header: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              'cookie': wx.getStorageSync('cookie')
+            },
+            data: {
+              questionnaireNo: questionnaireNo,
+              rstart: 1,
+              rcount: 50
+            },
+            method: 'post',
+            success: function (res) {
+              wx.hideToast()
+              if (res.data.code == 0) {
+                if (res.data.data.rows && res.data.data.rows == 0) {
+                  wx.navigateTo({
+                    url: '../addPatientMine/addPatientMine?no=' + questionnaireNo + "&type=myself", //+"&patientId="+id,
+                  })
+                } else {
+                  // wx.navigateTo({
+                  //   url: '../assessmentScaleShare/assessmentScaleShare?no=' + questionnaireNo + '&doNo=' + res.data.data.rows[0].doNo,
+                  // })
+                  wx.navigateTo({
+                    url: '../assessmentScale/assessmentScale?no=' + questionnaireNo + '&doNo=' + res.data.data.rows[0].doNo,
+                  })
+                }
+
+
+                // wx.navigateTo({
+                //   url: '../assessmentScaleShare/assessmentScaleShare?no='+res.data.data.rows[0].,
+                // })
+              } else {
+                wx.showModal({
+                  showCancel: false,
+                  title: res.data.codeMsg
+                })
+              }
+            }
+          });
+        } else {
+          wx.showModal({
+            showCancel: false,
+            title: res.data.codeMsg
+          })
+        }
+      }
+    });
+
+  },
+  version(e) {
     wx.showModal({
-      title: 'ver: '+app.version,
+      title: 'ver: ' + app.version,
       content: app.versionIntro ? app.versionIntro : "",
       showCancel: false,
       cancelText: "取消111",
@@ -32,12 +101,11 @@ Page({
       confirmText: "确定",
       confirmColor: "#0f0",
       success: function (res) {
-        if (res.confirm) {
-        }
+        if (res.confirm) {}
       }
     })
   },
-  taskList(e){
+  taskList(e) {
     wx.navigateTo({
       url: '../taskList/taskList',
     })
@@ -45,7 +113,7 @@ Page({
   toLogin(e) {
     var backUrl = '../mine/mine';
     wx.redirectTo({
-      url: '../logs/logs?fromType=1&backUrl=' + backUrl,
+      url: '../login/login?fromType=1&backUrl=' + backUrl,
     })
   },
   tel(e) {
@@ -108,58 +176,62 @@ Page({
     })
   },
   loginout(e) {
- 
+
     var that = this
     wx.showModal({
       title: '退出',
-         content: '确定要退出登录？',
-        //  showCancel: true,//是否显示取消按钮
-        //  cancelText:"否",//默认是“取消”
-        //  cancelColor:'skyblue',//取消文字的颜色
-        //  confirmText:"是",//默认是“确定”
-        //  confirmColor: 'skyblue',//确定文字的颜色
-         success: function (res) {
-            if (res.cancel) {
-               //点击取消,默认隐藏弹框
-            } else {
-               //点击确定
-               
-               wx.request({
-                 url: app.globalData.url + '/ypt/user/logout',
-                 header: {
-                   "Content-Type": "application/x-www-form-urlencoded",
-                   'cookie': wx.getStorageSync('cookie')
-                 },
-                 method: 'post',
-                 data: {
-                   name: that.data.name,
-                 },
-                 success: function (res) {
-                   if (res.data.code == 0) {
-                     wx.setStorageSync('cookie', '')
-                           app.globalData.userInfo = '' //null
-                           app.globalData.userInfoDetail = []
-                           wx.setStorageSync('withoutLogin', true)
-                           that.setData({
-                             names: '',
-                             phone: '',
-                             avator: '../icon/moren.png',
-                             withoutLogin: true,
-                           })
-                   } else {
-                     wx.showToast({
-                       title: res.data.codeMsg,
-                       icon: 'none'
-                     })
-                   }
-                 }
-               })
+      content: '确定要退出登录？',
+      //  showCancel: true,//是否显示取消按钮
+      //  cancelText:"否",//默认是“取消”
+      //  cancelColor:'skyblue',//取消文字的颜色
+      //  confirmText:"是",//默认是“确定”
+      //  confirmColor: 'skyblue',//确定文字的颜色
+      success: function (res) {
+        if (res.cancel) {
+          //点击取消,默认隐藏弹框
+        } else {
+          //点击确定
+
+          wx.request({
+            url: app.globalData.url + '/ypt/user/logout',
+            header: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              'cookie': wx.getStorageSync('cookie')
+            },
+            method: 'post',
+            data: {
+              name: that.data.name,
+            },
+            success: function (res) {
+              if (res.data.code == 0) {
+                wx.setStorageSync('cookie', '')
+                app.globalData.userInfo = '' //null
+                app.globalData.userInfoDetail = []
+                wx.setStorageSync('withoutLogin', true)
+                that.setData({
+                  names: '',
+                  phone: '',
+                  avator: '../icon/moren.png',
+                  withoutLogin: true,
+                })
+                var backUrl = '../mine/mine';
+                wx.redirectTo({
+                  url: '../login/login?fromType=1&backUrl=' + backUrl,
+                })
+              } else {
+                wx.showToast({
+                  title: res.data.codeMsg,
+                  icon: 'none'
+                })
+              }
             }
-         },
-         fail: function (res) { }, 
-         complete: function (res) { },
+          })
+        }
+      },
+      fail: function (res) {},
+      complete: function (res) {},
     })
-    
+
   },
   avator() {
     var that = this
@@ -199,7 +271,7 @@ Page({
                     avator: app.globalData.url + url
                   })
                   // that.lookCode()
-                  
+
                 }
               })
             }
@@ -223,11 +295,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this
+    var that = this
     that.sys();
     // that.bginfo();
   },
-  
+
   // bginfo: function () {
   //   var that = this;
   //   console.log( that.data.avator)
@@ -238,7 +310,7 @@ Page({
   //       that.setData({
   //         avatorShare: res.tempFilePath
   //       })
-        
+
   //     }
   //   })
   // },
@@ -248,8 +320,8 @@ Page({
       success: function (res) {
         that.setData({
           windowW: res.windowWidth,
-          windowH:res.windowHeight,
-          windowTop:(res.windowHeight-res.windowWidth)/2
+          windowH: res.windowHeight,
+          windowTop: (res.windowHeight - res.windowWidth) / 2
         })
       },
     })
@@ -257,14 +329,14 @@ Page({
   canvasdraw: function (canvas) {
     var that = this;
     that.setData({
-      canvasShow:true
+      canvasShow: true
     })
     console.log('n3')
-    if(that.data.avator=='../icon/moren.png'){
+    if (that.data.avator == '../icon/moren.png') {
       that.setData({
         avatorShare: that.data.avator
       })
-      var leftW=(that.data.windowW-200)/2
+      var leftW = (that.data.windowW - 200) / 2
       var windowW = that.data.windowW;
       var windowH = that.data.windowH;
 
@@ -272,58 +344,58 @@ Page({
       canvas.drawImage(that.data.avatorShare, 15, 30, 50, 50);
       canvas.drawImage(that.data.imglist[0], leftW, 100, 200, 200);
       // canvas.setFontSize(50)
-      canvas.font="20px Georgia";
-      if(that.data.detail.type2NurseName){
-        canvas.fillText('护士：'+that.data.detail.type2NurseName, 70, 50)
-      }else if(that.data.detail.type1DoctorName){
-        canvas.fillText('医生：'+that.data.detail.type1DoctorName, 70, 50)
+      canvas.font = "20px Georgia";
+      if (that.data.detail.type2NurseName) {
+        canvas.fillText('护士：' + that.data.detail.type2NurseName, 70, 50)
+      } else if (that.data.detail.type1DoctorName) {
+        canvas.fillText('医生：' + that.data.detail.type1DoctorName, 70, 50)
       }
       console.log(that.data.detail.type1DoctorName)
-      canvas.font="15px Georgia";
-      canvas.fillText( app.globalData.hospitalName, 70, 70)
-      canvas.draw(true,setTimeout(function(){
+      canvas.font = "15px Georgia";
+      canvas.fillText(app.globalData.hospitalName, 70, 70)
+      canvas.draw(true, setTimeout(function () {
         console.log('n31')
         that.saveCanvas()
-        
-      },100));
-     
-    }else{
-   
+
+      }, 100));
+
+    } else {
+
       wx.downloadFile({
-        url: that.data.avator,//注意公众平台是否配置相应的域名
+        url: that.data.avator, //注意公众平台是否配置相应的域名
         success: function (res) {
           that.setData({
             avatorShare: res.tempFilePath
           })
-          var leftW=(that.data.windowW-220)/2
+          var leftW = (that.data.windowW - 220) / 2
           var windowW = that.data.windowW;
           var windowH = that.data.windowH;
-  
+
           canvas.drawImage('../icon/fang.png', 0, 0, windowW, windowW);
           canvas.drawImage(that.data.avatorShare, 15, 30, 50, 50);
           canvas.drawImage(that.data.imglist[0], leftW, 100, 220, 220);
           // canvas.setFontSize(50)
-          canvas.font="20px Georgia";
-          if(that.data.detail.type2NurseName){
-            canvas.fillText('护士：'+that.data.detail.type2NurseName, 70, 50)
-          }else if(that.data.detail.type1DoctorName){
-            canvas.fillText('医生：'+that.data.detail.type1DoctorName, 70, 50)
+          canvas.font = "20px Georgia";
+          if (that.data.detail.type2NurseName) {
+            canvas.fillText('护士：' + that.data.detail.type2NurseName, 70, 50)
+          } else if (that.data.detail.type1DoctorName) {
+            canvas.fillText('医生：' + that.data.detail.type1DoctorName, 70, 50)
           }
-          canvas.font="15px Georgia";
-          canvas.fillText( app.globalData.hospitalName, 70, 70)
-          canvas.draw(true,setTimeout(function(){
+          canvas.font = "15px Georgia";
+          canvas.fillText(app.globalData.hospitalName, 70, 70)
+          canvas.draw(true, setTimeout(function () {
             console.log('n32')
             that.saveCanvas()
-  
-          },100));
+
+          }, 100));
         }
       })
     }
-    
-   
-   
-   
-   
+
+
+
+
+
     // canvas.draw();
   },
   saveCanvas: function () {
@@ -344,16 +416,16 @@ Page({
         //   canvasShow:false
         // }).
         console.log(121212)
-        console.log(340+res.tempFilePath)
+        console.log(340 + res.tempFilePath)
         that.setData({
-          urls:res.tempFilePath
+          urls: res.tempFilePath
         })
       },
-      fail:function(res){
-        console.log('fail='+res)
+      fail: function (res) {
+        console.log('fail=' + res)
       },
-      error:function(res){
-        console.log('error='+res)
+      error: function (res) {
+        console.log('error=' + res)
       }
     })
   },
@@ -366,25 +438,25 @@ Page({
     //   canvasShow:true
     // })
   },
-  lookCodeShow(){
-    var that=this
-    if(that.data.imglist){
-        // that.setData({
-        //   canvasShow:true
-        // })
-        // that.lookCode()
-        console.log(that.data.imglist[0],that.data.avator)
-        if(that.data.detail.type2NurseName){
-          wx.navigateTo({
-            url: '../canvasEve/canvasEve?img='+that.data.imglist[0]+'&avator='+that.data.avator+'&name='+app.globalData.hospitalName+'&eveName=护士：'+that.data.detail.type2NurseName,
-          })
-        }else if(that.data.detail.type1DoctorName){
-          wx.navigateTo({
-            url: '../canvasEve/canvasEve?img='+that.data.imglist[0]+'&avator='+that.data.avator+'&name='+app.globalData.hospitalName+'&eveName=医生：'+that.data.detail.type1DoctorName,
-          })
-        }
-      
-    }else{
+  lookCodeShow() {
+    var that = this
+    if (that.data.imglist) {
+      // that.setData({
+      //   canvasShow:true
+      // })
+      // that.lookCode()
+      console.log(that.data.imglist[0], that.data.avator)
+      if (that.data.detail.type2NurseName) {
+        wx.navigateTo({
+          url: '../canvasEve/canvasEve?img=' + that.data.imglist[0] + '&avator=' + that.data.avator + '&name=' + app.globalData.hospitalName + '&eveName=护士：' + that.data.detail.type2NurseName,
+        })
+      } else if (that.data.detail.type1DoctorName) {
+        wx.navigateTo({
+          url: '../canvasEve/canvasEve?img=' + that.data.imglist[0] + '&avator=' + that.data.avator + '&name=' + app.globalData.hospitalName + '&eveName=医生：' + that.data.detail.type1DoctorName,
+        })
+      }
+
+    } else {
       wx.showToast({
         title: '维护中',
       })
@@ -393,10 +465,10 @@ Page({
   closeCanvas: function () {
     var that = this;
     that.setData({
-      canvasShow:false
+      canvasShow: false
     })
   },
-  saveIs: function() {
+  saveIs: function () {
     var that = this
     console.log(that.data.urls)
     //生产环境时 记得这里要加入获取相册授权的代码
@@ -408,7 +480,7 @@ Page({
           showCancel: false,
           confirmText: '好哒',
           confirmColor: '#72B9C3',
-          success: function(res) {
+          success: function (res) {
             if (res.confirm) {
               that.setData({
                 hidden: true
@@ -417,8 +489,8 @@ Page({
           }
         })
       },
-      fail:function(err){
-        
+      fail: function (err) {
+
       }
     })
   },
@@ -428,8 +500,8 @@ Page({
   onReady: function () {
 
   },
-  refresh(){
-    var that =this
+  refresh() {
+    var that = this
     wx.request({
       url: app.globalData.url + '/ypt/user/login-refresh',
       header: {
@@ -440,8 +512,12 @@ Page({
       success: function (res) {
         // wx.hideToast()
         if (res.data.code == 0) {
-          
-          wx.setStorageSync('withoutLogin', false)
+          if (res.data.data.maintainIs == 1 || res.data.data.type == 1 || res.data.data.hospitalMaintainIs == 1) {
+            that.setData({
+              ttFormEditShow: true
+            })
+          }
+          wx.setStorageSync('withoutLogin', false)
           app.globalData.userInfoDetail = res.data.data
           if (app.globalData.userInfoDetail.cover == '' || app.globalData.userInfoDetail.cover == null || app.globalData.userInfoDetail.cover == undefined) {
             var avator = '../icon/moren.png'
@@ -455,10 +531,10 @@ Page({
             phone: app.globalData.userInfoDetail.phone,
             avator: avator,
             withoutLogin: false,
-            detail:res.data.data
+            detail: res.data.data
           })
           // Share
-          var param = encodeURIComponent('pages/evaNowShare/evaNowShare?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId)+'&hospitalid='+(wx.getStorageSync('loginHospitalId')||''))
+          var param = encodeURIComponent('pages/evaNowShare/evaNowShare?type=' + app.globalData.userInfoDetail.type + '&isfrom=1&id=' + (app.globalData.userInfoDetail.type1DoctorId || app.globalData.userInfoDetail.type2NurseId) + '&hospitalid=' + (wx.getStorageSync('loginHospitalId') || ''))
           wx.getImageInfo({
             src: app.globalData.url + '/ypt/wxminqrcode?path=' + param + '&width=200',
             method: 'get',
@@ -495,11 +571,16 @@ Page({
    */
   onShow: function () {
     // var that = this
+    if (app.globalData.userInfoDetail.maintainIs == 1 || app.globalData.userInfoDetail.type == 1 || app.globalData.userInfoDetail.hospitalMaintainIs == 1) {
+      this.setData({
+        ttFormEditShow: true
+      })
+    }
     this.setData({
-      canvasShow:false
+      canvasShow: false
     })
     this.setData({
-      version: app.version,//.split('-')[0],
+      version: app.version, //.split('-')[0],
       entityTel: app.globalData.entity.entityTel,
     })
     this.refresh()
@@ -548,7 +629,7 @@ Page({
       method: 'post',
       success: function (res) {
         if (res.data.code == 0) {
-        
+
         }
       }
     })

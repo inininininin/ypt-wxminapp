@@ -1,5 +1,16 @@
 {
   "pages": [
+    
+    "pages/mine/mine",
+    "pages/modifyQueItem/modifyQueItem",
+    "pages/logBf/logBf",
+    "pages/pacie/pacie",
+    "pages/assessmentScaleShare/assessmentScaleShare",
+    "pages/assessmentScale/assessmentScale",
+    "pages/addPatient/addPatient",
+    "pages/addQueItem/addQueItem",
+    "pages/addQue/addQue",
+    "pages/painForm/painForm",
     "pages/index/index",
     "pages/search/saerch",
     "pages/searchPage/searchPage",
@@ -9,7 +20,6 @@
     "pages/common/common",
     "pages/evaluation/evaluation",
     "pages/news/news",
-    "pages/mine/mine",
     "pages/hosIndex/hosIndex",
     "pages/evaList/evaList",
     "pages/evadepart/evadepart",
@@ -22,7 +32,20 @@
     "pages/picDemo/picDemo",
     "pages/evaNowShare/evaNowShare",
     "pages/canvasHos/canvasHos",
-    "pages/canvasEve/canvasEve"
+    "pages/canvasEve/canvasEve",
+    "pages/addPatientMine/addPatientMine"
+  ],
+  "subpackages": [
+    {
+      "root": "packageA",
+      "pages": [
+        "pages/login/login",
+        "pages/index/index",
+        "pages/list/list",
+        "pages/rows/rows",
+        "pages/maIndex/maIndex"
+      ]
+    }
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -57,6 +80,11 @@
         "text": "我的"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   },
   "sitemapLocation": "sitemap.json"
 }

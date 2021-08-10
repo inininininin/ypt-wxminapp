@@ -1,5 +1,6 @@
 // pages/evaNow/evaNow.js
 var app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -24,6 +25,7 @@ Page({
     content:'',
     placeholder:'请输入评价',
     evaNowShow:true,
+    showIsPhone:false,
     // imglist: ["https://zaylt.njshangka.com/oss/20200115142958749245942194005171.jpg", "https://zaylt.njshangka.com/oss/20200115143015774507902254216329.jpg", "https://zaylt.njshangka.com/oss/20200224110306310510637790292661.png"],
   },
   select(e) {
@@ -109,7 +111,7 @@ Page({
                 icon: 'none',
                 duration: 2000,
                 mask: true,
-                complete: function complete(res) {
+                complete: function (res) {
                 
                 }
               });
@@ -151,6 +153,13 @@ Page({
     // debugger
     wx.setStorageSync('type', options.type) 
     wx.setStorageSync('id', options.id)
+    wx.request({
+      url: app.globalData.url + '/oss/alive/user-protocol.html',
+      success: function (res) {
+        var article = res.data
+        WxParse.wxParse('article', 'html', article, that, 5);
+      }
+    })
     if (wx.getStorageSync('type') == 1) {
       wx.request({
         url: app.globalData.url + '/ypt/doctor',
@@ -218,12 +227,25 @@ Page({
 
   },
   evaNow(e) {
+    let that = this
+    console.log(app.globalData.userInfoDetail)
+    if(!app.globalData.userInfoDetail.phone){
+      wx.showToast({
+        title: '请先绑定手机号',
+        icon:'none',
+        duration:1000
+      })
+      that.setData({
+        showIsPhone:true
+      })
+      return
+    }
     wx.showToast({
       title: '操作中',
       icon: 'none',
       duration:1000
     })
-    var that = this
+ 
     that.setData({
       evaNowShow:false
     })
@@ -288,7 +310,7 @@ Page({
               icon: 'none',
               duration: 2000,
               mask: true,
-              complete: function complete(res) {
+              complete: function (res) {
                 that.setData({
                   evaNowShow:true
                 })
@@ -354,7 +376,7 @@ Page({
             icon: 'none',
             duration: 2000,
             mask: true,
-            complete: function complete(res) {
+            complete: function (res) {
               setTimeout(function () {
                 wx.setStorageSync('historyUrl', app.historyUrl() )
                 wx.navigateTo({
@@ -415,5 +437,95 @@ Page({
         }
       }
     })
+  },
+  refuse(e) {
+    this.setData({
+      showIsPhone: false
+    })
+  },
+  getPhoneNumber(e) {
+let that=this
+    wx.login({
+      success(res) {
+        var code = res.code
+        wx.request({
+          url: app.globalData.url + '/ypt/user/bind-phone',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          method: 'post',
+          data: {
+            wsJsCode: code,
+            // loginHospitalId: wx.getStorageSync('loginHospitalId'),
+            wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
+            wxMinappIv: e.detail.iv || '',
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+
+              // wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              wx.request({
+                url: app.globalData.url + '/ypt/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  wx.hideToast()
+                  if (res.data.code == 0) {
+                    app.globalData.userInfoDetail = res.data.data
+                    wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                    wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+                    wx.setStorageSync('codeType', that.data.type)
+                    wx.setStorageSync('withoutLogin', false)
+                    wx.showToast({
+                      title: '绑定成功',
+                      icon: 'none',
+                      duration: 2000,
+                      mask: true,
+                      complete: function (res) {
+                        setTimeout(function () {    
+                          that.setData({
+                            showIsPhone: false
+                          })        
+                        //   wx.setStorageSync('historyUrl', that.data.backUrl)              
+                        //   if (that.data.fromType == 1) {
+                        //     wx.setStorageSync('fromTab', 1)
+                        //     wx.switchTab({
+                        //       url: '../index/index',
+                        //     })
+                        //   } else {
+                        //     wx.switchTab({
+                        //       url: '../index/index',
+                        //     })
+                        //   }
+                        }, 500);
+                      }
+                    });
+
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              })
+
+
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+      }
+    })
+
   }
 })

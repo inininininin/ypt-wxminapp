@@ -1,0 +1,47 @@
+<!--pages/addPatient/addPatient.wxml-->
+<view class="content">
+  <text wx:if="{{options.type!='modify'}}" class="title">创建问卷</text>
+  <text wx:if="{{options.type!='modify'}}"  class="point">填写问卷基本信息，创建他的疼痛评估单</text>
+  <text wx:if="{{options.type=='modify'}}" class="title">修改问卷</text>
+  <text wx:if="{{options.type=='modify'}}"  class="point">填写问卷基本信息，修改疼痛评估单</text>
+  <view class="lineItem">
+    <text class="lineTitle">姓名：</text><input value="{{patientDetail.realname}}" type="text" bindinput="realname" placeholder-style="color: #cccccc;" placeholder="请输入姓名" />
+  </view>
+  <view class="lineItem">
+    <text class="lineTitle">性别：</text>
+    <radio-group class="radioChange" bindchange="radioChange">
+          <label class="answerItem" wx:for="{{items}}" wx:key="{{item.value}}">
+            <radio value="{{item.value}}" checked="{{item.checked}}" /><text>{{item.name}}</text></label>
+        </radio-group>
+    <!-- <input type="text" placeholder-style="color: #cccccc;" placeholder="请输入性别" /> -->
+  </view>
+  <view class="lineItem">
+    <text class="lineTitle">年龄：</text><input value="{{patientDetail.age}}"  bindinput="age" type="number" placeholder-style="color: #cccccc;" placeholder="请输入年龄" />
+  </view>
+  <view class="lineItem">
+    <text class="lineTitle">电话：</text><input value="{{patientDetail.phone}}"  bindinput="phone" type="number" placeholder-style="color: #cccccc;" placeholder="请输入电话" />
+  </view>
+  <view class="addressItem">
+    <view class="lineTitle">住址：</view>
+    <view class="selectBox">
+      <view class="pickerLess">
+        <picker class="orderSelcet" wx:if='{{picker}}' mode="region" style="color:#cccccc" bindchange="addressSel"
+          custom-item="{{customItem}}">
+          <view class="picker lineOne">
+            请选择收货地：省-市-区
+          </view>
+        </picker>
+        <picker class="orderSelcet" wx:if='{{!picker}}' mode="region" style="color:#333333" bindchange="addressSel"
+          custom-item="{{customItem}}">
+          <view class="picker lineOne">
+            {{patientDetail.addressList.area1Name}}，{{patientDetail.addressList.area2Name}}，{{patientDetail.addressList.area3Name}}
+          </view>
+        </picker>
+      </view>
+      <input class="inputItem"  value="{{patientDetail.addressList.address}}"  bindinput="address" type="text" placeholder="请填写详细住址" placeholder-style="color: #cccccc;" />
+    </view>
+  </view>
+</view>
+<!-- 创建疼痛评估表 -->
+<view class="createForm" bindtap="createPatient" wx:if="{{options.type!='modify'}}">创建问卷</view>
+<view class="createForm" bindtap="modifyPatient" wx:if="{{options.type=='modify'}}">确认</view>

@@ -1,0 +1,92 @@
+<view class="topHeader" style="height:{{navBarHeight}}px;background:#fff">
+  <view style="width:100%;height:{{navBarHeight-menuHeight-menuBotton}}px"></view>
+  <view class="topHeaderTitle" style="height:{{menuHeight+menuBotton}}px;line-height:{{menuHeight+menuBotton}}px;">
+    <view class="lineOne addressTop" style="width:{{menuWidth}}px;height:{{menuHeight+menuBotton}}px;">
+      {{address}}
+    </view>
+    <view class="title" style="width:calc(100% - {{menuWidth+menuWidth}}px) ">
+      {{title}}
+      <view wx:if="{{commit}}" style=" font-size: 28rpx;">(<text class="error" wx:if="{{exception==1}}">异常</text><text
+          class="success" wx:if="{{exception==0}}">正常</text>)</view>
+    </view>
+  </view>
+</view>
+
+<!--pages/assessmentScale/assessmentScale.wxml-->
+
+
+<view class="questionList" wx:if="{{patientDetail.doChunks}}">
+  <view wx:for="{{patientDetail.doChunks}}" wx:if="{{index==0}}">
+    <!-- <text>{{item.name}}</text> -->
+    <view class="questionItem" wx:for="{{item.doTopics}}" wx:for-item="childItem">
+      <!-- 填空题 -->
+      <view class="blanks" wx:if="{{childItem.type==3||childItem.type==4}}">
+        <view class="title">{{index+1}}.{{childItem.name}}</view>
+        <view class="imageQue" wx:if="{{childItem.img}}">
+          <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}"
+            mode="aspectFit"></image>
+        </view>
+        <input wx:if="{{childItem.type==3}}" class="inputItem" disabled='{{disabled}}' type="text" data-tno='{{childItem.doTopicNo}}'
+          value='{{childItem.elseanswer}}' bindblur="bindTextBlur" placeholder="输入答案内容" />
+          <input  wx:if="{{childItem.type==4}}" class="inputItem" disabled='{{disabled}}' type="digit" data-tno='{{childItem.doTopicNo}}'
+          value='{{childItem.elseanswer}}' bindblur="bindTextBlur" placeholder="输入答案内容" />
+      </view>
+      <!-- 单选题 -->
+      <view class="singleChoice" wx:if="{{childItem.type==1}}">
+        <view class="title">{{index+1}}.{{childItem.name}}</view>
+        <view class="imageQue" wx:if="{{childItem.img}}">
+          <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}"
+            mode="aspectFit"></image>
+        </view>
+        <view class="answerList">
+          <radio-group bindchange="radioChange" data-tno='{{childItem.doTopicNo}}'>
+            <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
+              <radio disabled='{{disabled}}' value="{{answerItem.doAnswerNo}}"
+                checked="{{answerItem.selected==1?true:false}}" />
+              <text>{{answerItem.name}}</text>
+            </label>
+          </radio-group>
+
+        </view>
+        <view class="elseOther" wx:if="{{childItem.elseanswerIs==1}}">
+          <text>其他：</text>
+          <textarea disabled='{{disabled}}' class="textItem" value='{{childItem.elseanswer}}'
+            data-tno='{{childItem.doTopicNo}}' cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return'
+            maxlength="1000" placeholder="输入其他" />
+          </view>
+    </view>
+    <!-- 多选题 -->
+    <view class="multipleChoice"  wx:if="{{childItem.type==2}}">
+      <view class="title">{{index+1}}.{{childItem.name}}</view>
+      <view class="imageQue" wx:if="{{childItem.img}}">
+        <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}" mode="aspectFit"></image>
+      </view>
+      <view class="answerList">
+        <checkbox-group  bindchange="checkboxChange"  data-tno='{{childItem.doTopicNo}}'>
+          <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
+            <checkbox  disabled='{{disabled}}' value="{{answerItem.doAnswerNo}}"  checked="{{answerItem.selected==1?true:false}}" />
+            <text>{{answerItem.name}}</text>
+          </label>
+        </checkbox-group>
+      </view>
+      <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
+        <text>其他：</text>
+        <textarea  disabled='{{disabled}}'  value='{{childItem.elseanswer}}' data-tno='{{childItem.doTopicNo}}'    class="textItem" cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
+      </view>
+    </view>
+
+  </view>
+  </view>
+  <view class="supply" bindtap="supply" wx:if="{{!disabled}}">提交</view>
+  <view  class="supplyNo" wx:if="{{disabled}}">提交</view>
+</view>
+
+
+
+<view  class="showMaintainIs" wx:if="{{showMaintainIs}}" catchtap='showMaintainIs'>
+  <image src="../icon/manage.png"></image>
+  管理
+</view>
+
+
+<!-- <view class="loading" wx:if="{{loading}}"></view> -->

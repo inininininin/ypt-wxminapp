@@ -1,0 +1,2 @@
+<!--pages/logBf/logBf.wxml-->
+<text class="wait">{{text}}</text>
