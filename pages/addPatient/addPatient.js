@@ -134,6 +134,7 @@ Page({
         'cookie': wx.getStorageSync('cookie')
       },
       data:{
+        hospitalId:that.data.options.hospitalId,
         questionnaireNo:that.data.patientDetail.questionnaireNo,
         phone:that.data.patientDetail.phone,
         realname:that.data.patientDetail.realname,

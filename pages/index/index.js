@@ -15,8 +15,8 @@ Page({
     bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
     canvasShow: false,
-    change:0,
-    ids:''
+    change: 0,
+    ids: ''
   },
   // 搜索跳转
   searchkey(e) {
@@ -81,6 +81,7 @@ Page({
     var that = this
     // wx.showToast({
     //   title:  wx.getStorageSync('loginHospitalId'),
+    //   icon:"none"
     // })
     // if(!wx.getStorageSync('loginHospitalId')){
     //   wx.showToast({
@@ -90,6 +91,9 @@ Page({
     //   })
     //   return
     // }
+    that.setData({
+      loginHospitalId11: wx.getStorageSync('loginHospitalId'),
+    })
     wx.request({
       url: app.globalData.url + '/ypt/user/hospital',
       header: {
@@ -101,23 +105,21 @@ Page({
         hospitalId: wx.getStorageSync('loginHospitalId'), // app.globalData.loginHospitalId,
       },
       success: function (res) {
-        // if (res.data.codeMsg) {
-        //   wx.showToast({
-        //     title: res.data.codeMsg,
-        //     icon: 'none'
-        //   })
-        // }
         if (res.data.code == 0) {
+          that.setData({
+            loginHospitalId111: res.data.data.name,
+            loginHospitalId222: res.data.data.hospitalId
+          })
           app.globalData.hospitalName = res.data.data.name
           app.globalData.hospitaiDetail = res.data.data
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
-            if(res.data.data.tag.split(',')){
+            if (res.data.data.tag.split(',')) {
               for (var i in res.data.data.tag.split(',')) {
                 tag.push(res.data.data.tag.split(',')[i])
               }
-            }else{
+            } else {
               tag.push(res.data.data.tag)
             }
           }
@@ -148,17 +150,17 @@ Page({
               console.log(res)
             }
           })
-        } else if (res.data.code == 1404||res.data.code==1001) {
+        } else if (res.data.code == 1404 || res.data.code == 1001) {
           wx.showToast({
             title: '请选择一个医院',
-            icon:'none',
-            duration:2000,
-            success:function(res){
+            icon: 'none',
+            duration: 2000,
+            success: function (res) {
               wx.navigateTo({
                 url: '../hosList/hosList',
               })
             },
-            complete:function(res){
+            complete: function (res) {
               console.log(res)
             },
           })
@@ -207,7 +209,7 @@ Page({
               depart: res.data.data.rows
             })
           }
-        
+
         }
         // else {
         //   wx.showToast({
@@ -279,24 +281,108 @@ Page({
     })
   },
   onLoad: function (options) {
-    let that=this
+    let that = this
     console.log(options)
     that.setData({
-      version: app.version,//.split('-')[0],
+      version: app.version,
       entityTel: app.globalData.entity.entityTel,
     })
     if (options && options.hospitalid) {
       that.setData({
-        ids:options.hospitalid
+        ids: options.hospitalid
       })
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
-      that.hosDetail();
-    }else{
-      that.hosDetail();
+      // that.hosDetail();
+      // wx.showToast({
+      //   title: '1',
+      // })
+    } else {
+      // wx.showToast({
+      //   title: '2',
+      // })
+      // that.hosDetail();
     }
     that.sys();
-   
+
+    let hospitalId = ''
+    if (options && options.hospitalid) {
+      hospitalId = options.hospitalid
+    } else if (wx.getStorageSync('loginHospitalId')) {
+      hospitalId = wx.getStorageSync('loginHospitalId')
+    } else {
+      hospitalId = ''
+    }
+    console.log('hospitalId=' + hospitalId)
+    that.setData({
+      hospitalIdXIanshi: hospitalId
+    })
+    wx.login({
+      success(res) {
+        var code = res.code
+        wx.request({
+          url: app.globalData.url + '/ypt/user/login-by-wxminapp-jscode',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: 'post',
+          data: {
+            wsJsCode: code,
+            loginHospitalId: hospitalId,
+          },
+          success: function (res) {
+            // wx.hideToast()
+            if (res.data.code == 0) {
+              // wx.showToast({
+              //   title: hospitalId,
+              // })
+
+              that.setData({
+                hospitalIdXIanshi1: hospitalId
+              })
+              console.log('wxLogin')
+              wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              wx.request({
+                url: app.globalData.url + '/ypt/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  // wx.hideToast()
+                  if (res.data.code == 0) {
+                    that.departDetail();
+                    that.docList();
+                    that.hosDetail();
+                    that.setData({
+                      loginHospitalId1: res.data.data.hospitalId,
+                      loginHpitalName1: res.data.data.hospitalName
+                    })
+                    app.globalData.userInfoDetail = res.data.data
+                    wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                    wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              })
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+      }
+    })
+
+
   },
   onShow: function (options) {
     this.setData({
@@ -306,27 +392,27 @@ Page({
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
-    console.log( wx.getStorageSync('historyUrl'))
+    console.log(wx.getStorageSync('historyUrl'))
     if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 1) {
       wx.switchTab({
         url: wx.getStorageSync('historyUrl'),
       })
       wx.setStorageSync('fromTab', '')
-    } else  if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 0){
+    } else if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 0) {
       console.log(wx.getStorageSync('historyUrl'))
-      console.log(wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'))
+      console.log(wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id') + '&hospitalid=' + wx.getStorageSync('loginHospitalId'))
       wx.navigateTo({
-        url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'),
+        url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id') + '&hospitalid=' + wx.getStorageSync('loginHospitalId'),
       })
       wx.setStorageSync('historyUrl', '')
     }
-    if(this.data.change==1){
+    if (this.data.change == 1) {
       this.setData({
-        change:0
+        change: 0
       })
       this.hosDetail();
     }
-   
+
     this.departDetail();
     this.docList();
 
@@ -411,7 +497,7 @@ Page({
       canvasShow: true
     })
     wx.downloadFile({
-      url: that.data.testImg,//注意公众平台是否配置相应的域名
+      url: that.data.testImg, //注意公众平台是否配置相应的域名
       success: function (res) {
         console.log(res.tempFilePath)
         that.setData({
@@ -500,21 +586,21 @@ Page({
       // })
       // that.lookCode()
       console.log(that.data.hosDetail.name, that.data.imglist[0], that.data.testImg)
-      if(that.data.imglist[0]&&that.data.hosDetail.name&&that.data.testImg){
+      if (that.data.imglist[0] && that.data.hosDetail.name && that.data.testImg) {
         wx.navigateTo({
-          url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + that.data.testImg + '&name=' + that.data.hosDetail.name,
+          url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + that.data.testImg + '&name=' + that.data.hosDetail.name+"&id="+that.data.hosDetail.hospitalId,
         })
-      }else{
+      } else {
         wx.showToast({
           title: '二维码生成中,请稍后重试',
-          icon:'none'
+          icon: 'none'
         })
       }
-     
+
     } else {
       wx.showToast({
         title: '维护中',
-        icon:'none'
+        icon: 'none'
       })
     }
     // console.log(112121)

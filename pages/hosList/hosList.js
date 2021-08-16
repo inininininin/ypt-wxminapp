@@ -9,7 +9,7 @@ Page({
   data: {
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
-    navtitle: '选择登录医院',
+    navtitle: '选择医院',
     showIs:false,
     kw:'',
     schemeList:[],
@@ -18,17 +18,22 @@ Page({
   selectThis(e){
     // app.globalData.loginHospitalId=e.currentTarget.dataset.id
     // app.globalData.loginHpitalName=e.currentTarget.dataset.name
-    wx.setStorageSync('loginHospitalId', e.currentTarget.dataset.id)
-    wx.setStorageSync('loginHpitalName', e.currentTarget.dataset.name)
-    
-    var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1];   //当前页面
-    var prevPage = pages[pages.length - 2];  //上一个页面
-    prevPage.setData({
-      change:1
-    });
-    wx.navigateBack({
-      delta: 1
+    // wx.setStorageSync('loginHospitalId', e.currentTarget.dataset.id)
+    // wx.setStorageSync('loginHpitalName', e.currentTarget.dataset.name)
+   
+    // var pages = getCurrentPages();
+    // var currPage = pages[pages.length - 1];   //当前页面
+    // var prevPage = pages[pages.length - 2];  //上一个页面
+    // prevPage.setData({
+    //   change:1
+    // });
+    // wx.navigateBack({
+    //   delta: 1
+    // })
+    wx.setStorageSync('loginHospitalIdMaintain', e.currentTarget.dataset.id)
+    wx.setStorageSync('loginHpitalNameMaintain', e.currentTarget.dataset.name)
+    wx.navigateTo({
+      url: '../pacieMain/pacieMain?id='+e.currentTarget.dataset.id+'&name='+e.currentTarget.dataset.name+'&cover='+e.currentTarget.dataset.cover,
     })
   },
   backHistory(e) {

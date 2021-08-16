@@ -401,3 +401,110 @@ color: #ffffff;
 .posBtm .posBtm{
   margin-top: 20rpx;
 }
+
+.expertOpinion{
+  width: 100%;
+  height: auto;
+  font-size: 34rpx;
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: 400;
+    text-align: left;
+    color: #333333;
+    line-height: 48rpx;
+    letter-spacing: 1rpx;
+    white-space: normal;
+    word-break:break-all;
+    background-color: #fff;
+    padding: 30rpx 32rpx 40rpx;
+    box-sizing: border-box;
+    background-color: rgba(51, 189, 51, 0.253);
+}
+
+.maintainIs{
+  position: fixed;
+  bottom: 150rpx;
+  right: 40rpx;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 45rpx;
+  z-index: 1001;
+  background-color: rgba(255,255,255,0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 24rpx;
+  color: #666666;
+  border:1rpx solid #e5e5e5;
+}
+.maintainIs image{
+  width: 50rpx;
+  height: 50rpx;
+}
+.maintainIsShow{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1002;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.suggest{
+  width: 540rpx;
+  height: 400rpx;
+  border-radius: 10rpx;
+  background-color: #ffffff;
+}
+.suggest .title{
+  font-size: 30rpx;
+  color: #333333;
+  width: 100%;
+  height: 80rpx;
+  display: inline-block;
+  line-height: 80rpx;
+  text-align: center;
+  border-bottom: 1rpx solid  #e5e5e5;
+}
+.opinion{
+  margin: 30rpx auto;
+  width: 480rpx;
+  height: 160rpx;
+  border: 1rpx dotted #e5e5e5;
+  padding: 22rpx;
+  box-sizing: border-box;
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #666666;
+}
+.suggestBtn{
+  width: 100%;
+  height: 100rpx;
+  border-top: 1rpx solid #e5e5e5;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.suggestRefuse,.suggestSure{
+  width: 269rpx;
+  height: 100%;
+  text-align: center;
+  line-height: 100rpx;
+}
+.suggestRefuse{
+  color: #999999;
+}
+.suggestSure{
+  color: #666666;
+  /* font-weight: 500; */
+}
+.suggestLine{
+  width: 2rpx;
+  height: 30rpx;
+  background-color: #c5c5c5;
+}

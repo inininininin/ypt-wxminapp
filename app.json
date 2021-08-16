@@ -32,7 +32,8 @@
     "pages/evaNowShare/evaNowShare",
     "pages/canvasHos/canvasHos",
     "pages/canvasEve/canvasEve",
-    "pages/addPatientMine/addPatientMine"
+    "pages/addPatientMine/addPatientMine",
+     "pages/pacieMain/pacieMain"
   ],
   "subpackages": [
     {

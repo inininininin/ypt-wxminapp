@@ -1,5 +1,6 @@
 // pages/assessmentScale/assessmentScale.js
 const app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -25,13 +26,67 @@ Page({
     chunkNo: null,
     answerList: [],
     doMyself: true,
-    dis:true,
-    isMine:false,
-    mydoNo:'',
-    type:null,
+    dis: true,
+    isMine: false,
+    mydoNo: '',
+    type: null,
+    maintainIs:null,
+    maintainIsShow:false,
+    opinion:''
   },
-  newOwnTopic(){
+  newOwnTopic() {
     this.myQue()
+  },
+  suggestRefuse(){
+    this.setData({
+      maintainIsShow:false
+    })
+  },
+  opinion(e){
+    this.setData({
+      opinion:e.detail.value
+    })
+  },
+  maintainIs() {
+    let that=this
+    this.setData({
+      maintainIsShow:true
+    })
+  },
+  suggestSure(){
+    let that=this
+    wx.request({
+      url: app.globalData.url + '/ypt/questionnaire-do/expert-do-opinion',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      data: {
+        doNo:  that.data.options.doNo,
+        opinion: that.data.opinion
+      },
+      method: 'post',
+      success: function (res) {
+        if (res.data.code == 0) {
+          console.log(that.data.patientDetail)
+          that.data.patientDetail.expertOpinion= that.data.opinion
+          that.setData({
+            opinion:'',
+            patientDetail:that.data.patientDetail,
+            maintainIsShow:false
+          })
+          wx.showToast({
+            title: '提交成功',
+            icon: "none"
+          })
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
+      }
+    });
   },
   bindTextBlur(e) {
     // this.data.answerList
@@ -96,7 +151,7 @@ Page({
             for (var m in doAnswers) {
               if (answerVal == doAnswers[m].doAnswerNo) {
                 doAnswers[m].selected = 1
-              }else{
+              } else {
                 doAnswers[m].selected = 0
               }
             }
@@ -140,18 +195,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options)
-   
-    
-    if(options&&options.dis){
-      this.setData({
-        dis:options.dis
+    let that=this
+    that.setData({
+      maintainIs:app.globalData.userInfoDetail.maintainIs
+    })
+    wx.request({
+      url: app.globalData.url + '/oss/alive/user-protocol.html',
+      success: function (res) {
+        var article = res.data
+        WxParse.wxParse('article', 'html', article, that, 5);
+      }
+    })
+    if (options && options.dis) {
+      that.setData({
+        dis: options.dis
       })
     }
-    this.setData({
+    that.setData({
       options: options
     })
-    this.wxLogin() 
+    that.wxLogin()
     // this.patientRow()
   },
   selectChunk(e) {
@@ -181,7 +244,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-console.log(this.data.patientDetail)
+    console.log(this.data.patientDetail)
   },
 
   /**
@@ -202,6 +265,7 @@ console.log(this.data.patientDetail)
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    this.patientRow()
     wx.stopPullDownRefresh()
   },
 
@@ -223,15 +287,15 @@ console.log(this.data.patientDetail)
 
     // var path = 'pages/assessmentScaleShare/assessmentScaleShare?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId
     // var path = 'pages/out/articleDetail/articleDetail?id=' + this.data.id+"&ids=1"
-    var path = 'pages/assessmentScale/assessmentScale?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId +"&dis=true"
-   
+    var path = 'pages/assessmentScale/assessmentScale?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId + "&dis=true"
+
     let realname = this.data.patientDetail.realname
     if (realname.length > 1) {
       realname = realname.slice(0, realname.length - 1) + '*'
     }
     console.log(realname)
     return {
-      title: '姓名： ' + realname +`(${app.globalData.userInfoDetail.hospitalName})`, //分享内容
+      title:   realname+'的问卷' + `(${app.globalData.userInfoDetail.hospitalName})`, //分享内容
       path: path, //分享地址
       imageUrl: app.globalData.url + '/ypt/wxminapp-resource/questionnaire-logo1.png', //分享图片
       success: function (res) {},
@@ -259,28 +323,30 @@ console.log(this.data.patientDetail)
       },
       method: 'post',
       success: function (res) {
-        wx.hideToast()
+
         if (res.data.code == 0) {
           console.log(that.data.dis)
-          console.log(res.data.data.row.userId,app.globalData.userInfoDetail.userId)
-          if(res.data.data.row.userId==app.globalData.userInfoDetail.userId){
+          console.log(111)
+          // console.log()
+          console.log('123='+res.data.data.row.userId, '456='+app.globalData.userInfoDetail.userId)
+          if (res.data.data.row.userId == app.globalData.userInfoDetail.userId) {
             that.setData({
-              dis:false,
-              isMine:true
+              dis: false,
+              isMine: true
             })
-          }else{
-            if(that.data.type==1){
+          } else {
+            if (that.data.type == 1) {
               that.setData({
-                dis:false,
-                isMine:false
+                dis: false,
+                isMine: false
               })
-            }else{
+            } else {
               that.setData({
-                dis:true,
-                isMine:false
+                dis: true,
+                isMine: false
               })
             }
-           
+
           }
           console.log(that.data.dis)
           let chunkNo = ''
@@ -302,7 +368,7 @@ console.log(this.data.patientDetail)
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon:'none'
+            icon: 'none'
           })
         }
       }
@@ -323,7 +389,7 @@ console.log(this.data.patientDetail)
       },
       method: 'post',
       success: function (res) {
-        wx.hideToast()
+
         if (res.data.code == 0) {
           for (var r in that.data.topicRows) {
             if (that.data.topicRows[r].no == topicNo) {
@@ -337,7 +403,7 @@ console.log(this.data.patientDetail)
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon:'none'
+            icon: 'none'
           })
         }
       }
@@ -347,34 +413,48 @@ console.log(this.data.patientDetail)
   // /do-topic
   doTopic(doTopicNo, elseanswer, doAnswerNo) {
     var that = this
-   
+
     wx.request({
-      url: app.globalData.url +  '/ypt/questionnaire-do/do-topic',
+      url: app.globalData.url + '/ypt/questionnaire-do/do-topic',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
       },
       data: {
         doNo: that.data.options.doNo,
-        doTopicNo: doTopicNo||"",
-        elseanswer: elseanswer||"",
-        doAnswerNo: doAnswerNo||"",
+        doTopicNo: doTopicNo || "",
+        elseanswer: elseanswer || "",
+        doAnswerNo: doAnswerNo || "",
       },
       method: 'post',
       success: function (res) {
-        wx.hideToast()
+
         if (res.data.code == 0) {
-          wx.showToast({
-            title: '提交成功',
-            icon: "none",
-            success: function (res) {
-             
+          let doTopics = []
+          for (var i in that.data.patientDetail.doChunks) {
+            if (that.data.patientDetail.doChunks[i].doChunkNo == that.data.chunkNo) {
+              doTopics = that.data.patientDetail.doChunks[i].doTopics
+              for (var r in doTopics) {
+                if (doTopicNo == doTopics[r].doTopicNo) {
+                  wx.showToast({
+                    title: '提交成功',
+                    icon: "none",
+                    success: function (res) {
+
+                    }
+                  })
+                }
+              }
             }
-          })
+
+
+          }
+
+
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon:'none'
+            icon: 'none'
           })
         }
       }
@@ -382,7 +462,7 @@ console.log(this.data.patientDetail)
   },
   // 提交答案
   supply() {
-    setTimeout(()=>{
+    setTimeout(() => {
       console.log(this.data.patientDetail)
       let doChunks = this.data.patientDetail.doChunks
       let that = this
@@ -397,24 +477,24 @@ console.log(this.data.patientDetail)
             } else if (doTopics[i].type == 1) {
               console.log(1)
               for (var m in doTopics[i].doAnswers) {
-                
+
                 if (doTopics[i].doAnswers[m].selected == 1) {
-                  that.doTopic(doTopics[i].doTopicNo,'', doTopics[i].doAnswers[m].doAnswerNo)
-                }else{
+                  that.doTopic(doTopics[i].doTopicNo, '', doTopics[i].doAnswers[m].doAnswerNo)
+                } else {
                   that.undoTopic(doTopics[i].doTopicNo, doTopics[i].doAnswers[m].doAnswerNo)
                 }
-                
+
               }
               if (doTopics[i].elseanswer) {
                 that.doTopic(doTopics[i].doTopicNo, doTopics[i].elseanswer, '')
               }
-      
+
             } else if (doTopics[i].type == 2) {
               console.log(2)
               for (var m in doTopics[i].doAnswers) {
                 if (doTopics[i].doAnswers[m].selected == 1) {
                   that.doTopic(doTopics[i].doTopicNo, '', doTopics[i].doAnswers[m].doAnswerNo)
-                }else{
+                } else {
                   that.undoTopic(doTopics[i].doTopicNo, doTopics[i].doAnswers[m].doAnswerNo)
                 }
               }
@@ -426,19 +506,19 @@ console.log(this.data.patientDetail)
           // wx.redirectTo({
           //   url: '../assessmentScaleShare/assessmentScaleShare?no='+that.data.options.no+'&doNo='+that.data.options.doNo,
           // })
-          if(that.data.options.share==2){
+          if (that.data.options.share == 2) {
             wx.navigateBack()
-          }else{
-            wx.showToast({
-              title: '修改已完成',
-              icon:'none'
-            })
+          } else {
+            // wx.showToast({
+            //   title: '修改已完成',
+            //   icon:'none'
+            // })
           }
         }
       }
-    },500)
-  
-   
+    }, 500)
+
+
 
   },
   // /undo-selected-answer
@@ -457,7 +537,7 @@ console.log(this.data.patientDetail)
       },
       method: 'post',
       success: function (res) {
-        wx.hideToast()
+
         if (res.data.code == 0) {
           // wx.showToast({
           //   title: '提交成功',
@@ -469,7 +549,7 @@ console.log(this.data.patientDetail)
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon:'none'
+            icon: 'none'
           })
         }
       }
@@ -491,7 +571,7 @@ console.log(this.data.patientDetail)
             loginHospitalId: wx.getStorageSync('loginHospitalId'),
           },
           success: function (res) {
-            wx.hideToast()
+
             if (res.data.code == 0) {
               console.log('wxLogin')
               wx.setStorageSync('cookie', res.header['Set-Cookie'])
@@ -503,17 +583,17 @@ console.log(this.data.patientDetail)
                 },
                 method: 'post',
                 success: function (res) {
-                  wx.hideToast()
+
                   if (res.data.code == 0) {
                     if (!res.data.data.phone) {
                       that.setData({
                         showIs: true
                       })
                     }
-                    if(res.data.data.type==1){
+                    if (res.data.data.hospitalOperation == 1) {
                       that.setData({
                         dis: false,
-                        type:res.data.data.type
+                        type: res.data.data.hospitalOperation
                       })
                     }
                     that.myQue()
@@ -543,50 +623,132 @@ console.log(this.data.patientDetail)
       }
     })
   },
-  myQue(){
-    let that=this
+  myQue() {
+    let that = this
     wx.request({
       url: app.globalData.url + '/ypt/questionnaire-do/get-my-questionnaire-do',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
       },
-      data:{
-        questionnaireNo :that.data.options.no,
+      data: {
+        questionnaireNo: that.data.options.no,
       },
       method: 'post',
       success: function (res) {
         if (res.data.code == 0) {
-          if(res.data.data.doNo!=''&&res.data.data.doNo!=null&&res.data.data.doNo!=undefined){
+          if (res.data.data.doNo != '' && res.data.data.doNo != null && res.data.data.doNo != undefined) {
             that.setData({
-              funBtn:true,
-              mydoNo:res.data.data.doNo
+              funBtn: true,
+              mydoNo: res.data.data.doNo
             })
-           
-          }else{
+
+          } else {
             that.setData({
-              funBtn:false
+              funBtn: false
             })
-           
+
           }
           console.log(that.data.dis)
         } else {
           wx.showToast({
             title: res.data.codeMsg,
-            icon:'none'
+            icon: 'none'
           })
         }
       }
     });
   },
-  newOwnTopic(){
+  newOwnTopic() {
     wx.navigateTo({
       url: '../addPatientMine/addPatientMine?no=' + this.data.options.no + "&type=myself",
     })
   },
-  goOwnTopic(){
+  goOwnTopic() {
     wx.navigateTo({
-      url: '../assessmentScale/assessmentScale?no='+this.data.options.no+'&doNo='+this.data.mydoNo,
+      url: '../assessmentScale/assessmentScale?no=' + this.data.options.no + '&doNo=' + this.data.mydoNo,
+    })
+  },
+  getPhoneNumber(e) {
+    let that = this
+    wx.login({
+      success(res) {
+        var code = res.code
+        wx.request({
+          url: app.globalData.url + '/ypt/user/bind-phone',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          method: 'post',
+          data: {
+            wsJsCode: code,
+            // loginHospitalId: wx.getStorageSync('loginHospitalId'),
+            wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
+            wxMinappIv: e.detail.iv || '',
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+
+              // wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              wx.request({
+                url: app.globalData.url + '/ypt/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  wx.hideToast()
+                  if (res.data.code == 0) {
+                    app.globalData.userInfoDetail = res.data.data
+                    wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                    wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+                    wx.setStorageSync('codeType', that.data.type)
+                    wx.setStorageSync('withoutLogin', false)
+                    wx.showToast({
+                      title: '绑定成功',
+                      icon: 'none',
+                      duration: 2000,
+                      mask: true,
+                      complete: function (res) {
+                        setTimeout(function () {
+                          that.data.patientDetail.phone = app.globalData.userInfoDetail.phone
+                          // wx.redirectTo({
+                          //   url: '../assessmentScaleShare/assessmentScaleShare?no=' + that.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + "&doNo=" + that.data.options.doNo
+                          // })
+                          wx.redirectTo({
+                            url: '../assessmentScale/assessmentScale?no=' + that.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + "&doNo=" + that.data.options.doNo+"&dis=true"
+                          })
+                          
+                          that.setData({
+                            showIs: false,
+                            patientDetail: that.data.patientDetail
+                          })
+                        }, 500);
+                      }
+                    });
+
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              })
+
+
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+      }
     })
   }
 })

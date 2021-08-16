@@ -127,15 +127,25 @@ Page({
     var that = this
     console.log(132)
     console.log(that.data.patientDetail.questionnaireNo)
+    let hospitalId=''
+    console.log('hhh='+that.data.options.loginHospitalId,app.globalData.userInfoDetail.hospitalId)
+    if(that.data.options.loginHospitalId){
+      hospitalId=that.data.options.loginHospitalId
+      console.log(1)
+    }else{
+      hospitalId=app.globalData.userInfoDetail.hospitalId
+      console.log(2)
+    }
     wx.request({
-      url: app.globalData.url +that.data.createPatientUrl,// '/ypt/questionnaire-do/create',
+      url: app.globalData.url +'/ypt/questionnaire-do/create-my-do',// '/ypt/questionnaire-do/create',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
       },
       data:{
         fromUserId:wx.getStorageSync('fromUserId'),
-        questionnaireNo:that.data.patientDetail.questionnaireNo,
+        hospitalId:hospitalId,
+        questionnaireNo:that.data.options.no,
         phone:that.data.patientDetail.phone||"",
         realname:that.data.patientDetail.realname||"",
         sex:that.data.patientDetail.sex||"",
@@ -151,36 +161,24 @@ Page({
       method: 'post',
       success: function (res) {
         wx.hideToast()
-        console.log(333)
+      
         console.log(res)
+        console.log(333)
+        // console.log(that.data.createPatientUrl)
+        console.log(111)
+        console.log(res.data)
         if (res.data.code == 0) {
-          if(that.data.createPatientUrl=='/ypt/questionnaire-do/create'){
-            var pages = getCurrentPages();
-            // var currPage = pages[pages.length - 1]; //当前页面
-            var prevPage = pages[pages.length - 2]; //上一个页面
-            console.log(prevPage.data.patientList)
-            prevPage.data.patientList.unshift({doNo: res.data.data.doNo,
-            createTime:utils.formatTime( Date.parse(new Date()) / 1000, 'Y-M-D h:m') ,
-            userId: '',
-            realname: that.data.patientDetail.realname,
-            phone: that.data.patientDetail.phone})
-            console.log(prevPage.data.patientList)
-            // //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-            prevPage.setData({
-              patientList: prevPage.data.patientList,
-            })
-            wx.navigateBack();
-          }else{
+         
             // wx.navigateBack();
             // ?no='+this.data.list[0].no+'&doNo='+e.currentTarget.dataset.id,
             // wx.redirectTo({
             //   url: '../assessmentScaleShare/assessmentScaleShare?no='+wx.getStorageSync('no')+'&doNo='+res.data.data.doNo,
             // })
-
+            console.log(111)
+console.log(that.data.options.no)
             wx.redirectTo({
               url: '../assessmentScale/assessmentScale?no='+that.data.options.no+'&doNo='+res.data.data.doNo+"&dis=true",
             })
-          }
           
         } else {
           wx.showToast({
@@ -216,12 +214,84 @@ Page({
   onLoad: function (options) {
     console.log(options)
     let that=this
+    wx.request({
+      url: app.globalData.url + '/oss/alive/user-protocol.html',
+      success: function (res) {
+        var article = res.data
+        WxParse.wxParse('article', 'html', article, that, 5);
+      }
+    })
     if(options.fromUserId){
       wx.setStorageSync('fromUserId', options.fromUserId)
     }
     that.setData({
       options:options
     })
+    if(options.loginHospitalId){
+      wx.setStorageSync('loginHospitalId', options.loginHospitalId)
+    }
+    wx.getLocation({
+      type: 'wgs84',
+      success (res) {
+        console.log('success=')
+        console.log(res)
+        const latitude = res.latitude
+        const longitude = res.longitude
+        const speed = res.speed
+        const accuracy = res.accuracy
+        console.log('定位='+latitude,longitude,speed,accuracy)
+        wx.request({
+          url: app.globalData.url + '/ypt/baidu/map/reverse-geocoding',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          data:{
+            longitude :longitude,
+            latitude :latitude,
+          },
+          method: 'post',
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+             console.log('地址='+res.data.data)
+             if(that.data.picker||that.data.patientDetail.addressList.area1Name==''){
+               console.log(res.data.data.result.addressComponent.adcode,typeof(res.data.data.result.addressComponent.adcode))
+                that.data.patientDetail.addressList.area1Name=res.data.data.result.addressComponent.province
+                that.data.patientDetail.addressList.area2Name=res.data.data.result.addressComponent.city
+                that.data.patientDetail.addressList.area3Name=res.data.data.result.addressComponent.district
+                that.data.patientDetail.addressList.area1Id=res.data.data.result.addressComponent.adcode.slice(0,2)
+                that.data.patientDetail.addressList.area2Id=res.data.data.result.addressComponent.adcode.slice(0,4)
+                that.data.patientDetail.addressList.area3Id=res.data.data.result.addressComponent.adcode.slice(0,6)
+                console.log(that.data.patientDetail)
+                that.setData({
+                  patientDetail: that.data.patientDetail,
+                  region:[that.data.patientDetail.addressList.areaL1Name,that.data.patientDetail.addressList.areaL2Name,that.data.patientDetail.addressList.areaL3Name],
+                  picker:false
+                 })
+                // setTimeout(()=>{
+                //   that.setData({
+                //     patientDetail: that.data.patientDetail,
+                //     region:[that.data.patientDetail.addressList.areaL1Name,that.data.patientDetail.addressList.areaL2Name,that.data.patientDetail.addressList.areaL3Name],
+                //     picker:false
+                //    })
+                //  },500)
+             }
+             
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon:'none'
+              })
+            }
+          }
+        });
+      },
+      complete(res){
+        console.log('complete=')
+        console.log(res)
+      }
+     })
     wx.request({
           url: app.globalData.url + '/ypt/questionnaire-do/get-my-questionnaire-do',
           header: {
@@ -252,57 +322,7 @@ Page({
                 })
               }else{
                 
-                wx.getLocation({
-                  type: 'wgs84',
-                  success (res) {
-                    const latitude = res.latitude
-                    const longitude = res.longitude
-                    const speed = res.speed
-                    const accuracy = res.accuracy
-                    console.log(latitude,longitude,speed,accuracy)
-                    wx.request({
-                      url: app.globalData.url + '/ypt/baidu/map/reverse-geocoding',
-                      header: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        'cookie': wx.getStorageSync('cookie')
-                      },
-                      data:{
-                        longitude :longitude,
-                        latitude :latitude,
-                      },
-                      method: 'post',
-                      success: function (res) {
-                        wx.hideToast()
-                        if (res.data.code == 0) {
-                         console.log(res.data.data)
-                         if(that.data.picker||that.data.patientDetail.addressList.area1Name==''){
-                           console.log(res.data.data.result.addressComponent.adcode,typeof(res.data.data.result.addressComponent.adcode))
-                            that.data.patientDetail.addressList.area1Name=res.data.data.result.addressComponent.province
-                            that.data.patientDetail.addressList.area2Name=res.data.data.result.addressComponent.city
-                            that.data.patientDetail.addressList.area3Name=res.data.data.result.addressComponent.district
-                            that.data.patientDetail.addressList.area1Id=res.data.data.result.addressComponent.adcode.slice(0,2)
-                            that.data.patientDetail.addressList.area2Id=res.data.data.result.addressComponent.adcode.slice(0,4)
-                            that.data.patientDetail.addressList.area3Id=res.data.data.result.addressComponent.adcode.slice(0,6)
-                            console.log(that.data.patientDetail)
-                            setTimeout(()=>{
-                              that.setData({
-                                patientDetail: that.data.patientDetail,
-                                region:[that.data.patientDetail.addressList.areaL1Name,that.data.patientDetail.addressList.areaL2Name,that.data.patientDetail.addressList.areaL3Name],
-                                picker:false
-                               })
-                             },500)
-                         }
-                         
-                        } else {
-                          wx.showToast({
-                            title: res.data.codeMsg,
-                            icon:'none'
-                          })
-                        }
-                      }
-                    });
-                  }
-                 })
+                
                 that.data.patientDetail.questionnaireNo=options.no
                 if(options.loginHospitalId){
                   wx.setStorageSync('loginHospitalId', options.loginHospitalId)
@@ -313,13 +333,7 @@ Page({
                   options:options
                 })
                 console.log(that.data.patientDetail.questionnaireNo)
-                wx.request({
-                  url: app.globalData.url + '/oss/alive/user-protocol.html',
-                  success: function (res) {
-                    var article = res.data
-                    WxParse.wxParse('article', 'html', article, that, 5);
-                  }
-                })
+                
                 wx.request({
                   url: app.globalData.url + '/ypt/user/login-refresh',
                   header: {
@@ -374,13 +388,13 @@ Page({
                     }
                   }
                 })
-                if(options&&options.type=='myself'){
-                  // /create-my-do
-                  that.setData({
-                    createPatientUrl:'/ypt/questionnaire-do/create-my-do',
-                    myself:true
-                  })
-                }
+                // if(options&&options.type=='myself'){
+                //   // /create-my-do
+                //   that.setData({
+                //     createPatientUrl:'/ypt/questionnaire-do/create-my-do',
+                //     myself:true
+                //   })
+                // }
                 if(options&&options.type=='modify'){
                   wx.request({
                     url: app.globalData.url + '/ypt/questionnaire-do/row',
@@ -436,10 +450,11 @@ Page({
                 }
               }
             } else {
-              wx.showToast({
-                title: res.data.codeMsg,
-                icon:'none'
-              })
+              that.wxLogin()
+              // wx.showToast({
+              //   title: res.data.codeMsg,
+              //   icon:'none'
+              // })
             }
           }
         });
@@ -641,6 +656,10 @@ let that=this
   },
   wxLogin(){
     let that=this
+    let hospitalId=''
+    console.log('hhh='+that.data.options.loginHospitalId,wx.getStorageSync('loginHospitalId'))
+    console.log(app.globalData.userInfoDetail.hospitalId)
+  
     wx.login({
       success(res) {
         var code = res.code

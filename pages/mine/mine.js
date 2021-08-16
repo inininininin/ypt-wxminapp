@@ -1,5 +1,6 @@
 // pages/mine/mine.js
 var app = getApp()
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -22,6 +23,15 @@ Page({
     withoutLogin: true,
     canvasShow: false,
     ttFormEditShow: false,
+    hospitalListIs:false,
+    showIsPhone:false,
+    myPhone:''
+  },
+ 
+  hospitalList(){
+    wx.navigateTo({
+      url: '../hosList/hosList',
+    })
   },
   evaluation() {
     wx.navigateTo({
@@ -296,6 +306,13 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    wx.request({
+      url: app.globalData.url + '/oss/alive/user-protocol.html',
+      success: function (res) {
+        var article = res.data
+        WxParse.wxParse('article', 'html', article, that, 5);
+      }
+    })
     that.sys();
     // that.bginfo();
   },
@@ -511,10 +528,25 @@ Page({
       method: 'post',
       success: function (res) {
         // wx.hideToast()
+        console.log(res)
         if (res.data.code == 0) {
-          if (res.data.data.maintainIs == 1 || res.data.data.type == 1 || res.data.data.hospitalMaintainIs == 1) {
+          if (!res.data.data.phone) {
+            // that.setData({
+            //   showIsPhone: true
+            // })
+          }else{
+            that.setData({
+              myPhone:res.data.data.phone
+            })
+          }
+          if (res.data.data.maintainIs == 1 || res.data.data.hospitalOperation == 1 || res.data.data.hospitalMaintainIs == 1) {
             that.setData({
               ttFormEditShow: true
+            })
+          }
+          if(res.data.data.maintainIs == 1){
+            that.setData({
+              hospitalListIs: true
             })
           }
           wx.setStorageSync('withoutLogin', false)
@@ -528,7 +560,7 @@ Page({
             typeUser: app.globalData.userInfoDetail.type,
             names: app.globalData.userInfoDetail.name,
             name: app.globalData.userInfoDetail.name,
-            phone: app.globalData.userInfoDetail.phone,
+            phone: app.globalData.userInfoDetail.phone||'',
             avator: avator,
             withoutLogin: false,
             detail: res.data.data
@@ -558,10 +590,14 @@ Page({
             }
           })
         } else {
-          // wx.showToast({
-          //   title: res.data.codeMsg,
-          //   icon: 'loading'
-          // })
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'loading'
+          })
+          var backUrl = '../mine/mine';
+    wx.redirectTo({
+      url: '../login/login?fromType=1&backUrl=' + backUrl,
+    })
         }
       }
     })
@@ -571,7 +607,7 @@ Page({
    */
   onShow: function () {
     // var that = this
-    if (app.globalData.userInfoDetail.maintainIs == 1 || app.globalData.userInfoDetail.type == 1 || app.globalData.userInfoDetail.hospitalMaintainIs == 1) {
+    if (app.globalData.userInfoDetail.maintainIs == 1 || app.globalData.userInfoDetail.hospitalOperation == 1 || app.globalData.userInfoDetail.hospitalMaintainIs == 1) {
       this.setData({
         ttFormEditShow: true
       })
@@ -633,5 +669,52 @@ Page({
         }
       }
     })
-  }
+  },
+  refuse(e) {
+    this.setData({
+      showIsPhone: false
+    })
+  },
+  getPhoneNumber(e) {
+    let that=this
+        wx.login({
+          success(res) {
+            var code = res.code
+            wx.request({
+              url: app.globalData.url + '/ypt/user/bind-phone',
+              header: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                'cookie': wx.getStorageSync('cookie')
+              },
+              method: 'post',
+              data: {
+                wsJsCode: code,
+                // loginHospitalId: wx.getStorageSync('loginHospitalId'),
+                wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
+                wxMinappIv: e.detail.iv || '',
+              },
+              success: function (res) {
+                // wx.hideToast()
+                if (res.data.code == 0) {
+                  that.setData({
+                    showIsPhone: false
+                  })
+                  that.refresh()
+                } else {
+                  wx.showToast({
+                    title: res.data.codeMsg,
+                    icon: 'none'
+                  })
+                }
+              }
+            })
+          }
+        })
+    
+      },
+      bindphone(){
+        this.setData({
+          showIsPhone: true
+        })
+      }
 })

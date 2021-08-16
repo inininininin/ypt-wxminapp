@@ -394,3 +394,6 @@ canvas{
   background:#1890FF !important;
   color: #fff !important;
 }
+.wordxianshi{
+  white-space:normal; word-break:break-all;
+}

@@ -18,11 +18,11 @@
 	<image mode="aspectFill" lazy-load="true" bindtap="lookBigPic" data-src="{{testImg||'../icon/Bitmap.png'}}" src="{{testImg||'../icon/Bitmap.png'}}" lazy-load=""></image>
 	<view>
 		<!-- src="{{item}}" -->
-		<view class="lineOne">{{hosDetail.name}}
+		<view class="lineOne">{{hosDetail.name||''}}
 			<image mode="aspectFill" lazy-load="true" catchtap="lookCodeShow" wx:for='{{imglist}}' data-src="{{item}}" class="tcode" src="../icon/tcode.png"></image>
 		</view>
 
-		<view class="lineOne">{{departDetail}}</view>
+		<view class="lineOne">{{departDetail||''}}</view>
 		<view class="lineOne">
 			<text wx:for='{{hosDetail.tag}}'>{{item}}</text>
 		</view>
@@ -36,7 +36,7 @@
 		</view>
 		<text>查看详情</text>
 	</view>
-	<text class="lineSix">{{hosDetail.intro}}</text>
+	<text class="lineSix">{{hosDetail.intro||''}}</text>
 </view>
 <!-- <view class="doctorDetail">
   <image lazy-load="true" src="../icon/chahua.png" bindtap="panoramaVrUrl"></image>
@@ -68,7 +68,14 @@
 	<canvas canvas-id='canvas' style='width:{{windowW}}px;height:{{windowW}}px;margin-top:{{windowTop}}px;border:2rpx solid #e5e5e5;' catchlongtap="saveCanvas"></canvas>
 	<button type='primary' size='mini' bindtap='saveIs'>保存分享图</button>
 </view>
-
+<!-- <view class='wordxianshi' >
+	登录医院：{{hospitalIdXIanshi}},
+{{hospitalIdXIanshi1}}
+返回医院：{{loginHospitalId1}},
+{{loginHpitalName1}}
+应该登录的{{loginHospitalId11}}
+实际登录的医院{{loginHospitalId111}}{{loginHospitalId222}}
+</view> -->
 
 
 <!-- <text class="versionEve" bindtap="version" style="width:100%;display:block;font-size: 26rpx;color: #999;text-align: center;">ver : {{version}}-{{ids}}</text> -->

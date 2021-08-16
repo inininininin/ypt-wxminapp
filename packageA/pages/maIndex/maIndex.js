@@ -472,7 +472,7 @@ Page({
       }
     });
   },
-  //  取消题目
+  //  提交题目
   commit() {
     var that = this
     wx.request({

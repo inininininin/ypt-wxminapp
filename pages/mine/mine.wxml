@@ -1,8 +1,8 @@
 <!--pages/mine/mine.wxml-->
 <view class="container" style="background: url({{bgUrl}}) no-repeat;background-size: cover;background-position: center;">
 	<text>{{names||''}}</text>
-	<text>{{phone||''}}</text>
-
+	<!-- <text wx:if="{{phone}}">{{phone||''}}</text> -->
+	<!-- <text wx:if="{{!phone}}" bindtap="bindphone">绑定手机</text> -->
 	<image mode="aspectFill" lazy-load="true" wx:if='{{!withoutLogin}}' class="avator" bindtap="avator" src="{{avator}}"></image>
 	<image mode="aspectFill" lazy-load="true" wx:if='{{withoutLogin}}' class="avator" src="{{avator}}"></image>
 	<image mode="aspectFill" lazy-load="true" wx:if='{{!withoutLogin}}' class="edit" bindtap="edit" src="../icon/bianji.png"></image>
@@ -21,6 +21,14 @@
 		<text>服务电话</text>
 		<text bindtap="tel" class="tel" data-tel='{{entityTel}}'>{{entityTel}}</text>
 	</view>
+	<view class="line" wx:if="{{!withoutLogin&&phone}}">
+		<text>手机号</text>
+		<text style="color:#999999" class="tel" data-tel='{{phone}}'>{{phone}}</text>
+	</view>
+	<view class="line" wx:if="{{!withoutLogin&&!phone}}" bindtap="bindphone">
+		<text>点击绑定手机</text>
+		<!-- <image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image> -->
+	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="taskList">
 		<text>任务中心</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
@@ -30,13 +38,22 @@
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="evaluationOwn">
-		<text>疼痛评估表</text>
+		<text>我的疼痛评估表</text>
+		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
+	</view>
+	<view class="line" wx:if='{{!withoutLogin&&hospitalListIs}}' bindtap="hospitalList">
+		<text>医院列表</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="loginout">
 		<text>退出登录</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
+	<!-- <view class="line" bindtap="deleteNo1">
+		<text>删除用户</text>
+		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
+	</view>
+	<view bindtap="deleteNo2">删除问卷</view> -->
 	<!-- <view class="line" wx:if='{{withoutLogin}}' bindtap="toLogin">
     <text>去登陆</text>
 		<image mode=" aspectFill" class="right" src="../icon/right.png">
@@ -65,4 +82,24 @@
 <view class="canvasShow" wx-if='{{canvasShow}}'   style="opacity:1" bindtap="closeCanvas">
 <canvas canvas-id='canvas'   style='width:{{windowW}}px;height:{{windowW}}px;margin-top:{{windowTop}}px;border:2rpx solid #e5e5e5' catchlongtap="saveCanvas"></canvas>
 	<button type='primary' size='mini' bindtap='saveIs'>保存分享图</button>
+</view>
+
+<!-- 
+<input type="text" style="width:500rpx;height:80rpx;border:1rpx solid #e5e5e5" bindinput="deletethis" /> -->
+
+
+<view class="popWindow" wx:if='{{showIsPhone}}'>
+  <view>
+    <!-- <text style="">手机号绑定</text> -->
+    <view>
+      <import src="../../wxParse/wxParse.wxml" />
+      <view class="wxParse">
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+      </view>
+    </view>
+    <view>
+      <button class="refuse" bindtap="refuse">不同意</button>
+      <button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+    </view>
+  </view>
 </view>

@@ -34,6 +34,11 @@
   </view>
  </view>
 <view class="line"></view>
+<view class="expertOpinion" wx:if="{{patientDetail.expertOpinion}}">
+  <text style="color:#ff8400">专家建议：</text>
+  <text style="color:#666666">{{patientDetail.expertOpinion}}</text>
+</view>
+<!-- <view class=""></view> -->
 <view class="questionList" >
   <view wx:for="{{patientDetail.doChunks}}" wx:if="{{chunkNo==item.doChunkNo}}">
     <!-- <text>{{item.name}}</text> -->
@@ -121,6 +126,25 @@
     <view>
       <button class="refuse" bindtap="refuse">不同意</button>
       <button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+    </view>
+  </view>
+</view>
+
+
+<view class="maintainIs" wx:if="{{maintainIs==1}}" bindtap="maintainIs">
+  <image src="../icon/pz.png"></image>
+  <text>点评</text>
+</view>
+<!--  wx:if="{{false}}" -->
+<view class="maintainIsShow" wx:if="{{maintainIsShow}}" catchtap='suggestRefuse'>
+  <view class="suggest" catchtap='true'>
+    <text class="title">建议</text>
+    <textarea auto-focus='{{true}}' auto-height='{{false}}' name=""  id="" maxlength="1000"   type="text" class="opinion" value="{{opinion}}" placeholder="请输入" bindinput="opinion"></textarea>
+    <!-- <input type="text" class="opinion" value="{{opinion}}" placeholder="请输入" bindinput="opinion"> -->
+    <view class="suggestBtn">
+      <view class="suggestRefuse" bindtap="suggestRefuse">取消</view>
+      <view class="suggestLine"></view>
+      <view class="suggestSure" bindtap="suggestSure">确认</view>
     </view>
   </view>
 </view>

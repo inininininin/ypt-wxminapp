@@ -26,7 +26,8 @@ Page({
     this.setData({
       imglist: imglist,
       hosName: options.name,
-      testImg: options.cover
+      testImg: options.cover,
+      options:options
     })
     this.sys();
     this.lookCode()
@@ -78,6 +79,27 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+console.log(this.data.options.id, this.data.imglist[0])
+    // var path = 'pages/assessmentScaleShare/assessmentScaleShare?no=' + this.data.options.no + "&loginHospitalId=" + wx.getStorageSync('loginHospitalId') + '&doNo=' + this.data.options.doNo + '&fromUserId=' + app.globalData.userInfoDetail.userId
+    // var path = 'pages/out/articleDetail/articleDetail?id=' + this.data.id+"&ids=1"
+    var path ='pages/index/index?hospitalid=' + this.data.options.id + '&hospitalname=' + this.data.options.name
+
+    let realname = app.globalData.userInfoDetail.realname
+    if (realname.length > 1) {
+      realname = realname.slice(0, realname.length - 1) + '*'
+    }
+    console.log(this.data.urls)
+    return {
+      title:  this.data.options.name ,//+ `(${realname})`, //分享内容
+      path: path, //分享地址
+      imageUrl:  this.data.imglist[0],//app.globalData.url + '/ypt/wxminapp-resource/questionnaire-logo1.png', //分享图片this.data.urls,//
+      success: function (res) {},
+      fail: function (res) {}
+    }
 
   },
   // canvas绘图部分
