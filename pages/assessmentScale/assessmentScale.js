@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    array: [{realname:'请选择',userId:''}],
+    index:0,
     imgUrl: app.globalData.url,
     items: [{
         value: '',
@@ -32,8 +34,66 @@ Page({
     type: null,
     maintainIs:null,
     maintainIsShow:false,
-    opinion:''
+    opinion:'',
+    activeIcon:false,
   },
+  bindPickerClick(e){
+    this.setData({
+      activeIcon:'activeIcon'
+    })
+  },
+  bindcancel(e){
+    this.setData({
+      activeIcon:false
+    })
+  },
+  bindPickerChange: function(e) {
+    let that=this
+    let indexVal=e.detail.value
+    let expertUserId=that.data.array[e.detail.value].userId
+    console.log(e.currentTarget.dataset.id,e.detail.value)
+    if(indexVal==0){
+      wx.showToast({
+        title: '请选择分配专家',
+        icon:'none'
+      })
+      return
+    }
+   
+    wx.request({
+      url: app.globalData.url + '/ypt/questionnaire-do/assign-expert',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      data: {
+        doNo:  that.data.options.doNo,
+        expertUserId:expertUserId
+      },
+      method: 'post',
+      success: function (res) {
+        if (res.data.code == 0) {
+          wx.showToast({
+            title: '分配成功',
+            icon: "none"
+          })
+          that.setData({
+            index: indexVal,
+            activeIcon:false
+          })
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
+      }
+    });
+   
+    
+  },
+
+
   newOwnTopic() {
     this.myQue()
   },
@@ -200,6 +260,38 @@ Page({
       maintainIs:app.globalData.userInfoDetail.maintainIs
     })
     wx.request({
+      url: app.globalData.url + '/ypt/questionnaire-do/expert-rows',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        if (res.data.code == 0) {
+          let rows=res.data.data.rows
+         let array=that.data.array.concat(rows)
+          that.setData({
+            array:array
+          })
+          console.log(that.data.array)
+          // for (var r in that.data.topicRows) {
+          //   if (that.data.topicRows[r].no == topicNo) {
+          //     that.data.topicRows[r].rows = res.data.data.rows
+          //     console.log(that.data.topicRows[r].rows)
+          //   }
+          // }
+          // that.setData({
+          //   topicRows: that.data.topicRows
+          // })
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
+      }
+    });
+    wx.request({
       url: app.globalData.url + '/oss/alive/user-protocol.html',
       success: function (res) {
         var article = res.data
@@ -329,6 +421,14 @@ Page({
           console.log(111)
           // console.log()
           console.log('123='+res.data.data.row.userId, '456='+app.globalData.userInfoDetail.userId)
+
+          for(var i in that.data.array){
+            if(that.data.array[i].realname==res.data.data.row.expertRealname){
+              that.setData({
+                index:i
+              })
+            }
+          }
           if (res.data.data.row.userId == app.globalData.userInfoDetail.userId) {
             that.setData({
               dis: false,
@@ -623,6 +723,7 @@ Page({
       }
     })
   },
+  
   myQue() {
     let that = this
     wx.request({
@@ -669,11 +770,26 @@ Page({
       url: '../assessmentScale/assessmentScale?no=' + this.data.options.no + '&doNo=' + this.data.mydoNo,
     })
   },
+  refuse(){
+    this.setData({
+      showIs: false,
+    })
+  },
   getPhoneNumber(e) {
     let that = this
     wx.login({
       success(res) {
         var code = res.code
+        if(!e.detail.encryptedData||!e.detail.iv){
+          // wx.showToast({
+          //   title: '获取手机号失败',
+          //   icon:'none'
+          // })
+          that.setData({
+            showIs:false
+          })
+          return
+        }
         wx.request({
           url: app.globalData.url + '/ypt/user/bind-phone',
           header: {

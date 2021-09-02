@@ -11,14 +11,18 @@
     <view class="patientItem" wx:for="{{patientList}}"  data-id="{{item.doNo}}" bindtap="lookForm">
       <view class="itemDetail">
         <view>
-          <image src="../icon/personal.png"></image>
+          <image src="../icon/personal.png" style="margin-right:10rpx;margin-left:0"></image>
           <text>{{item.realname||""}}</text>
         </view>
-        <text>{{item.phone||""}}</text>
+        <view>
+          <text>{{item.phone||""}}</text>
+        <image catchtap='deleteThis'  data-realname='{{item.realname}}' data-id="{{item.doNo}}" src="../icon/deleteT.png"></image>
+        </view>
       </view>
       <view class="itemDate">
         <text>{{item.createTime}}</text>
-        <image catchtap='deleteThis'  data-realname='{{item.realname}}' data-id="{{item.doNo}}" src="../icon/deleteT.png"></image>
+        <text class="fenpei" wx:if="{{item.expertRealname}}">已分配：{{item.expertRealname}}</text>
+        <!-- <image catchtap='deleteThis'  data-realname='{{item.realname}}' data-id="{{item.doNo}}" src="../icon/deleteT.png"></image> -->
       </view>
     </view>
   </view>

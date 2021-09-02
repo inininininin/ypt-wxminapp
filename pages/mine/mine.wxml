@@ -25,8 +25,9 @@
 		<text>手机号</text>
 		<text style="color:#999999" class="tel" data-tel='{{phone}}'>{{phone}}</text>
 	</view>
-	<view class="line" wx:if="{{!withoutLogin&&!phone}}" bindtap="bindphone">
-		<text>点击绑定手机</text>
+	<view class="line" wx:if="{{!withoutLogin&&!phone}}" >
+		<!-- <text>点击绑定手机</text> -->
+		<button class="agreeThis" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">点击绑定手机</button>
 		<!-- <image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image> -->
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="taskList">
@@ -37,12 +38,12 @@
 		<text>疼痛评估表管理</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
-	<view class="line" wx:if='{{!withoutLogin}}' bindtap="evaluationOwn">
+	<view class="line" wx:if='{{!withoutLogin&&ttshow}}' bindtap="evaluationOwn">
 		<text>我的疼痛评估表</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin&&hospitalListIs}}' bindtap="hospitalList">
-		<text>医院列表</text>
+		<text>全部医院</text>
 		<image mode="aspectFill" lazy-load="true" class="right" src="../icon/right.png"></image>
 	</view>
 	<view class="line" wx:if='{{!withoutLogin}}' bindtap="loginout">
@@ -91,12 +92,9 @@
 <view class="popWindow" wx:if='{{showIsPhone}}'>
   <view>
     <!-- <text style="">手机号绑定</text> -->
-    <view>
-      <import src="../../wxParse/wxParse.wxml" />
-      <view class="wxParse">
-        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
-      </view>
-    </view>
+    <view class="title">
+			微信登录
+		</view>
     <view>
       <button class="refuse" bindtap="refuse">不同意</button>
       <button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>

@@ -98,7 +98,7 @@ box-shadow: 0rpx 2rpx 14rpx 0rpx rgba(0,0,0,0.08);
 .itemDetail view image{
   width: 41rpx;
 height: 42rpx;
-margin-right: 10rpx;
+margin-left: 20rpx;
 }
 .itemDetail>text{
   font-size: 30rpx;
@@ -128,3 +128,14 @@ color: #999999;
   height: 40rpx;
   padding: 10rpx ;
 }
+.fenpei{
+  height: 73rpx;
+  line-height: 73rpx;
+  opacity: 1;
+  font-size: 24rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  text-align: right;
+  color: #f56a00;
+  
+  }

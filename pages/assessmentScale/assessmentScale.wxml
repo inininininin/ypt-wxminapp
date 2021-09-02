@@ -20,7 +20,9 @@
   <view class="address"> <text>住址：</text>
     <text>{{patientDetail.areaL1Name}}{{patientDetail.areaL2Name}}{{patientDetail.areaL3Name}}{{patientDetail.address}}</text>
   </view>
-  <view class="modifyPersonal" bindtap="modifyPersonal"  wx:if="{{!dis}}"> <image src="../icon/editWhite.png"></image></view>
+  <view class="modifyPersonal" bindtap="modifyPersonal" wx:if="{{!dis}}">
+    <image src="../icon/editWhite.png"></image>
+  </view>
   <!-- <view class="treatment">
     <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}'
       wx:for="{{patientDetail.doChunks}}">
@@ -29,52 +31,59 @@
 </view>
 <view class="treatmentFix fixed" wx:if="{{patientDetail.doChunks.length!=1}}">
   <view class="treatment">
-    <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}' wx:for="{{patientDetail.doChunks}}">
+    <view class="{{item.active}}" bindtap="selectChunk" data-no='{{item.doChunkNo}}'
+      wx:for="{{patientDetail.doChunks}}">
       {{item.name}}</view>
   </view>
- </view>
+</view>
 <view class="line"></view>
 <view class="expertOpinion" wx:if="{{patientDetail.expertOpinion}}">
   <text style="color:#ff8400">专家建议：</text>
   <text style="color:#666666">{{patientDetail.expertOpinion}}</text>
 </view>
 <!-- <view class=""></view> -->
-<view class="questionList" >
+<view class="questionList">
   <view wx:for="{{patientDetail.doChunks}}" wx:if="{{chunkNo==item.doChunkNo}}">
     <!-- <text>{{item.name}}</text> -->
-    <view class="questionItem"  wx:for="{{item.doTopics}}" wx:for-item="childItem">
-    <!-- 填空题 -->
-    <view class="blanks" wx:if="{{childItem.type==3}}">
-      <view class="title">{{index+1}}.{{childItem.name}}</view>
-      <view class="imageQue" wx:if="{{childItem.img}}">
-        <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}" mode="aspectFit"></image>
-      </view>
-      <input disabled="{{dis}}" class="inputItem" type="text" data-tno='{{childItem.doTopicNo}}' value='{{childItem.elseanswer}}' bindblur="bindTextBlur" /> 
-      <!-- placeholder="输入答案内容"  -->
-      <!-- <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
+    <view class="questionItem" wx:for="{{item.doTopics}}" wx:for-item="childItem">
+      <!-- 填空题 -->
+      <view class="blanks" wx:if="{{childItem.type==3}}">
+        <view class="title">{{index+1}}.{{childItem.name}}</view>
+        <view class="imageQue" wx:if="{{childItem.img}}">
+          <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}"
+            mode="aspectFit"></image>
+        </view>
+        <input disabled="{{dis}}" class="inputItem" type="text" data-tno='{{childItem.doTopicNo}}'
+          value='{{childItem.elseanswer}}' bindblur="bindTextBlur" />
+        <!-- placeholder="输入答案内容"  -->
+        <!-- <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
         <text>其他：</text>
         <textarea  class="textItem" data-tno='{{childItem.doTopicNo}}'  value="{{childItem.elseanswer||''}}" cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
       </view> -->
-    </view>
-    <!-- 单选题 -->
-    <view class="singleChoice"  wx:if="{{childItem.type==1}}">
-      <view class="title">{{index+1}}.{{childItem.name}}</view>
-      <view class="imageQue" wx:if="{{childItem.img}}">
-        <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}" mode="aspectFit"></image>
       </view>
-      <view class="answerList">
-        <radio-group bindchange="radioChange"  data-tno='{{childItem.doTopicNo}}'>
-          <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
-            <radio  disabled="{{dis}}"  value="{{answerItem.doAnswerNo}}" checked="{{answerItem.selected==1?true:false}}" />
-            <text>{{answerItem.name}}</text>
-          </label>
-        </radio-group>
-       
-      </view>
-      <view class="elseOther"  wx:if="{{childItem.elseanswerIs==1}}">
-        <text>其他：</text>
-        <textarea  disabled="{{dis}}"  class="textItem"  value='{{childItem.elseanswer}}'  data-tno='{{childItem.doTopicNo}}'  cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return' maxlength="1000"  />
-        <!--   placeholder="输入其他" -->
+      <!-- 单选题 -->
+      <view class="singleChoice" wx:if="{{childItem.type==1}}">
+        <view class="title">{{index+1}}.{{childItem.name}}</view>
+        <view class="imageQue" wx:if="{{childItem.img}}">
+          <image bindtap="showImg" data-src="{{imgUrl}}{{childItem.img}}" src="{{imgUrl}}{{childItem.img}}"
+            mode="aspectFit"></image>
+        </view>
+        <view class="answerList">
+          <radio-group bindchange="radioChange" data-tno='{{childItem.doTopicNo}}'>
+            <label class="answerItem" wx:for="{{childItem.doAnswers}}" wx:for-item="answerItem">
+              <radio disabled="{{dis}}" value="{{answerItem.doAnswerNo}}"
+                checked="{{answerItem.selected==1?true:false}}" />
+              <text>{{answerItem.name}}</text>
+            </label>
+          </radio-group>
+
+        </view>
+        <view class="elseOther" wx:if="{{childItem.elseanswerIs==1}}">
+          <text>其他：</text>
+          <textarea disabled="{{dis}}" class="textItem" value='{{childItem.elseanswer}}'
+            data-tno='{{childItem.doTopicNo}}' cursor-spacing='30' bindblur="bindTextBlur" confirm-type='return'
+            maxlength="1000" />
+          <!--   placeholder="输入其他" -->
       </view>
     </view>
     <!-- 多选题 -->
@@ -104,30 +113,38 @@
 </view>
 <view    class="posBtm">
     <view class="supply"  bindtap="supply" wx:if="{{!dis}}">提交</view>
-    <view class="funBtn" wx:if="{{!isMine}}">
-  <view class="edit" wx:if="{{!funBtn}}" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷
-  </view>
-  <view class="edit"  wx:if="{{funBtn}}"  bindtap="goOwnTopic" style="border-right:0;width:100%;height:100%">前往自己问卷
-  </view>
-</view>
-  </view>
-
-
-
-<view class="popWindow" wx:if='{{showIs}}'>
-  <view>
-    <!-- <text>微信授权登录</text> -->
-    <view>
-      <import src="../../wxParse/wxParse.wxml" />
-      <view class="wxParse">
-        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+    <!-- wx:if="{{!isMine}}" -->
+    <view class="funBtn" style='display:none'>
+      <view class="edit" wx:if="{{!funBtn}}" bindtap="newOwnTopic" style="border-right:0;width:100%;height:100%">新建自己问卷
+      </view>
+      <view class="edit" wx:if="{{funBtn}}" bindtap="goOwnTopic" style="border-right:0;width:100%;height:100%">前往自己问卷
       </view>
     </view>
-    <view>
-      <button class="refuse" bindtap="refuse">不同意</button>
-      <button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+
+    <view class="fenpeiWho">
+      <text>将患者分配给：</text>
+      <view class="pickerHz">
+        <picker class="pickerHzPic" bindchange="bindPickerChange" bindcancel='bindcancel' bindtap='bindPickerClick'
+          range="{{array}}" range-key='realname'  value='{{array[index].realname}}'  data-id='{{array[index].userId}}'>
+          <view class="picker" style="color:#333333">
+            <!-- data-id='{{array[index].userId}} -->
+            {{array[index].realname||""}}
+          </view>
+        </picker>
+        <image class="rightIcon {{activeIcon}}" src="../icon/right.png"></image>
+      </view>
     </view>
   </view>
+
+
+
+<view class="popWindow1" wx:if='{{showIs}}'>
+  <view>
+		<view class="deleteThis">
+			<image src="../icon/deleteT.png" bindtap="refuse"></image>
+		</view>
+		<button class="agreeWx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信登录</button>
+	</view>
 </view>
 
 
@@ -140,11 +157,11 @@
   <view class="suggest" catchtap='true'>
     <text class="title">建议</text>
     <textarea auto-focus='{{true}}' auto-height='{{false}}' name=""  id="" maxlength="1000"   type="text" class="opinion" value="{{opinion}}" placeholder="请输入" bindinput="opinion"></textarea>
-    <!-- <input type="text" class="opinion" value="{{opinion}}" placeholder="请输入" bindinput="opinion"> -->
-    <view class="suggestBtn">
-      <view class="suggestRefuse" bindtap="suggestRefuse">取消</view>
-      <view class="suggestLine"></view>
-      <view class="suggestSure" bindtap="suggestSure">确认</view>
-    </view>
-  </view>
-</view>
+          <!-- <input type="text" class="opinion" value="{{opinion}}" placeholder="请输入" bindinput="opinion"> -->
+          <view class="suggestBtn">
+            <view class="suggestRefuse" bindtap="suggestRefuse">取消</view>
+            <view class="suggestLine"></view>
+            <view class="suggestSure" bindtap="suggestSure">确认</view>
+          </view>
+        </view>
+      </view>

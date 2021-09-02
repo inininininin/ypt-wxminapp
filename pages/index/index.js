@@ -4,6 +4,7 @@ const app = getApp()
 var utils = require('../../utils/util.js');
 Page({
   data: {
+    showIs:false,
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     testImg: "../icon/Bitmap.png",
@@ -17,6 +18,20 @@ Page({
     canvasShow: false,
     change: 0,
     ids: ''
+  },
+  getUserProfile(e) {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        console.log(res)
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    })
   },
   // 搜索跳转
   searchkey(e) {
@@ -352,6 +367,7 @@ Page({
                 success: function (res) {
                   // wx.hideToast()
                   if (res.data.code == 0) {
+                  
                     that.departDetail();
                     that.docList();
                     that.hosDetail();
@@ -385,7 +401,31 @@ Page({
 
   },
   onShow: function (options) {
-    this.setData({
+    let that=this
+    wx.request({
+      url: app.globalData.url + '/ypt/user/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        // wx.hideToast()
+        if (res.data.code == 0) {
+          if(!res.data.data.phone){
+            that.setData({
+              showIs: true
+            })
+          }
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+    that.setData({
       canvasShow: false
     })
     if (options && options.hospitalid) {
@@ -406,15 +446,15 @@ Page({
       })
       wx.setStorageSync('historyUrl', '')
     }
-    if (this.data.change == 1) {
-      this.setData({
+    if (that.data.change == 1) {
+      that.setData({
         change: 0
       })
-      this.hosDetail();
+      that.hosDetail();
     }
 
-    this.departDetail();
-    this.docList();
+    that.departDetail();
+    that.docList();
 
     // console.log(app.globalData.hospitaiDetail)
 
@@ -638,5 +678,98 @@ Page({
         })
       }
     })
+  },
+  refuse(e) {
+    this.setData({
+      showIs: false
+    })
+  },
+  getPhoneNumber(e) {
+let that=this
+    wx.login({
+      success(res) {
+        console.log(res)
+        var code = res.code
+        if(!e.detail.encryptedData||!e.detail.iv){
+          // wx.showToast({
+          //   title: '获取手机号失败',
+          //   icon:'none'
+          // })
+          that.setData({
+            showIs:false
+          })
+          return
+        }
+        wx.request({
+          url: app.globalData.url + '/ypt/user/bind-phone',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          method: 'post',
+          data: {
+            wsJsCode: code,
+            // loginHospitalId: wx.getStorageSync('loginHospitalId'),
+            wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
+            wxMinappIv: e.detail.iv || '',
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+
+              // wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              wx.request({
+                url: app.globalData.url + '/ypt/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  wx.hideToast()
+                  if (res.data.code == 0) {
+                    app.globalData.userInfoDetail = res.data.data
+                  
+                    wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                    wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+                    wx.showToast({
+                      title: '绑定成功',
+                      icon: 'none',
+                      duration: 2000,
+                      mask: true,
+                      complete: function(res) {
+                        setTimeout(function () {    
+                          that.setData({
+                            showIs: false,
+                          })      
+                        }, 500);
+                      }
+                    });
+
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              })
+
+
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+      },
+      error:function(error){
+        console.log(error)
+      }
+      
+    })
+
   },
 })

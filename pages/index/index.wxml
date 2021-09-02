@@ -80,3 +80,25 @@
 
 <!-- <text class="versionEve" bindtap="version" style="width:100%;display:block;font-size: 26rpx;color: #999;text-align: center;">ver : {{version}}-{{ids}}</text> -->
 <!-- <text wx:if='{{ids}}' style="color:#333;width:100%;text-align:center">{{ver:ids}}</text> -->
+<!-- <button  open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button> -->
+
+
+<!-- wx:if='{{showIs}}'  -->
+<view class="popWindow" style="display:none">
+
+	<view>
+		<view class="deleteThis">
+			<image src="../icon/deleteT.png" bindtap="refuse"></image>
+		</view>
+		<button class="agreeWx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信登录</button>
+	</view>
+	<!-- <view>
+		<view class="title">
+			微信登录
+		</view>
+		<view>
+			<button class="refuse" bindtap="refuse">不同意</button>
+			<button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
+		</view>
+	</view> -->
+</view>

@@ -25,7 +25,8 @@ Page({
     ttFormEditShow: false,
     hospitalListIs:false,
     showIsPhone:false,
-    myPhone:''
+    myPhone:'',
+    ttshow:false
   },
  
   hospitalList(){
@@ -606,20 +607,49 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // var that = this
+    var that = this
+    wx.request({
+      url: app.globalData.url + '/ypt/questionnaire-do/my-rows',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      data: {
+        questionnaireNo: 111111111111,
+        rstart: 1,
+        rcount: 50
+      },
+      method: 'post',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          if(res.data.data.rows&&res.data.data.rows.length>0){
+            that.setData({
+              ttshow:true
+            })
+          }
+
+        } else {
+          wx.showModal({
+            showCancel: false,
+            title: res.data.codeMsg
+          })
+        }
+      }
+    });
     if (app.globalData.userInfoDetail.maintainIs == 1 || app.globalData.userInfoDetail.hospitalOperation == 1 || app.globalData.userInfoDetail.hospitalMaintainIs == 1) {
-      this.setData({
+      that.setData({
         ttFormEditShow: true
       })
     }
-    this.setData({
+    that.setData({
       canvasShow: false
     })
-    this.setData({
+    that.setData({
       version: app.version, //.split('-')[0],
       entityTel: app.globalData.entity.entityTel,
     })
-    this.refresh()
+    that.refresh()
     // var param=encodeURIComponent('../evaNow/evaNow?type='+app.globalData.userInfoDetail.type+'&id=' + (app.globalData.userInfoDetail.type1DoctorId||app.globalData.userInfoDetail.type2NurseId)+'&name=' + (app.globalData.userInfoDetail.type1DoctorName||app.globalData.userInfoDetail.type2NurseName)+'&hospitalid=' + app.globalData.userInfoDetail.hospitalId +'&hospitalname=' + app.globalData.userInfoDetail.hospitalName   )
   },
 
@@ -641,7 +671,38 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.refresh()
+   
+    var that = this
+    that.refresh()
+    wx.request({
+      url: app.globalData.url + '/ypt/questionnaire-do/my-rows',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      data: {
+        questionnaireNo: 111111111111,
+        rstart: 1,
+        rcount: 50
+      },
+      method: 'post',
+      success: function (res) {
+        wx.hideToast()
+        if (res.data.code == 0) {
+          if(res.data.data.rows&&res.data.data.rows.length>0){
+            that.setData({
+              ttshow:true
+            })
+          }
+
+        } else {
+          wx.showModal({
+            showCancel: false,
+            title: res.data.codeMsg
+          })
+        }
+      }
+    });
     wx.stopPullDownRefresh({})
   },
 
@@ -680,6 +741,16 @@ Page({
         wx.login({
           success(res) {
             var code = res.code
+            if(!e.detail.encryptedData||!e.detail.iv){
+              // wx.showToast({
+              //   title: '获取手机号失败',
+              //   icon:'none'
+              // })
+              that.setData({
+                showIsPhone:false
+              })
+              return
+            }
             wx.request({
               url: app.globalData.url + '/ypt/user/bind-phone',
               header: {
