@@ -36,6 +36,7 @@ Page({
     maintainIsShow:false,
     opinion:'',
     activeIcon:false,
+    noPtr:false
   },
   bindPickerClick(e){
     this.setData({
@@ -695,6 +696,12 @@ Page({
                         dis: false,
                         type: res.data.data.hospitalOperation
                       })
+                    }
+                    if(res.data.data.maintainIs==1){
+                      that.setData({
+                        noPtr: true
+                      })
+                      
                     }
                     that.myQue()
                     that.patientRow()

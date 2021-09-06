@@ -17,7 +17,7 @@
         </view>
         <view>
           <text>{{item.phone||""}}</text>
-        <image catchtap='deleteThis'  data-realname='{{item.realname}}' data-id="{{item.doNo}}" src="../icon/deleteT.png"></image>
+        <image catchtap='deleteThis' hidden="hidden" data-realname='{{item.realname}}' data-id="{{item.doNo}}" src="../icon/deleteT.png"></image>
         </view>
       </view>
       <view class="itemDate">

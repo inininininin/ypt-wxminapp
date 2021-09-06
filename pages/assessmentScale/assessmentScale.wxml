@@ -121,7 +121,7 @@
       </view>
     </view>
 
-    <view class="fenpeiWho">
+    <view class="fenpeiWho" wx:if="{{noPtr}}">
       <text>将患者分配给：</text>
       <view class="pickerHz">
         <picker class="pickerHzPic" bindchange="bindPickerChange" bindcancel='bindcancel' bindtap='bindPickerClick'
