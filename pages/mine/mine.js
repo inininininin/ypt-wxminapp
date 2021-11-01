@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    jscode: null,
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     showIs: false,
@@ -23,13 +24,13 @@ Page({
     withoutLogin: true,
     canvasShow: false,
     ttFormEditShow: false,
-    hospitalListIs:false,
-    showIsPhone:false,
-    myPhone:'',
-    ttshow:false
+    hospitalListIs: false,
+    showIsPhone: false,
+    myPhone: '',
+    ttshow: false
   },
- 
-  hospitalList(){
+
+  hospitalList() {
     wx.navigateTo({
       url: '../hosList/hosList',
     })
@@ -535,9 +536,9 @@ Page({
             // that.setData({
             //   showIsPhone: true
             // })
-          }else{
+          } else {
             that.setData({
-              myPhone:res.data.data.phone
+              myPhone: res.data.data.phone
             })
           }
           if (res.data.data.maintainIs == 1 || res.data.data.hospitalOperation == 1 || res.data.data.hospitalMaintainIs == 1) {
@@ -545,7 +546,7 @@ Page({
               ttFormEditShow: true
             })
           }
-          if(res.data.data.maintainIs == 1){
+          if (res.data.data.maintainIs == 1) {
             that.setData({
               hospitalListIs: true
             })
@@ -561,7 +562,7 @@ Page({
             typeUser: app.globalData.userInfoDetail.type,
             names: app.globalData.userInfoDetail.name,
             name: app.globalData.userInfoDetail.name,
-            phone: app.globalData.userInfoDetail.phone||'',
+            phone: app.globalData.userInfoDetail.phone || '',
             avator: avator,
             withoutLogin: false,
             detail: res.data.data
@@ -596,9 +597,9 @@ Page({
             icon: 'loading'
           })
           var backUrl = '../mine/mine';
-    wx.redirectTo({
-      url: '../login/login?fromType=1&backUrl=' + backUrl,
-    })
+          wx.redirectTo({
+            url: '../login/login?fromType=1&backUrl=' + backUrl,
+          })
         }
       }
     })
@@ -608,6 +609,16 @@ Page({
    */
   onShow: function () {
     var that = this
+
+    wx.login({
+      success(res) {
+        that.setData({
+          jscode: res.code
+        })
+      }
+    })
+
+
     wx.request({
       url: app.globalData.url + '/ypt/questionnaire-do/my-rows',
       header: {
@@ -623,9 +634,9 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          if(res.data.data.rows&&res.data.data.rows.length>0){
+          if (res.data.data.rows && res.data.data.rows.length > 0) {
             that.setData({
-              ttshow:true
+              ttshow: true
             })
           }
 
@@ -671,7 +682,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-   
+
     var that = this
     that.refresh()
     wx.request({
@@ -689,9 +700,9 @@ Page({
       success: function (res) {
         wx.hideToast()
         if (res.data.code == 0) {
-          if(res.data.data.rows&&res.data.data.rows.length>0){
+          if (res.data.data.rows && res.data.data.rows.length > 0) {
             that.setData({
-              ttshow:true
+              ttshow: true
             })
           }
 
@@ -737,55 +748,49 @@ Page({
     })
   },
   getPhoneNumber(e) {
-    let that=this
-        wx.login({
-          success(res) {
-            var code = res.code
-            if(!e.detail.encryptedData||!e.detail.iv){
-              // wx.showToast({
-              //   title: '获取手机号失败',
-              //   icon:'none'
-              // })
-              that.setData({
-                showIsPhone:false
-              })
-              return
-            }
-            wx.request({
-              url: app.globalData.url + '/ypt/user/bind-phone',
-              header: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                'cookie': wx.getStorageSync('cookie')
-              },
-              method: 'post',
-              data: {
-                wsJsCode: code,
-                // loginHospitalId: wx.getStorageSync('loginHospitalId'),
-                wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
-                wxMinappIv: e.detail.iv || '',
-              },
-              success: function (res) {
-                // wx.hideToast()
-                if (res.data.code == 0) {
-                  that.setData({
-                    showIsPhone: false
-                  })
-                  that.refresh()
-                } else {
-                  wx.showToast({
-                    title: res.data.codeMsg,
-                    icon: 'none'
-                  })
-                }
-              }
-            })
-          }
-        })
-    
+    let that = this
+    if (!e.detail.encryptedData || !e.detail.iv) {
+      // wx.showToast({
+      //   title: '获取手机号失败',
+      //   icon:'none'
+      // })
+      that.setData({
+        showIsPhone: false
+      })
+      return
+    }
+    wx.request({
+      url: app.globalData.url + '/ypt/user/bind-phone',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
       },
-      bindphone(){
-        this.setData({
-          showIsPhone: true
-        })
+      method: 'post',
+      data: { 
+        wsJsCode: that.data.jscode,
+        // loginHospitalId: wx.getStorageSync('loginHospitalId'),
+        wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
+        wxMinappIv: e.detail.iv || '',
+      },
+      success: function (res) {
+        // wx.hideToast()
+        if (res.data.code == 0) {
+          that.setData({
+            showIsPhone: false
+          })
+          that.refresh()
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
       }
+    })
+  },
+  bindphone() {
+    this.setData({
+      showIsPhone: true
+    })
+  }
 })
