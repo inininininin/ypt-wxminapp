@@ -14,7 +14,7 @@
   </view>
 
   <view class="searchList">
-    <text wx:for='{{schemeList}}' data-id='{{item.hospitalId}}'  data-name='{{item.name}}' bindtap="selectThis">{{item.name}}</text>
+    <text wx:for='{{schemeList}}' data-id='{{item.hospitalId}}' data-cover='{{item.cover||""}}'  data-name='{{item.name}}' bindtap="selectThis">{{item.name}}</text>
     <!-- <text>某某医院某某医院</text>
     <text>某某1231医院</text>
     <text>某某医院</text>

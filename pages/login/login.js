@@ -91,9 +91,10 @@ Page({
                   wx.hideToast()
                   if (res.data.code == 0) {
                     if(!res.data.data.phone){
-                      this.setData({
+                      that.setData({
                         showIs: true
                       })
+                      return
                     }
                     app.globalData.userInfoDetail = res.data.data
                     wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)

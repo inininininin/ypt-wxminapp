@@ -16,10 +16,10 @@
 
   <view class="selectQueType {{active}}">
 
-
-    <view class="selectTaps" catchtap='selectTaps'>
+    <!-- catchtap='selectTaps' -->
+    <view class="selectTaps" >
       <text wx:if="{{!queType}}">请选择题目类型</text>
-      <text wx:if="{{queType}}" style="color:#333333;">{{queTypeName}}</text>
+      <text wx:if="{{queType}}" style="color:#999999;">{{queTypeName}}</text>
       <image class="rightIcon {{active}}" src="../icon/right.png"></image>
     </view>
 

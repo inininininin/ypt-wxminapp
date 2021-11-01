@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    imglist:[],
+    tcode:'',
     formIs:true,
     list:[],
     patientList:[],
@@ -100,7 +102,7 @@ wx.request({
   // 新增病人
   addNew(e){
     wx.navigateTo({
-      url: '../addPatient/addPatient?no='+this.data.list[0].no+"&hospitalId="+app.globalData.userInfoDetail.hospitalId,
+      url: '../addPatient/addPatient?no='+this.data.list[0].no+"&hospitalId="+this.data.options.id,
     })
   },
   painForm(e){
@@ -145,18 +147,20 @@ wx.request({
       }
     });
   },
-  patientRows(e) {
+  patientRows() {
     if(!app.globalData.userInfoDetail.maintainIs&&app.globalData.userInfoDetail.hospitalOperation!=1){
       return
     }
     var that = this
     wx.request({
-      url: app.globalData.url + '/ypt/questionnaire-do/rows',
+      url: app.globalData.url + '/ypt/questionnaire-do/rows-in-all-hospitals',
       header: {
         "Content-Type": "application/x-www-form-urlencoded",
         'cookie': wx.getStorageSync('cookie')
       },
       data:{
+        hospitalId:that.data.options.id
+        // hospitalId:wx.getStorageSync('loginHospitalIdMaintain')
         // questionnaireNo:this.data.list[0].no
       },
       method: 'post',
@@ -193,13 +197,41 @@ wx.request({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(app.globalData.userInfoDetail.hospitalOperation==1){
-      this.setData({
+    let that=this
+    if(app.globalData.userInfoDetail.maintainIs==1||app.globalData.userInfoDetail.hospitalOperation==1){
+      that.setData({
         showIs:true
       })
     }
-    this.questionnaireRows()
-    this.patientRows()
+    wx.setNavigationBarTitle({
+      title: options.name,
+    })
+    that.setData({
+      options:options
+    })
+    console.log(options)
+    var param = encodeURIComponent('pages/index/index?hospitalid=' + options.id + '&hospitalname=' + options.name)
+    wx.getImageInfo({
+      src: app.globalData.url + '/ypt/wxminqrcode?path=' + param + '&width=2',
+      method: 'get',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      success: function (res) {
+        var imglist = []
+        imglist.push(res.path)
+        console.log(res.path)
+        that.setData({
+          tcode: res.path,
+          imglist: imglist,
+        })
+      },
+      fail(res) {
+        console.log(res)
+      }
+    })
+    that.questionnaireRows()
+    that.patientRows()
   },
 
   /**
@@ -252,9 +284,10 @@ wx.request({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
-    var path = 'pages/addPatientMine/addPatientMine?no=' + this.data.list[0].no + "&loginHospitalId="+wx.getStorageSync('loginHospitalId')+"&type=myself"+'&fromUserId='+app.globalData.userInfoDetail.userId
+    console.log('分享页'+this.data.list[0].no+'==='+this.data.options.id,this.data.options.name)
+    var path = 'pages/addPatientMine/addPatientMine?no=' + this.data.list[0].no + "&loginHospitalId="+this.data.options.id+"&type=myself"+'&fromUserId='+app.globalData.userInfoDetail.userId
     return {
-      title: app.globalData.userInfoDetail.hospitalName+`(${app.globalData.userInfoDetail.realname})`, //分享内容
+      title: this.data.options.name+`(${app.globalData.userInfoDetail.realname})`, //分享内容
       path: path, //分享地址
       imageUrl: app.globalData.url+'/ypt/wxminapp-resource/questionnaire-logo1.png', //分享图片
       success: function (res) {
@@ -262,5 +295,43 @@ wx.request({
       fail: function (res) {
       }
     }
+  },
+  maintainIs() {
+    var that = this
+    if (that.data.imglist) {
+      // that.setData({
+      //   canvasShow:true
+      // })
+      // that.lookCode()
+      console.log(that.data.options.name, that.data.imglist[0])
+      let cover=''
+      if(that.data.options.cover){
+        cover=app.globalData.url+that.data.options.cover
+      }else{
+        cover=''
+      }
+      if(that.data.imglist[0]&&that.data.options.name){
+        wx.navigateTo({
+          url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + cover + '&name=' + that.data.options.name+"&id="+that.data.options.id,
+        })
+      }else{
+        wx.showToast({
+          title: '二维码生成中,请稍后重试',
+          icon:'none'
+        })
+      }
+     
+    } else {
+      wx.showToast({
+        title: '维护中',
+        icon:'none'
+      })
+    }
+    // console.log(112121)
+    // console.log(that.data.urls)
+    // wx.previewImage({
+    //   urls: [that.data.urls],
+    // })
+    // that.saveCanvas()
   }
 })

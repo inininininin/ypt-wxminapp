@@ -50,17 +50,10 @@
 <view class="createForm" bindtap="modifyPatient" wx:if="{{options.type=='modify'}}">修改问卷</view>
 
 <view class="popWindow" wx:if='{{showIs}}'>
-	<view>
-		<!-- <text>微信授权登录</text> -->
-		<view>
-			<import src="../../wxParse/wxParse.wxml" />
-			<view class="wxParse">
-				<template is="wxParse" data="{{wxParseData:article.nodes}}" />
-			</view>
+  <view>
+		<view class="deleteThis">
+			<image src="../icon/deleteT.png" bindtap="refuse"></image>
 		</view>
-		<view>
-			<button class="refuse" bindtap="refuse">不同意</button>
-			<button class="agree" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意</button>
-		</view>
+		<button class="agreeWx" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信登录</button>
 	</view>
 </view>

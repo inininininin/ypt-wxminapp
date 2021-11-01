@@ -15,11 +15,11 @@
       <view class="imageQue" wx:if="{{item.img}}">
         <image bindtap="showImg" data-src="{{item.img}}" src="{{item.img}}" mode="aspectFit"></image>
       </view>
-      <input class="inputItem" type="text" bindblur="bindTextAreaBlur" placeholder="输入答案内容" />
+      <input disabled class="inputItem" type="text" bindblur="bindTextAreaBlur" placeholder="" />
       <view class="elseOther" wx:if="{{item.elseanswerIs==1}}">
         <text>其他：</text>
-        <textarea class="textItem" cursor-spacing='30' bindblur="bindTextAreaBlur" confirm-type='return'
-          maxlength="1000" placeholder="输入其他" />
+        <textarea disabled class="textItem" cursor-spacing='30' bindblur="bindTextAreaBlur" confirm-type='return'
+          maxlength="1000" placeholder="" />
         </view>
     </view>
     <!-- 单选题 -->
@@ -32,14 +32,14 @@
       <view class="answerList">
         <radio-group bindchange="radioChange">
             <label class="answerItem" wx:for="{{item.rows}}"  wx:for-item="childItem" wx:key="{{childItem.value}}">
-              <radio value="{{childItem.value}}" checked="{{childItem.checked}}" />
+              <radio disabled value="{{childItem.value}}" checked="{{childItem.checked}}" />
               <text>{{childItem.name}}</text>
             </label>
         </radio-group>
       </view>
       <view class="elseOther" wx:if="{{item.elseanswerIs==1}}">
         <text>其他：</text>
-        <textarea   class="textItem" cursor-spacing='30' bindblur="bindTextAreaBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
+        <textarea disabled  class="textItem" cursor-spacing='30' bindblur="bindTextAreaBlur" confirm-type='return' maxlength="1000"  placeholder=""  />
       </view>
     </view>
     <!-- 多选题 -->
@@ -52,14 +52,14 @@
       <view class="answerList">
         <checkbox-group bindchange="checkboxChange">
           <view class="answerItem" wx:for="{{item.rows}}" wx:for-item="childItem" wx:key="{{childItem.value}}">
-            <checkbox value="{{childItem.value}}" checked="{{item.checked}}" />
+            <checkbox disabled value="{{childItem.value}}" checked="{{item.checked}}" />
             <text>{{childItem.name}}</text>
           </view>
         </checkbox-group>
       </view>
       <view class="elseOther"  wx:if="{{item.elseanswerIs==1}}">
         <text>其他：</text>
-        <textarea  class="textItem" cursor-spacing='30' bindblur="bindTextAreaBlur" confirm-type='return' maxlength="1000"  placeholder="输入其他"  />
+        <textarea disabled  class="textItem" cursor-spacing='30' bindblur="bindTextAreaBlur" confirm-type='return' maxlength="1000"  placeholder=""  />
       </view>
     </view>
    

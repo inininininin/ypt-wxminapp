@@ -4,6 +4,7 @@ const app = getApp()
 var utils = require('../../utils/util.js');
 Page({
   data: {
+    showIs:false,
     statusBarHeight: getApp().globalData.statusBarHeight,
     titleBarHeight: getApp().globalData.titleBarHeight,
     testImg: "../icon/Bitmap.png",
@@ -15,8 +16,22 @@ Page({
     bgUrl2: app.globalData.url + '/wxminapp-resource/2.png',
     bgUrl3: app.globalData.url + '/wxminapp-resource/3.png',
     canvasShow: false,
-    change:0,
-    ids:''
+    change: 0,
+    ids: ''
+  },
+  getUserProfile(e) {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        console.log(res)
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        })
+      }
+    })
   },
   // 搜索跳转
   searchkey(e) {
@@ -81,6 +96,7 @@ Page({
     var that = this
     // wx.showToast({
     //   title:  wx.getStorageSync('loginHospitalId'),
+    //   icon:"none"
     // })
     // if(!wx.getStorageSync('loginHospitalId')){
     //   wx.showToast({
@@ -90,6 +106,9 @@ Page({
     //   })
     //   return
     // }
+    that.setData({
+      loginHospitalId11: wx.getStorageSync('loginHospitalId'),
+    })
     wx.request({
       url: app.globalData.url + '/ypt/user/hospital',
       header: {
@@ -101,23 +120,21 @@ Page({
         hospitalId: wx.getStorageSync('loginHospitalId'), // app.globalData.loginHospitalId,
       },
       success: function (res) {
-        // if (res.data.codeMsg) {
-        //   wx.showToast({
-        //     title: res.data.codeMsg,
-        //     icon: 'none'
-        //   })
-        // }
         if (res.data.code == 0) {
+          that.setData({
+            loginHospitalId111: res.data.data.name,
+            loginHospitalId222: res.data.data.hospitalId
+          })
           app.globalData.hospitalName = res.data.data.name
           app.globalData.hospitaiDetail = res.data.data
           var tag = []
           res.data.data.cover = app.cover(res.data.data.cover)
           if (res.data.data.tag) {
-            if(res.data.data.tag.split(',')){
+            if (res.data.data.tag.split(',')) {
               for (var i in res.data.data.tag.split(',')) {
                 tag.push(res.data.data.tag.split(',')[i])
               }
-            }else{
+            } else {
               tag.push(res.data.data.tag)
             }
           }
@@ -148,17 +165,17 @@ Page({
               console.log(res)
             }
           })
-        } else if (res.data.code == 1404||res.data.code==1001) {
+        } else if (res.data.code == 1404 || res.data.code == 1001) {
           wx.showToast({
             title: '请选择一个医院',
-            icon:'none',
-            duration:2000,
-            success:function(res){
+            icon: 'none',
+            duration: 2000,
+            success: function (res) {
               wx.navigateTo({
                 url: '../hosList/hosList',
               })
             },
-            complete:function(res){
+            complete: function (res) {
               console.log(res)
             },
           })
@@ -207,7 +224,7 @@ Page({
               depart: res.data.data.rows
             })
           }
-        
+
         }
         // else {
         //   wx.showToast({
@@ -279,56 +296,165 @@ Page({
     })
   },
   onLoad: function (options) {
-    let that=this
+    let that = this
     console.log(options)
     that.setData({
-      version: app.version,//.split('-')[0],
+      version: app.version,
       entityTel: app.globalData.entity.entityTel,
     })
     if (options && options.hospitalid) {
       that.setData({
-        ids:options.hospitalid
+        ids: options.hospitalid
       })
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
-      that.hosDetail();
-    }else{
-      that.hosDetail();
+      // that.hosDetail();
+      // wx.showToast({
+      //   title: '1',
+      // })
+    } else {
+      // wx.showToast({
+      //   title: '2',
+      // })
+      // that.hosDetail();
     }
     that.sys();
-   
+
+    let hospitalId = ''
+    if (options && options.hospitalid) {
+      hospitalId = options.hospitalid
+    } else if (wx.getStorageSync('loginHospitalId')) {
+      hospitalId = wx.getStorageSync('loginHospitalId')
+    } else {
+      hospitalId = ''
+    }
+    console.log('hospitalId=' + hospitalId)
+    that.setData({
+      hospitalIdXIanshi: hospitalId
+    })
+    wx.login({
+      success(res) {
+        var code = res.code
+        wx.request({
+          url: app.globalData.url + '/ypt/user/login-by-wxminapp-jscode',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          method: 'post',
+          data: {
+            wsJsCode: code,
+            loginHospitalId: hospitalId,
+          },
+          success: function (res) {
+            // wx.hideToast()
+            if (res.data.code == 0) {
+              // wx.showToast({
+              //   title: hospitalId,
+              // })
+
+              that.setData({
+                hospitalIdXIanshi1: hospitalId
+              })
+              console.log('wxLogin')
+              wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              wx.request({
+                url: app.globalData.url + '/ypt/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  // wx.hideToast()
+                  if (res.data.code == 0) {
+                  
+                    that.departDetail();
+                    that.docList();
+                    that.hosDetail();
+                    that.setData({
+                      loginHospitalId1: res.data.data.hospitalId,
+                      loginHpitalName1: res.data.data.hospitalName
+                    })
+                    app.globalData.userInfoDetail = res.data.data
+                    wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                    wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              })
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+      }
+    })
+
+
   },
   onShow: function (options) {
-    this.setData({
+    let that=this
+    wx.request({
+      url: app.globalData.url + '/ypt/user/login-refresh',
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        'cookie': wx.getStorageSync('cookie')
+      },
+      method: 'post',
+      success: function (res) {
+        // wx.hideToast()
+        if (res.data.code == 0) {
+          if(!res.data.data.phone){
+            that.setData({
+              showIs: true
+            })
+          }
+        } else {
+          wx.showToast({
+            title: res.data.codeMsg,
+            icon: 'none'
+          })
+        }
+      }
+    })
+    that.setData({
       canvasShow: false
     })
     if (options && options.hospitalid) {
       wx.setStorageSync('loginHospitalId', options.hospitalid)
       wx.setStorageSync('loginHpitalName', options.hospitalname)
     }
-    console.log( wx.getStorageSync('historyUrl'))
+    console.log(wx.getStorageSync('historyUrl'))
     if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 1) {
       wx.switchTab({
         url: wx.getStorageSync('historyUrl'),
       })
       wx.setStorageSync('fromTab', '')
-    } else  if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 0){
+    } else if (wx.getStorageSync('historyUrl') && wx.getStorageSync('fromTab') == 0) {
       console.log(wx.getStorageSync('historyUrl'))
-      console.log(wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'))
+      console.log(wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id') + '&hospitalid=' + wx.getStorageSync('loginHospitalId'))
       wx.navigateTo({
-        url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id')+'&hospitalid='+wx.getStorageSync('loginHospitalId'),
+        url: wx.getStorageSync('historyUrl') + "?type=" + wx.getStorageSync('type') + "&id=" + wx.getStorageSync('id') + '&hospitalid=' + wx.getStorageSync('loginHospitalId'),
       })
       wx.setStorageSync('historyUrl', '')
     }
-    if(this.data.change==1){
-      this.setData({
-        change:0
+    if (that.data.change == 1) {
+      that.setData({
+        change: 0
       })
-      this.hosDetail();
+      that.hosDetail();
     }
-   
-    this.departDetail();
-    this.docList();
+
+    that.departDetail();
+    that.docList();
 
     // console.log(app.globalData.hospitaiDetail)
 
@@ -411,7 +537,7 @@ Page({
       canvasShow: true
     })
     wx.downloadFile({
-      url: that.data.testImg,//注意公众平台是否配置相应的域名
+      url: that.data.testImg, //注意公众平台是否配置相应的域名
       success: function (res) {
         console.log(res.tempFilePath)
         that.setData({
@@ -500,21 +626,21 @@ Page({
       // })
       // that.lookCode()
       console.log(that.data.hosDetail.name, that.data.imglist[0], that.data.testImg)
-      if(that.data.imglist[0]&&that.data.hosDetail.name&&that.data.testImg){
+      if (that.data.imglist[0] && that.data.hosDetail.name && that.data.testImg) {
         wx.navigateTo({
-          url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + that.data.testImg + '&name=' + that.data.hosDetail.name,
+          url: '../canvasHos/canvasHos?img=' + that.data.imglist[0] + '&cover=' + that.data.testImg + '&name=' + that.data.hosDetail.name+"&id="+that.data.hosDetail.hospitalId,
         })
-      }else{
+      } else {
         wx.showToast({
           title: '二维码生成中,请稍后重试',
-          icon:'none'
+          icon: 'none'
         })
       }
-     
+
     } else {
       wx.showToast({
         title: '维护中',
-        icon:'none'
+        icon: 'none'
       })
     }
     // console.log(112121)
@@ -552,5 +678,98 @@ Page({
         })
       }
     })
+  },
+  refuse(e) {
+    this.setData({
+      showIs: false
+    })
+  },
+  getPhoneNumber(e) {
+let that=this
+    wx.login({
+      success(res) {
+        console.log(res)
+        var code = res.code
+        if(!e.detail.encryptedData||!e.detail.iv){
+          // wx.showToast({
+          //   title: '获取手机号失败',
+          //   icon:'none'
+          // })
+          that.setData({
+            showIs:false
+          })
+          return
+        }
+        wx.request({
+          url: app.globalData.url + '/ypt/user/bind-phone',
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            'cookie': wx.getStorageSync('cookie')
+          },
+          method: 'post',
+          data: {
+            wsJsCode: code,
+            // loginHospitalId: wx.getStorageSync('loginHospitalId'),
+            wxMinappencryptedDataOfPhoneNumber: e.detail.encryptedData || '',
+            wxMinappIv: e.detail.iv || '',
+          },
+          success: function (res) {
+            wx.hideToast()
+            if (res.data.code == 0) {
+
+              // wx.setStorageSync('cookie', res.header['Set-Cookie'])
+              wx.request({
+                url: app.globalData.url + '/ypt/user/login-refresh',
+                header: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  'cookie': wx.getStorageSync('cookie')
+                },
+                method: 'post',
+                success: function (res) {
+                  wx.hideToast()
+                  if (res.data.code == 0) {
+                    app.globalData.userInfoDetail = res.data.data
+                  
+                    wx.setStorageSync('loginHospitalId', res.data.data.hospitalId)
+                    wx.setStorageSync('loginHpitalName', res.data.data.hospitalName)
+                    wx.showToast({
+                      title: '绑定成功',
+                      icon: 'none',
+                      duration: 2000,
+                      mask: true,
+                      complete: function(res) {
+                        setTimeout(function () {    
+                          that.setData({
+                            showIs: false,
+                          })      
+                        }, 500);
+                      }
+                    });
+
+                  } else {
+                    wx.showToast({
+                      title: res.data.codeMsg,
+                      icon: 'none'
+                    })
+                  }
+                }
+              })
+
+
+            } else {
+              wx.showToast({
+                title: res.data.codeMsg,
+                icon: 'none'
+              })
+            }
+          }
+        })
+      },
+      error:function(error){
+        console.log(error)
+      }
+      
+    })
+
   },
 })

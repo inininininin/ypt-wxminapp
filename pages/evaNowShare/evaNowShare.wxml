@@ -108,11 +108,8 @@
 <view class="popWindow" wx:if='{{showIsPhone}}'>
 	<view>
 		<!-- <text>微信授权登录</text> -->
-		<view>
-			<import src="../../wxParse/wxParse.wxml" />
-			<view class="wxParse">
-				<template is="wxParse" data="{{wxParseData:article.nodes}}" />
-			</view>
+		<view class="title">
+			微信登录
 		</view>
 		<view>
 			<button class="refuse" bindtap="refuse">不同意</button>
